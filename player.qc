@@ -1077,6 +1077,11 @@ void () PlayerDie =
 		Attack_Finished(0.75);
 		self.hook_out = 1;
 	}
+	te = find(world, classname, "primer");
+	while (te != world && te.owner != self) 
+		te = find(te, classname, "primer");
+	if (te != world) 
+		te.nextthink = time;
 	self.items = self.items - (self.items & 524288);
 	self.invisible_finished = 0;
 	self.invincible_finished = 0;
