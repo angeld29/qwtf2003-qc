@@ -1497,5 +1497,5 @@ float api_version;
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 3
-#define ANGEL_VERSION "Compiled: 01.03.2004 r1\nOfficial MTFL version\n"
+#define ANGEL_VERSION "Compiled: 02.03.2004 r1\nOfficial MTFL version\n"
 

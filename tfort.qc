@@ -1559,6 +1559,17 @@ void () TeamFortress_SetEquipment =
   self.lives = -1;
  self.items = self.items | kept_items;
 //angel fix
+        st = infokey(self, "sb");
+        
+        if(st == string_null)
+         	self.assault_min_shells = 20;
+         else{
+                self.assault_min_shells = rint(stof(st));
+                if( self.assault_min_shells <=0) 
+                 	self.assault_min_shells = 0;
+         }
+
+
         st = infokey(self, "autoid");
         if(st == string_null)
          {
@@ -1576,6 +1587,7 @@ void () TeamFortress_SetEquipment =
          te.owner = self;
          te.classname = "timer";
          }
+
 //         self.ScannerOn = 0;
   self.allow_snip_time = 0;
 ////////

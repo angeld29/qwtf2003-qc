@@ -508,7 +508,7 @@ void () player_nail2 = [104, player_nail1]
 void () player_assaultcannonup1 = [103, player_assaultcannonup2]
 {
 
- if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
+ if (!self.button0 || self.ammo_shells <= self.assault_min_shells || intermission_running) {
   self.tfstate = self.tfstate - (self.tfstate & 2048);
   TeamFortress_SetSpeed(self);
   self.count = 1;
@@ -537,7 +537,7 @@ void () player_assaultcannonup1 = [103, player_assaultcannonup2]
 
 void () player_assaultcannonup2 = [103, player_assaultcannonup1]
 {
- if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
+ if (!self.button0 || self.ammo_shells <= self.assault_min_shells || intermission_running) {
   self.tfstate = self.tfstate - (self.tfstate & 2048);
   TeamFortress_SetSpeed(self);
   self.count = 1;
@@ -606,7 +606,7 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
 //  stuffcmd(self, "v_idlescale 0\n");
 #endif
  }
- if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
+ if (!self.button0 || self.ammo_shells <= self.assault_min_shells || intermission_running) {
 #ifndef  NEWHWGUY
   stuffcmd(self, "v_idlescale 0\n");
 #else 
@@ -650,7 +650,7 @@ void () player_assaultcannon2 = [104, player_assaultcannon1]
   else 
    self.weaponframe = 2;
  }
- if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
+ if (!self.button0 || self.ammo_shells <= self.assault_min_shells || intermission_running) {
 #ifndef NEWHWGUY
   stuffcmd(self, "v_idlescale 0\n");
 #endif
@@ -675,7 +675,7 @@ void () player_assaultcannondown1 = [103, player_assaultcannondown1]
   self.fire_held_down = 0;
   self.tfstate = self.tfstate - (self.tfstate & 2048);
   TeamFortress_SetSpeed(self);
-  if (self.ammo_shells <= #ASSAULT_MIN_SHELLS || self.ammo_cells < 4) {
+  if (self.ammo_shells <= self.assault_min_shells || self.ammo_cells < 4) {
    self.last_weapon = self.current_weapon;
    self.last_weaponmode = self.weaponmode;
    self.current_weapon = W_BestWeapon();

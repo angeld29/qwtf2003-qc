@@ -1846,7 +1846,7 @@ float () W_BestWeapon =
  if (self.ammo_cells >= 1 && (it & 65536) && self.waterlevel <= 1) 
   return 65536;
  else {
-  if (self.ammo_cells >= 6 && self.ammo_shells > #ASSAULT_MIN_SHELLS && (it & 32768)) 
+  if (self.ammo_cells >= 6 && self.ammo_shells > self.assault_min_shells && (it & 32768)) 
    return 32768;
   else {
    if (self.ammo_cells >= 1 && (it & 4096)) 
@@ -2517,7 +2517,7 @@ void () W_ChangeWeapon =
            else {
             if (it & 32768) {
              fl = 32768;
-             if (self.ammo_shells <= #ASSAULT_MIN_SHELLS) 
+             if (self.ammo_shells <= self.assault_min_shells) 
               am = 1;
              else {
               if (self.ammo_cells < 4) 
@@ -2552,7 +2552,7 @@ void () W_ChangeWeapon =
            else {
             if (self.impulse == 69) {
              fl = self.last_weapon;
-                                                                                                        if((fl & #WEAP_ASSAULT_CANNON) && self.ammo_shells <= #ASSAULT_MIN_SHELLS)
+                                                                                                        if((fl & #WEAP_ASSAULT_CANNON) && self.ammo_shells <= self.assault_min_shells)
                                                                                                          am = 1;
              
              if (it & self.last_weapon) 
@@ -2731,7 +2731,7 @@ void () CycleWeaponCommand =
                   self.current_weapon = 32768;
                   if (self.ammo_cells < 4) 
                    am = 1;
-                  if (self.ammo_shells <= #ASSAULT_MIN_SHELLS) 
+                  if (self.ammo_shells <= self.assault_min_shells) 
                    am = 1;
                  }
                  else {
