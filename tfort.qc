@@ -317,6 +317,7 @@ void () TeamFortress_Inventory =
 	local entity tg;
 	local string ac;
 	local float col;
+	local entity te;
 
 	col = TeamFortress_TeamGetColor(self.team_no);
 	sprint(self, 2, "You're in team ");
@@ -467,6 +468,17 @@ void () TeamFortress_Inventory =
 		}
 	}
 	sprint(self, 2, "\n");
+       	  te = find(world, classname, "detpack");
+      	  while (te) {
+       	   if (te.owner == self) {
+       	    sprint(self, 2, "Detpack armed: ");
+             ac = ftos(rint(te.nextthink - time));
+             sprint(self, 2,ac );      	    
+	     sprint(self, 2, "\n");      	    
+      	   }
+	   te = find(te, classname, "detpack");
+      	   }	
+
 };
 
 void () TeamFortress_ShowTF =

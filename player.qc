@@ -1077,6 +1077,12 @@ void () PlayerDie =
 		Attack_Finished(0.75);
 		self.hook_out = 1;
 	}
+	self.tf_impulse = 0;
+	self.imp1 = 0;
+	self.imp2 = 0;
+	self.imp3 = 0;
+	self.imp4 = 0;
+
 	te = find(world, classname, "primer");
 	while (te != world && te.owner != self) 
 		te = find(te, classname, "primer");

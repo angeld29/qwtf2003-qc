@@ -8,6 +8,8 @@ defs.qc
 qw.qc
 debug.qc
 
+omi.qc
+
 menu.qc
 subs.qc
 combat.qc

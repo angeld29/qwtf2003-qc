@@ -270,7 +270,7 @@ void () TeamFortress_DetpackExplode =
 	local entity te;
 	local vector org;
 
-	bprint(1, "FIRE IN THE HOLE!\n");
+	bprint(1, self.owner.netname," FIRE IN THE HOLE!\n");
 	sound(self, 1, "weapons/detpack.wav", 1, 0);
 	if (birthday == 1) 
 		bprint2(1, self.owner.netname, " spreads good cheer!\n");

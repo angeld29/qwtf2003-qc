@@ -322,3 +322,11 @@ void () muzzleflash =
 };
 
 
+
+.float tf_impulse;
+
+.float imp1;
+.float imp2;
+.float imp3;
+.float imp4;
+

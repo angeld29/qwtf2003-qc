@@ -185,9 +185,9 @@ float () Sentry_FindTarget =
 			gotone = 0;
 		if (client.is_feigning) 
 			gotone = 0;
-		if (client.flags & 128) 
+		if (client.flags & #FL_NOTARGET) 
 			gotone = 0;
-		if (client.items & 524288) 
+		if (client.items & #IT_INVISIBILITY) 
 			gotone = 0;
 		if (!visible(client)) 
 			gotone = 0;
