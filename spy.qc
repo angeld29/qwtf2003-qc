@@ -550,10 +550,10 @@ void () TeamFortress_SpyFeignDeath =
 			sprint(self, 2, "You can't feign with the hook out.\n");
 			return;
 		}
-		if (!(self.flags & 512) && !self.waterlevel) {
-			sprint(self, 2, "You can't feign in the air.\n");
-			return;
-		}
+//		if (!(self.flags & 512) && !self.waterlevel) {
+//			sprint(self, 2, "You can't feign in the air.\n");
+//			return;
+//		}
 		at_spot = findradius(self.origin, 64);
 		while (at_spot != world) {
 			if (at_spot.classname == "player" && self != at_spot && at_spot.is_feigning == 1) {

@@ -1463,7 +1463,7 @@ void () TeamFortress_SetEquipment =
 		self.lives = -1;
 	self.items = self.items | kept_items;
 //angel fix
-        st = infokey(self.owner, "autoid");
+        st = infokey(self, "autoid");
         if (st == "on")
         {
         	te = spawn();

@@ -283,8 +283,8 @@ void () TeamFortress_ID =
 				        {
 				         te = find(world, classname, "building_sentrygun");
 				         while(te.real_owner != trace_ent.real_owner)
- 				          te = find(world, classname, "building_sentrygun");
- 				          if(!te)te = trace_ent;
+ 				          te = find(te, classname, "building_sentrygun");
+// 				          if(!te)te = trace_ent;
 				        }else te = trace_ent;
 					self.StatusRefreshTime = time + 1.5;
 					if (self == trace_ent.real_owner) {

@@ -48,6 +48,7 @@ void (entity pl) RefreshStatusBar =
 	local string s7;
 	local float win;
 	local float sec;
+	local entity te;
 
 	if (!pl.StatusBarSize) {
 		pl.StatusRefreshTime = time + 60;
@@ -132,6 +133,20 @@ void (entity pl) RefreshStatusBar =
 	if (pl.playerclass == 4) {
 		if (self.is_detpacking) 
 			s2 = "  setting detpack                      \n";
+		else
+		{
+         	  te = find(world, classname, "detpack");
+        	  while (te) {
+ 		   if (te.owner == self) {
+ 		    s7 = "Detpack: ";
+       		    s2 = ftos(rint(te.nextthink - time));
+        	    s6 = "                 \n";
+        	    centerprint(pl, s1, s7, s2, s6, s3, s4, s5);
+        	    return;
+        	   }
+  	          te = find(te, classname, "detpack");
+		   }	
+		 }
 	}
 	else {
 		if (pl.playerclass == 8) {
