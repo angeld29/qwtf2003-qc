@@ -1,4 +1,3 @@
-Слегка подправленный вариант todo, что бы его не стыдно выложить было
 
 Cкаут.
 [ ] Сканнер может работать автоматически - on/off.
@@ -34,6 +33,11 @@ Cкаут.
 
 Общее.
 [+] Autoid,включается "setinfo autoid on"
+[+] Настраиваемый дискард 
+    "setinfo disc_s <сколько оставить>"
+    "setinfo disc_n <сколько оставить>"
+    "setinfo disc_r <сколько оставить>"
+    "setinfo disc_c <сколько оставить>"
 [+] Убран баг пропадания последней гранаты, при взятии goal_item.
 [+]	- Health boxes will now heal leg damage even if the player's health is
 		>= his class's max health.(tf 2.9).

@@ -832,13 +832,13 @@ void (entity Goal, entity Player) RemoveResults =
 		te = find(world, classname, "primer");
 		while (te) {
 			if (te.owner == Player) {
-				if (te.impulse == 151 && Player.no_grenades_2 <= 0) {
+				if (te.impulse == 151 && Goal.no_grenades_2 < 0) {
 					Player.tfstate = Player.tfstate - (Player.tfstate & 1);
 					Player.tfstate = Player.tfstate - (Player.tfstate & 1024);
 					dremove(te);
 				}
 				else {
-					if (te.impulse == 150 && Player.no_grenades_1 <= 0) {
+					if (te.impulse == 150 && Goal.no_grenades_1 < 0) {
 						Player.tfstate = Player.tfstate - (Player.tfstate & 1);
 						Player.tfstate = Player.tfstate - (Player.tfstate & 1024);
 						dremove(te);

@@ -1,5 +1,8 @@
 void () TeamFortress_Discard =
 {
+        local string st;
+        local float ammo_tmp;
+
 	newmis = spawn();
 	if (self.playerclass == 1) 
 		newmis.ammo_rockets = self.ammo_rockets;
@@ -45,18 +48,61 @@ void () TeamFortress_Discard =
 			}
 		}
 	}
+	st = infokey(self,"disc_s");
+	if(st != string_null)
+	{
+	  ammo_tmp = rint(stof(st));
+	  if(ammo_tmp >=0) {
+  	  if(ammo_tmp <= self.ammo_shells )
+ 	   newmis.ammo_shells = self.ammo_shells - ammo_tmp;
+          else
+  	   newmis.ammo_shells = 0;
+ 	  }
+	}
+	st = infokey(self,"disc_n");
+	if(st != string_null)
+	{
+	  ammo_tmp = rint(stof(st));
+	  if(ammo_tmp >=0) {
+	  if(ammo_tmp <= self.ammo_nails )
+	  newmis.ammo_nails = self.ammo_nails - ammo_tmp;
+	  else newmis.ammo_nails = 0;
+	  }
+	}
+	st = infokey(self,"disc_r");
+	if(st != string_null)
+	{
+	  ammo_tmp = rint(stof(st));
+	  if(ammo_tmp >=0) {
+	  if(ammo_tmp <= self.ammo_rockets)
+	  newmis.ammo_rockets = self.ammo_rockets - ammo_tmp;
+	  else newmis.ammo_rockets = 0;
+	  }
+	}
+	st = infokey(self,"disc_c");
+	if(st != string_null)
+	{
+	  ammo_tmp = rint(stof(st));
+	  if(ammo_tmp >=0) {
+	  if(ammo_tmp <= self.ammo_cells )
+	  newmis.ammo_cells = self.ammo_cells - ammo_tmp;
+	  else newmis.ammo_cells = 0;
+	  }
+	}
+
 	if (!(newmis.ammo_shells + newmis.ammo_nails + newmis.ammo_rockets + newmis.ammo_cells)) {
 		dremove(newmis);
 		return;
 	}
+
 	if (newmis.ammo_shells) 
-		self.ammo_shells = 0;
+		self.ammo_shells = self.ammo_shells - newmis.ammo_shells;
 	if (newmis.ammo_nails) 
-		self.ammo_nails = 0;
+		self.ammo_nails = self.ammo_nails - newmis.ammo_nails;
 	if (newmis.ammo_rockets) 
-		self.ammo_rockets = 0;
+		self.ammo_rockets = self.ammo_rockets - newmis.ammo_rockets;
 	if (newmis.ammo_cells) 
-		self.ammo_cells = 0;
+		self.ammo_cells = self.ammo_cells - newmis.ammo_cells;
 	W_SetCurrentAmmo();
 	sound(self, 3, "weapons/lock4.wav", 1, 1);
 	if (self.team_no) {
