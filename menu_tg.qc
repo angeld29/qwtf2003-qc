@@ -3,7 +3,8 @@ void () Detpack_SetClip;
 string (float num) NumberToString100;
 void ()Menu_TG_Main=
 {
- centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n4) Misc MOD options           \n5) Load defaults              \n7) Nothing                    ");
+// centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n4) Misc MOD options           \n5) Load defaults              \n7) Nothing                    ");
+ centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n7) Nothing                    ");
 };
 
 void (float inp)Menu_TG_Main_Input=
@@ -135,6 +136,7 @@ void () Menu_TG_Cheats =
  local string s3;
  local string s4;
  local string s5;
+ local string s6;
 
  if (unlimit_ammo) 
   s1 = "1)‰Unlimited ammo ON          \n";
@@ -147,10 +149,10 @@ void () Menu_TG_Cheats =
  if (gren_effect == 0) 
   s3 = "3)‡Grenade effect OFF         \n";
  else {
-  if (gren_effect == 1) 
+  if (gren_effect == 2) 
    s3 = "3)ˆGrenade effect OFF for self\n";
   else {
-   if (gren_effect == 2) 
+   if (gren_effect == 1) 
     s3 = "3)‰Grenade effect ON          \n";
   }
  }
@@ -166,7 +168,13 @@ void () Menu_TG_Cheats =
   s5 = "5)‰God Mode ON                \n";
  else 
   s5 = "5)‡God Mode OFF               \n";
- centerprint(self, "Cheats menu:\n", s1, s2, s3, s4, s5, "7) Nothing                    \n");
+
+ if (fullflash_for_self) 
+  s6 = "6)‰Flash for self: FULL       \n7) Nothing                    \n";
+ else 
+  s6 = "6)‡Flash for self: STD        \n7) Nothing                    \n";
+
+ centerprint(self, "Cheats menu:\n", s1, s2, s3, s4, s5,s6 );
 };
 
 void (float inp) Menu_TG_Cheats_Input =
@@ -202,10 +210,17 @@ void (float inp) Menu_TG_Cheats_Input =
        godmode = 0;
       else 
        godmode = 1;
-     }
-     else {
+     }else {
+      if (inp == 6) {
+       if (fullflash_for_self) 
+        fullflash_for_self = 0;
+       else 
+        fullflash_for_self = 1;
+      }
+      else {
       if (inp == 7) 
        ResetMenu();
+       }
      }
     }
    }

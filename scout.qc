@@ -118,7 +118,11 @@ void () FlashTimer =
 
  te = self.owner;
  te.FlashTime = te.FlashTime - 0.6;
+#ifndef TG
  if (te.FlashTime < 5) {
+#else
+ if (te.FlashTime < 5 || (self.gren_eff_time<=time && gren_time)) {
+#endif
   te.FlashTime = 0;
   stuffcmd(te, "v_cshift; wait; bf\n");
   remove(self);
@@ -144,7 +148,11 @@ void () FlashTimerNew =
 
  te = self.owner;
  te.FlashTime = te.FlashTime - 0.6;
+#ifndef TG
  if (te.FlashTime < 5) {
+#else
+ if (te.FlashTime < 5 || (self.gren_eff_time<=time && gren_time)) {
+#endif
   te.FlashTime = 0;
   stuffcmd(te, "v_cshift; wait; bf\n");
   remove(self);
@@ -203,8 +211,16 @@ void () FlashGrenadeExplode =
       newmis.owner = te;
       newmis.think = FlashTimerNew;
       newmis.nextthink = time + 1;
+#ifdef TG
+      if(gren_time)
+       newmis.gren_eff_time = time + gren_time;
+#endif
      }
+#ifndef TG
      if (te == self.owner){
+#else
+     if (te == self.owner && !fullflash_for_self){
+#endif 
       te.FlashTime = 16;
        stuffcmd(te, "v_cshift 160 160 160 160\n");
 #ifdef ANTIANTIFLASH
@@ -226,8 +242,16 @@ void () FlashGrenadeExplode =
       newmis.owner = te;
       newmis.think = FlashTimer;
       newmis.nextthink = time + 1;
+#ifdef TG
+      if(gren_time)
+       newmis.gren_eff_time = time + gren_time;
+#endif
      }
+#ifndef TG
      if (te == self.owner){
+#else
+     if (te == self.owner && !fullflash_for_self){
+#endif 
       te.FlashTime = 16;
      }else {
       te.FlashTime = 24;
@@ -276,12 +300,16 @@ void () ConcussionGrenadeExplode =
 void () OldConcussionGrenadeTimer =
 {
  local string st;
-
  if (self.owner.invincible_finished > time) {
+
   stuffcmd(self.owner, "v_idlescale 0; wait; fov 90\n");
   dremove(self);
   return;
  }
+#ifdef TG
+ if ( gren_time && self.gren_eff_time <= time ) 
+  self.health = 0;
+#endif 
  newmis = spawn();
  setmodel(newmis, "progs/s_bubble.spr");
  setorigin(newmis, self.owner.origin);
@@ -329,6 +357,10 @@ void () ConcussionGrenadeTimer =
   dremove(self);
   return;
  }
+#ifdef TG
+ if ( gren_time && self.gren_eff_time <= time ) 
+  self.health = 0;
+#endif 
  if (self.health == 200 || self.health == 400 || self.health == 600 || self.health == 800 || self.health == 1000) {
   newmis = spawn();
   setmodel(newmis, "progs/s_bubble.spr");
@@ -567,6 +599,10 @@ void (entity inflictor, entity attacker, float bounce, entity ignore) T_RadiusBo
         te.health = 800;
         te.nextthink = time + 0.25;
        }
+#ifdef TG
+       if(gren_time)
+       te.gren_eff_time= time+gren_time;
+#endif
       }
       else {
        if (old_grens == 1) {
@@ -590,6 +626,10 @@ void (entity inflictor, entity attacker, float bounce, entity ignore) T_RadiusBo
         te.owner = head;
         te.health = 800;
        }
+#ifdef TG
+       if(gren_time)
+        te.gren_eff_time= time+gren_time;
+#endif
       }
 #ifdef TG
      }

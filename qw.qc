@@ -322,13 +322,17 @@ float unlimit_grens;
 float godmode;
 float gren_effect;
 float gren_time;
+float fullflash_for_self;
+.float gren_eff_time;
 ///SG
 float sg_allow_fire;
 float sg_allow_find;
 float sg_fire_type;
+//detpacks
 float detpack_clip;
 float detpack_disarm;
 float detpack_drop;
+
 #endif 
 void (float psize, entity p) KickPlayer =
 {

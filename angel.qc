@@ -219,7 +219,9 @@ void (entity pl) Angel_PrintRules =
 //   sprint(pl, 2, "\n"); 
  }else
   sprint(pl, 2, "All Grenades Enabled\n"); 
-
+#ifdef TG
+ sprint(pl, 2, "TF2003 training version\n"); 
+#endif 
  sprint(pl, 2, #ANGEL_VERSION); 
 
 };

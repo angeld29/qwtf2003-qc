@@ -441,10 +441,11 @@ void () DecodeLevelParms =
   sg_allow_fire=1;
   sg_allow_find=#TG_SG_FIND_IGNORE_TEAM;
   sg_fire_type=#TG_SG_FIRE_NORMAL;
-  gren_time=10;
-  gren_effect=2;
+  gren_time=0;
+  gren_effect=1;
   detpack_disarm=1;
   detpack_drop=0;
+  fullflash_for_self=0;
 #endif
   st = infokey(world, "dg");
   if (st == string_null) 

@@ -267,7 +267,11 @@ void () tdeath_touch =
   other.solid = 0;
   other.nextthink = time + 1 + random() * 2;
   dremove(other.oldenemy);
+#ifndef TG
   bprint(1, other.owner.netname);
+#else
+  bprint(1, other.real_owner.netname);
+#endif 
   bprint(1, "'s detpack was telefragged by ");
   bprint(1, self.owner.netname);
   bprint(1, "\n");
