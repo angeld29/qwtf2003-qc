@@ -39,6 +39,7 @@ void () DropKey;
 void () UseSpecialSkill;
 void () RemoveFlare;
 void (float scanrange) TeamFortress_Scan;
+void (float scanrange) TeamFortress_Scan_Angel;
 void (float timer) TeamFortress_SetDetpack;
 void (float all) TeamFortress_TeamShowScores;
 void (entity Player) TeamFortress_TeamShowMemberClasses;
@@ -2637,7 +2638,7 @@ void () ImpulseCommands =
 		TeamFortress_SetDetpack(self.impulse);
 	else {
 		if (self.last_impulse == 159 && self.impulse) 
-			TeamFortress_Scan(self.impulse);
+			TeamFortress_Scan_Angel(self.impulse);
 	}
 	if (self.impulse == 8 && self.current_menu != 6) {
 		self.current_menu = 6;
@@ -2688,13 +2689,13 @@ void () ImpulseCommands =
       			TeamFortress_ReloadCurrentWeapon();
         	else {
       		if (self.impulse == 162) 
-      			TeamFortress_Scan(10);
+      			TeamFortress_Scan_Angel(10);
         	else {
        		if (self.impulse == 163) 
-       			TeamFortress_Scan(30);
+       			TeamFortress_Scan_Angel(30);
         	else {
       		if (self.impulse == 164) 
-      			TeamFortress_Scan(100);
+      			TeamFortress_Scan_Angel(100);
         	else {
        		if (self.impulse == 165) 
        			TeamFortress_SetDetpack(5);

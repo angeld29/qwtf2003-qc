@@ -374,7 +374,7 @@ void () TeamFortress_AutoScan =
  local entity oldself;
  oldself=self;
  self=oldself.owner;
- TeamFortress_Scan(self.ScanRange);
+ TeamFortress_Scan_Angel(self.ScanRange);
  self=oldself;
  self.nextthink = time + #TF_AUTOSCAN_TIME;
 };
@@ -498,19 +498,20 @@ void (float scanrange) TeamFortress_Scan =
 			}
 		}
 		if (any_detected) {
+		        sprint(self,#PRINT_HIGH,"Scanned ",list.netname,"\n");
 			lightningvec = normalize(list.origin - self.origin);
 			lightningvec = lightningvec * (vlen(list.origin - self.origin) / 5);
 			lightningvec = lightningvec + self.origin;
 			msg_entity = self;
-			WriteByte(1, 23);
-			WriteByte(1, 5);
-			WriteEntity(1, self);
-			WriteCoord(1, self.origin_x);
-			WriteCoord(1, self.origin_y);
-			WriteCoord(1, self.origin_z + 8);
-			WriteCoord(1, lightningvec_x);
-			WriteCoord(1, lightningvec_y);
-			WriteCoord(1, lightningvec_z + 8);
+			WriteByte(#MSG_ONE, #SVC_TEMPENTITY);
+			WriteByte(#MSG_ONE, #TE_LIGHTNING1);
+			WriteEntity(#MSG_ONE, self);
+			WriteCoord(#MSG_ONE, self.origin_x);
+			WriteCoord(#MSG_ONE, self.origin_y);
+			WriteCoord(#MSG_ONE, self.origin_z + 8);
+			WriteCoord(#MSG_ONE, lightningvec_x);
+			WriteCoord(#MSG_ONE, lightningvec_y);
+			WriteCoord(#MSG_ONE, lightningvec_z + 8);
 		}
 		list = list.linked_list;
 	}
@@ -620,7 +621,7 @@ entity (entity scanner, float scanrange, float enemies, float friends) T_RadiusS
 		if (gotatarget) {
 			if (list) {
 				list.linked_list = head;
-				list = list.linked_list;
+			        list = list.linked_list;
 			}
 			else {
 				list_head = head;
@@ -632,3 +633,128 @@ entity (entity scanner, float scanrange, float enemies, float friends) T_RadiusS
 	return list_head;
 };
 
+//////////////////////////////////////////
+
+void (float scanrange) TeamFortress_Scan_Angel =
+{
+	local string power;
+	local entity list;
+	local entity saveent;
+	local float minlen;
+	local float len;
+	local float scancost;
+	local float scen;
+	local float scfr;
+	local vector lightningvec;
+	local float enemy_detected;
+	local float friend_detected;
+	local float any_detected;
+	local vector vf;
+	local vector vr;
+	local vector e;
+	local float res1;
+	local float res2;
+	local float res3;
+	local float vf_e_angle;
+	local float vr_e_angle;
+
+	self.impulse = 0;
+	self.last_impulse = 0;
+	if (self.classname != "player") 
+	    return;
+       	if (!(self.tf_items & #NIT_SCANNER)) 
+       		return;
+       	if (scanrange == 160) {
+       		if (self.tf_items_flags & 1) {
+       			sprint(self, 2, "Enemy Scanning disabled.\n");
+       			self.tf_items_flags = self.tf_items_flags - 1;
+       			return;
+       		}
+       		sprint(self, #PRINT_HIGH, "Enemy Scanning enabled.\n");
+       		self.tf_items_flags = self.tf_items_flags | 1;
+       		return;
+       	}
+       	if (scanrange == 161) {
+       		if (self.tf_items_flags & 2) {
+       			sprint(self, #PRINT_HIGH, "Friendly Scanning disabled.\n");
+       			self.tf_items_flags = self.tf_items_flags - 2;
+       			return;
+       		}
+       		sprint(self, #PRINT_HIGH, "Friendly Scanning enabled.\n");
+       		self.tf_items_flags = self.tf_items_flags | 2;
+       		return;
+       	}
+       	if (scanrange > 50) 
+       		scanrange = 50;
+       	self.ScanRange=scanrange;
+       	scen = 0;
+       	scfr = 0;
+       	if (self.tf_items_flags & 1) 
+       		scen = 1;
+       	if (self.tf_items_flags & 2) 
+       		scfr = 1;
+       	if (!scen && !scfr) {
+       		sprint(self, #PRINT_HIGH, "All scanner functions are disabled.\n");
+       		return;
+       	}
+//		sprint(self, #PRINT_HIGH, "Scanning...\n");
+       	scanrange = scanrange * 25;
+       	minlen=scanrange+100;
+       	list = findradius(self.origin, scanrange + 40);
+       	while(list)
+       	{
+	 enemy_detected=0;
+	 friend_detected=0;
+	 any_detected=0;
+       	 if(list != self)
+       	 {
+       	  if(list.takedamage && list.health>0 && list.classname=="player")
+       	  {
+           if(teamplay)
+       	   {
+       	    if(scfr && list.team_no > 0 && list.team_no == self.team_no)
+       	    {
+       	      friend_detected=1;
+       	      any_detected=1;
+       	    }
+       	    if(scen && (self.team_no > 0) && (list.team_no > 0) && (list.team_no != self.team_no))
+       	    {
+       	      enemy_detected=1;
+       	      any_detected=1;
+       	    }
+       	    }else
+       	    any_detected=1;
+       	    if((self.tf_items_flags & 4)&&(vlen(list.velocity) <= 50))
+       	     any_detected=0;
+       	   }
+       	  }
+       	 if(any_detected)
+       	 {
+       	   len=vlen(list.origin - self.origin);
+       	   if(!saveent || (len < minlen))
+       	   {
+       	    saveent=list;
+       	    minlen=len;
+       	   }
+       	 }
+       	 list=list.chain;
+       	}
+       	if(saveent)
+       	{
+   		lightningvec = normalize(saveent.origin - self.origin);
+    		lightningvec = lightningvec * (vlen(saveent.origin - self.origin) / 5);
+    		lightningvec = lightningvec + self.origin;
+    		msg_entity = self;
+    		WriteByte(#MSG_ONE, #SVC_TEMPENTITY);
+    		WriteByte(#MSG_ONE, #TE_LIGHTNING1);
+    		WriteEntity(#MSG_ONE, self);
+    		WriteCoord(#MSG_ONE, self.origin_x);
+    		WriteCoord(#MSG_ONE, self.origin_y);
+    		WriteCoord(#MSG_ONE, self.origin_z + 8);
+    		WriteCoord(#MSG_ONE, lightningvec_x);
+    		WriteCoord(#MSG_ONE, lightningvec_y);
+    		WriteCoord(#MSG_ONE, lightningvec_z + 8);
+       	}
+	W_SetCurrentAmmo();
+	return;
+};

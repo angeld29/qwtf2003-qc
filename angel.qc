@@ -1,7 +1,7 @@
 string (float pc) TeamFortress_GetClassName;
+float (entity Goal, entity AP) Activated;
 
 /////////////////////////////////////////////////////////////
-float (entity Goal, entity AP) Activated;
 
 float (entity spot)CheckTelefragSpot=
 {
@@ -188,7 +188,7 @@ void (entity pl) Angel_PrintRules =
 	}else
 	 sprint(pl, 2, "All Grenades Enabled\n"); 
 
-	sprint(pl, 2, "Compiled: 14.06.2003\n"); 
+	sprint(pl, 2, #ANGEL_VERSION); 
 
 };
 
