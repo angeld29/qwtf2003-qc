@@ -1681,6 +1681,9 @@ void () item_tfgoal_touch =
 		return;
 	if (other == self.owner) 
 		return;
+	if (other.is_feigning) 
+		return;
+
 	if (CTF_Map == 1) {
 		if (self.goal_no == 1) {
 			if (self.origin != self.oldorigin) {

@@ -412,7 +412,7 @@ void () armor_touch =
 		other.armorvalue = value;
 		other.items = other.items - (other.items & (8192 | 16384 | 32768)) + bit;
 	}
-	if (self.armorclass) 
+	if (self.armorclass > 0) 
 		other.armorclass = self.armorclass;
 	self.solid = 0;
 	self.model = string_null;

@@ -118,6 +118,7 @@ void () TeamFortress_MOTD =
 	if (self.motd == 95) {
 		TeamFortress_Alias("disguise", 177, 0);
 		TeamFortress_Alias("feign", 178, 0);
+		TeamFortress_Alias("sfeign", 199, 0);
 		TeamFortress_Alias("build", 179, 0);
 		TeamFortress_Alias("detsentry", 188, 0);
 		TeamFortress_Alias("detdispenser", 187, 0);

@@ -1,4 +1,5 @@
 
+void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer;
 void (entity spy) TeamFortress_SpyCalcName;
 void () TeamFortress_SpyUndercoverThink;
 void () GasGrenadeMakeGas;
@@ -473,11 +474,12 @@ void () spy_upaxe9 = [41, spy_upaxe9]
 	player_stand1();
 };
 
-void () TeamFortress_SpyFeignDeath =
+void (float issilent) TeamFortress_SpyFeignDeath =
 {
 	local float i;
 	local float j;
 	local entity at_spot;
+	local entity te;
 
 	if (self.is_feigning) {
 		at_spot = findradius(self.origin, 64);
@@ -550,6 +552,11 @@ void () TeamFortress_SpyFeignDeath =
 			sprint(self, 2, "You can't feign with the hook out.\n");
 			return;
 		}
+         	if (self.is_unabletospy == 1) {
+         		sprint(self, 2, "You can't go undercover right now.\n");
+         		return;
+         	}
+
 //		if (!(self.flags & 512) && !self.waterlevel) {
 //			sprint(self, 2, "You can't feign in the air.\n");
 //			return;
@@ -576,12 +583,31 @@ void () TeamFortress_SpyFeignDeath =
 		setsize(self, '-16 -16 -24', '16 16 -16');
 		self.view_ofs = '0 0 4';
 		self.movetype = 6;
-		DeathSound();
+		if (!issilent) 
+ 		    DeathSound();
 		self.angles_x = 0;
 		self.angles_z = 0;
 		if (self.weapon <= 16) {
 			spy_die_ax1();
 			return;
+		}
+		te = find(world, classname, "item_tfgoal");
+		while (te) {
+			if (te.owner == self) {
+				if (!(te.goal_activation & 256) || self.has_disconnected == 1) 
+					tfgoalitem_RemoveFromPlayer(te, self, 0);
+				if (CTF_Map == 1 && te.goal_no == 1) {
+					bprint(2, self.netname);
+					bprint(2, " лост the блуе flag!\n");
+				}
+				else {
+					if (CTF_Map == 1 && te.goal_no == 2) {
+						bprint(2, self.netname);
+						bprint(2, " лост the ред flag!\n");
+					}
+				}
+			}
+			te = find(te, classname, "item_tfgoal");
 		}
 		i = 1 + floor(random() * 6);
 		if (i == 1) 

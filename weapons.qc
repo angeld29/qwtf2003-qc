@@ -2723,7 +2723,11 @@ void () ImpulseCommands =
 														TeamFortress_SpyGoUndercover();
 													else {
 														if (self.impulse == 178 && self.playerclass == 8) 
-															TeamFortress_SpyFeignDeath();
+															TeamFortress_SpyFeignDeath(0);
+                         											else {
+                 												if (self.impulse == 199 && self.playerclass == 8) 
+                 													TeamFortress_SpyFeignDeath(1);
+
 														else {
 															if (self.impulse == 179 && self.playerclass == 9) 
 																TeamFortress_EngineerBuild();
@@ -2743,6 +2747,7 @@ void () ImpulseCommands =
 															}
 														}
 													}
+												    }
 												}
 											}
 										}

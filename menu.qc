@@ -1,7 +1,8 @@
 
 void (float class) TeamFortress_SpyChangeSkin;
 void (float teamno) TeamFortress_SpyChangeColor;
-void () TeamFortress_SpyFeignDeath;
+//void () TeamFortress_SpyFeignDeath;
+void (float issilent) TeamFortress_SpyFeignDeath;
 void (entity spy) Spy_RemoveDisguise;
 void (entity eng, string bld) DestroyBuilding;
 void (float objtobuild) TeamFortress_Build;
@@ -548,7 +549,7 @@ void () Menu_ClassHelp =
 									CenterPrint(self, "гренадес:            \nHand Grenade        \nNapalm Grenade      \n\nспециал цоммандс:   \nNone\n\n\nPress   for alias help\n");
 								else {
 									if (self.playerclass == 8) {
-										CenterPrint(self, "гренадес:            \nHand Grenade        \nHallucinogen Grenade\n\nспециал цоммандс:   \nGo Undercover : disguise\n\n\nPress   for alias help\n");
+										CenterPrint(self, "гренадес:            \nHand Grenade        \nHallucinogen Grenade\n\nспециал цоммандс:   \nGo Undercover : disguise\nFeign Death : feign, sfeign\n\n\nPress   for alias help\n");
 									}
 									else {
 										if (self.playerclass == 9) 
@@ -732,7 +733,7 @@ void (float inp) Menu_Spy_Input =
 		}
 		else {
 			if (inp == 3) {
-				TeamFortress_SpyFeignDeath();
+				TeamFortress_SpyFeignDeath(0);
 				ResetMenu();
 				self.impulse = 0;
 			}

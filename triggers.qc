@@ -272,7 +272,7 @@ void (vector org, entity death_owner) spawn_tdeath =
 	death.movetype = 0;
 	death.solid = 1;
 	death.angles = '0 0 0';
-	setsize(death, death_owner.mins - '1 1 1', death_owner.maxs + '1 1 1');
+	setsize(death, death_owner.mins - '4 4 4', death_owner.maxs + '4 4 4');
 	setorigin(death, org);
 	death.touch = tdeath_touch;
 	death.nextthink = time + 0.2;
