@@ -21,7 +21,7 @@ void () TeamFortress_MOTD =
   sprint(self, 2, "\n\n\n");
   sprint(self, 2, "Type help for more info.\n");
 #ifdef TG
-  sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’• Training Version\n");
+  sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’• Training Ground\n");
 #else
   sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•\n");
 #endif
@@ -123,6 +123,11 @@ void () TeamFortress_MOTD =
  if (self.motd == 85) {
 #ifdef TG
   TeamFortress_Alias("mod_menu", #TG_MAINMENU_IMPULSE, 0);
+  TeamFortress_Alias("sg_rebuild", #TG_SG_REBUILD_IMPULSE, 0);
+  TeamFortress_Alias("sg_reload", #TG_SG_RELOAD_IMPULSE, 0);
+  TeamFortress_Alias("sg_upgrade", #TG_SG_UPGRADE_IMPULSE, 0);
+  TeamFortress_Alias("disp_load", #TG_DISP_LOAD_IMPULSE , 0);
+  TeamFortress_Alias("disp_unload", #TG_DISP_UNLOAD_IMPULSE, 0);
 #endif
   return;
  }

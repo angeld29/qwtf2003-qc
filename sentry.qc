@@ -374,17 +374,60 @@ void () Sentry_Explode =
  BecomeExplosion();
 };
 
+#ifndef TG
 void () Sentry_Die =
 {
  sprint(self.real_owner, 2, "Your sentry gun was destroyed.\n");
-#ifndef TG
  self.real_owner.has_sentry = 0;
-#else
- self.real_owner.has_sentry = self.real_owner.has_sentry - 1;
-#endif
  self.think = Sentry_Explode;
  self.nextthink = time + 0.1;
 };
+#else
+void () SG_Static =
+{
+ if (self.health == 0) {
+  setmodel(self, "progs/turrgun.mdl");
+  self.health = -1;
+ }
+ else {
+  setmodel(self, "");
+  self.health = 0;
+ }
+ self.nextthink = time + 0.5;
+};
+
+void () Sentry_Die =
+{
+ sprint(self.real_owner, 2, "Your sentry gun was destroyed.\n");
+ if (self.has_sentry) {
+  self.health = 0;
+  setmodel(self, "");
+  setmodel(self.trigger_field, "");
+  self.think = SG_Static;
+  self.nextthink = time + 0.5;
+  self.effects = self.effects - (self.effects && 8);
+  self.movetype = 0;
+  self.solid = 0;
+  self.trigger_field.movetype = 0;
+  self.trigger_field.solid = 0;
+  ThrowGib("progs/tgib1.mdl", -70);
+  ThrowGib("progs/tgib2.mdl", -70);
+  ThrowGib("progs/tgib3.mdl", -70);
+  deathmsg = 38;
+  T_RadiusDamage(self, self.real_owner, 75 + self.ammo_rockets * 8, self);
+  WriteByte(4, 23);
+  WriteByte(4, 3);
+  WriteCoord(4, self.origin_x);
+  WriteCoord(4, self.origin_y);
+  WriteCoord(4, self.origin_z);
+  multicast(self.origin, 1);
+ }else{
+  self.real_owner.has_sentry = self.real_owner.has_sentry - 1;
+  self.think = Sentry_Explode;
+  self.nextthink = time + 0.1;
+ }
+};
+#endif
 
 void (float shotcount, entity targ, vector spread) FireSentryBullets =
 {
@@ -459,7 +502,7 @@ void FireSentryLighting(entity targ)=
  multicast(src, 1);
  if (trace_ent) {
   if (trace_ent.classname == "player") {
-   rs = rint(random() * 5 + 1);
+   rs = rint(random() * 15 + 1);
    trace_ent.noise = "";
    if (rs == 1) 
     trace_ent.noise = "player/pain1.wav";
@@ -481,6 +524,7 @@ void FireSentryLighting(entity targ)=
      }
     }
    }
+   if(rs <= 5)
    sound(trace_ent, 2, trace_ent.noise, 1, 1);
   }
  }
@@ -580,3 +624,58 @@ void () Sentry_MuzzleFlash =
  self.effects = self.effects | 8;
 };
 
+#ifdef TG
+void () Eng_StaticSG_Activate =
+{
+ local entity ent;
+ local entity pl;
+ local float failed;
+ local string s1;
+
+ ent = find(world, classname, "building_sentrygun");
+ while (ent) {
+  failed = 0;
+  if (ent.has_sentry && !ent.takedamage) {
+   pl = findradius(ent.origin, 64);
+   while (pl) {
+    if (pl.classname == "player") {
+     bprint(2, "Static sentry too close to player\n");
+     failed = 1;
+    }
+    pl = pl.chain;
+   }
+   if (pointcontents(ent.origin) == -6) {
+    bprint(2, "ERROR: Sentry gun felt off the level\n");
+    failed = 1;
+    s1 = vtos(ent.origin);
+    bprint(2, s1, mapname, "\n");
+    ent.real_owner.has_sentry = ent.real_owner.has_sentry - 1;
+    dremove(ent.trigger_field);
+    dremove(ent);
+   }
+   if (!failed) {
+    setmodel(ent, "progs/turrgun.mdl");
+    setmodel(ent.trigger_field, "progs/turrbase.mdl");
+    if (ent.weapon == 1) 
+     ent.think = lvl1_sentry_stand;
+    else {
+     if (ent.weapon == 2) 
+      ent.think = lvl2_sentry_stand;
+     else 
+      ent.think = lvl3_sentry_stand;
+    }
+    ent.nextthink = time + 0.1;
+    ent.movetype = 4;
+    ent.solid = 2;
+    ent.trigger_field.movetype = 6;
+    ent.trigger_field.solid = 2;
+    ent.takedamage = 2;
+    ent.health = ent.max_health;
+    sprint(ent.real_owner, 2, "Your Static Sentry Gun rebuilded.\n");
+   }
+  }
+  ent = find(ent, classname, "building_sentrygun");
+
+ }
+};
+#endif

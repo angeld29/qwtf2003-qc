@@ -430,6 +430,7 @@ void () DecodeLevelParms =
    sgppl=rint(stof(st));
    if(sgppl<0)sgppl=0;
   }
+
   st = infokey(world, "dg");
   if (st == string_null) 
       st = infokey(world, "disable_grens");
@@ -473,9 +474,12 @@ void () DecodeLevelParms =
       st = infokey(world, "random_team_spawn");
   if(st == "on")
    random_tf_spawn = 1;
+#ifdef TG
+//  if(!defaults_loaded)
+  TG_LoadSettings();
+#endif
 
 //////////////
-
   st = infokey(world, "rd");
   if (st == string_null) 
    st = infokey(world, "respawn_delay");
@@ -502,10 +506,6 @@ void () DecodeLevelParms =
  if (parm15) {
   self.is_admin = parm15;
  }
-#ifdef TG
-  if(!defaults_loaded)
-  TG_LoadSettings();
-#endif
 };
 
 entity () FindIntermission =

@@ -1,4 +1,10 @@
-
+#ifdef TG
+void ()Eng_StaticSG_Activate;
+void () Eng_SGUp;
+void () Eng_SGReload;
+void () Eng_DispLoad;
+void () Eng_DispUnload;
+#endif 
 void () player_run;
 void () TeamFortress_DisplayDetectionItems;
 float (vector veca, vector vecb) crossproduct;
@@ -2765,7 +2771,27 @@ void () ImpulseCommands =
  {
    self.current_menu = #TG_MENU_MAIN;
    self.impulse = 0;
- }
+  }else{ 
+   if(self.impulse == #TG_SG_REBUILD_IMPULSE){
+    Eng_StaticSG_Activate();
+    self.impulse=0;
+  }else {
+    if(self.impulse == #TG_SG_RELOAD_IMPULSE){
+     Eng_SGReload();
+     self.impulse=0;
+   }else {
+     if(self.impulse == #TG_SG_UPGRADE_IMPULSE){
+      Eng_SGUp();
+      self.impulse=0;
+   }else {
+     if(self.impulse == #TG_DISP_LOAD_IMPULSE){
+      Eng_DispLoad();
+      self.impulse=0;
+   }else {
+     if(self.impulse == #TG_DISP_UNLOAD_IMPULSE){
+      Eng_DispUnload();
+      self.impulse=0;
+  }}}}}}
 #endif
  if (!self.is_building && !self.is_detpacking && !self.is_feigning) {
   if ((self.impulse >= 1 && self.impulse < 8) || self.impulse == 176) 

@@ -307,13 +307,16 @@ void () TeamFortress_ID =
             if(trace_ent.classname == "building_sentrygun_base")
             {
              te = find(world, classname, "building_sentrygun");
-             while(te.real_owner != trace_ent.real_owner)
+//             while(te.real_owner != trace_ent.real_owner)
+             while(te.trigger_field != trace_ent)
                te = find(te, classname, "building_sentrygun");
             }else te = trace_ent;
      self.StatusRefreshTime = time + 1.5;
      if (self == trace_ent.real_owner) {
+#ifndef TG
          if( self.playerclass == 9)
          {
+#endif
           st = NumberToString1000(te.health);
           st_s = NumberToString1000(te.ammo_shells);
           if(te.weapon != 3)
@@ -323,10 +326,11 @@ void () TeamFortress_ID =
            st_r = NumberToString1000(te.ammo_rockets);
            centerprint(self, "\n\n\nYour SentryGun\nHealth: ",st,"\nAmmo: ",st_s,st_r);
           }
+#ifndef TG
          }
          else 
            centerprint(self, "\n\n\n\nYour SentryGun");
-         
+#endif         
         } 
      else {
       if (!teamplay) 

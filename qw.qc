@@ -332,7 +332,11 @@ float sg_fire_type;
 float detpack_clip;
 float detpack_disarm;
 float detpack_drop;
-float defaults_loaded
+
+vector saved_position;
+vector saved_angle;
+vector saved_velocity;
+float tg_sbar;
 #endif 
 void (float psize, entity p) KickPlayer =
 {

@@ -7,6 +7,8 @@ void ()Menu_TG_Cheats;
 void (float inp)Menu_TG_Cheats_Input;
 void ()Menu_TG_Detpack;
 void (float inp)Menu_TG_Detpack_Input;
+void ()Menu_TG_SavePosition;
+void (float inp)Menu_TG_SavePosition_Input;
 #endif
 void (float class) TeamFortress_SpyChangeSkin;
 void (float teamno) TeamFortress_SpyChangeColor;
@@ -200,9 +202,13 @@ void () Player_Menu =
                            else {
                             if (self.current_menu == #TG_MENU_DETPACK) 
                              Menu_TG_Detpack();
+                             else {
+                              if (self.current_menu == #TG_MENU_POSITION) 
+                               Menu_TG_SavePosition();
                            else
                            self.current_menu = 0;
                            }
+                          }
                          }
                        }
                      }
@@ -500,6 +506,10 @@ void (float inp) Menu_Input =
                        else {
                         if (self.current_menu == #TG_MENU_DETPACK) 
                          Menu_TG_Detpack_Input(inp);
+                          else {
+                           if (self.current_menu == #TG_MENU_POSITION) 
+                            Menu_TG_SavePosition_Input(inp);
+                         }
                        }
                     }
                  }
@@ -1062,15 +1072,27 @@ void (float inp) Menu_EngineerFix_Dispenser_Input =
 
 void () Menu_EngineerFix_SentryGun =
 {
-
- if (self.building.weapon < 3 
 #ifndef TG
- && self.ammo_cells >= 130
-#endif
- ) 
+ if (self.building.weapon < 3  && self.ammo_cells >= 130 ) 
   CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n”‘ Upgrade Sentry Gun          \n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n");
  else 
   CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n\n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n");
+#else
+if(self.building.has_sentry)
+{
+ if (self.building.weapon < 3) 
+  CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n”‘ Upgrade Sentry Gun          \n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n™‘ Make no static              \n");
+ else 
+  CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n\n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n™‘ Make no static              \n");
+}else
+{
+ if (self.building.weapon < 3) 
+  CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n”‘ Upgrade Sentry Gun          \n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n™‘ Make static                 \n");
+ else 
+  CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n\n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n™‘ Make static                 \n");
+}
+#endif
+
 };
 
 void (float inp) Menu_EngineerFix_SentryGun_Input =
@@ -1175,11 +1197,29 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
       self.building.waitmin = anglemod(self.building.waitmin + 45);
       self.building.waitmax = anglemod(self.building.waitmax + 45);
      }
+#ifdef TG
+     else
+     {
+      if (inp == 7){ 
+      self.impulse = 0;
+      if (self.building.has_sentry) 
+       self.building.has_sentry = 0;
+      else 
+       self.building.has_sentry = 1;
+       ResetMenu();
+      }
+     }
+#endif
+
     }
    }
   }
  }
+#ifndef TG
  if (inp >= 1 && inp <= 6) {
+#else
+ if (inp >= 1 && inp <= 7) {
+#endif
   ResetMenu();
   self.impulse = 0;
   bound_other_ammo(self);

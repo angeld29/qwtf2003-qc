@@ -6,7 +6,8 @@ void ()TG_LoadSettings;
 void ()Menu_TG_Main=
 {
 // centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n4) Misc MOD options           \n5) Load defaults              \n7) Nothing                    ");
- centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n4) Load defaults              \n7) Nothing                    ");
+ centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n4) Load defaults              \n5) Saved position             \n7) Nothing                    ");
+ self.StatusRefreshTime = time + 1.5;
 };
 
 void (float inp)Menu_TG_Main_Input=
@@ -22,10 +23,12 @@ void (float inp)Menu_TG_Main_Input=
     else{
       if(inp == 4)
        TG_LoadSettings();
+       else{ if(inp == 5)
+        self.current_menu=#TG_MENU_POSITION;
       else{
        if(inp == 7)
         ResetMenu();
-  }}}}
+  }}}}}
  if (inp > 0 && inp <= 7) {
   self.impulse = 0;
   self.menu_count = 23;
@@ -39,7 +42,8 @@ void ()Menu_TG_SGOptions=
  local string _sgfire;
  local string _sgfind;
  local string _sgftype;
- local string _sgchtype;
+// local string _sgchtype;
+ local string _sg_sbar;
  _sgppl="";
  if (sentry_type == #SENTRY_MTFL){
     _sgtype="Sentry Gun Options:\nSentry: 2.8.1 fixed(mtfl)";
@@ -67,9 +71,19 @@ void ()Menu_TG_SGOptions=
    }
 
  if (sg_allow_fire) 
-  _sgfire = "4)‰fire ON                    \n";
- else 
-  _sgfire = "4)‡fire OFF                   \n";
+ {
+ if((sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || sentry_type == #SENTRY_OLD_NEWFIND))
+ _sgfire="\n1) Change SG type             \n2) Increase SGPPL             \n3) Decrease SGPPL             \n4)‰fire ON                    \n";
+ else
+ _sgfire="\n1) Change SG type             \n                              \n                              \n4)‰fire ON                    \n";
+//  _sgfire = "4)‰fire ON                    \n";
+ }else {
+ if((sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || sentry_type == #SENTRY_OLD_NEWFIND))
+ _sgfire="\n1) Change SG type             \n2) Increase SGPPL             \n3) Decrease SGPPL             \n4)‡fire OFF                   \n";
+ else
+ _sgfire="\n1) Change SG type             \n                              \n                              \n4)‡fire OFF                   \n";
+//  _sgfire = "4)‡fire OFF                   \n";
+ }
 
  if (sg_allow_find == #TG_SG_FIND_IGNORE_OFF) 
   _sgfind = "5)‰ignore OFF                 \n";
@@ -87,21 +101,26 @@ void ()Menu_TG_SGOptions=
  }
  
  if (sg_fire_type == #TG_SG_FIRE_NORMAL) 
-  _sgftype = "6) Fire bullets & rockets     \n7) Nothing                    ";
+  _sgftype = "6) Fire bullets & rockets     \n";
  else {
   if (sg_fire_type == #TG_SG_FIRE_BULLETS) 
-   _sgftype = "6) Fire bullets               \n7) Nothing                    ";
+   _sgftype = "6) Fire bullets               \n";
   else if(sg_fire_type == #TG_SG_FIRE_LIGHTING)
-   _sgftype = "6) Fire lightning (no damage) \n7) Nothing                    ";
+   _sgftype = "6) Fire lightning (no damage) \n";
  }
 
- if((sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || sentry_type == #SENTRY_OLD_NEWFIND))
+/* if((sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || sentry_type == #SENTRY_OLD_NEWFIND))
  _sgchtype="\n1) Change SG type             \n2) Increase SGPPL             \n3) Decrease SGPPL             \n";
  else
  _sgchtype="\n1) Change SG type             \n                              \n                              \n";
-
- centerprint(self, _sgtype, _sgppl,_sgchtype,_sgfire,_sgfind,_sgftype );
-
+*/
+// centerprint(self, _sgtype, _sgppl,_sgchtype,_sgfire,_sgfind,_sgftype );
+ if(tg_sbar)
+ _sg_sbar="7)‰Eng Sbar for All           \n8) Nothing                    \n";
+ else
+ _sg_sbar="7)‡Limited Eng Sbar           \n8) Nothing                    \n";
+ centerprint(self, _sgtype, _sgppl,_sgfire,_sgfind,_sgftype,_sg_sbar );
+ self.StatusRefreshTime = time + 1.5;
 };
 void (float inp)Menu_TG_SGOptions_Input=
 {
@@ -135,12 +154,17 @@ void (float inp)Menu_TG_SGOptions_Input=
   sg_fire_type=sg_fire_type+1;
   if(sg_fire_type>2)sg_fire_type = 0;
  }
-
  if(inp == 7)
+ {
+  if(tg_sbar) tg_sbar = 0;
+  else  tg_sbar=1;
+ }
+
+ if(inp == 8)
  {
   ResetMenu();
  }
- if (inp > 0 && inp <= 7) {
+ if (inp > 0 && inp <= 8) {
   self.impulse = 0;
   self.menu_count = 23;
  }
@@ -193,6 +217,7 @@ void () Menu_TG_Cheats =
   s6 = "6)‡Flash for self: STD        \n7) Nothing                    \n";
 
  centerprint(self, "Cheats menu:\n", s1, s2, s3, s4, s5,s6 );
+ self.StatusRefreshTime = time + 1.5;
 };
 
 void (float inp) Menu_TG_Cheats_Input =
@@ -283,6 +308,7 @@ void ()Menu_TG_Detpack=
   st4 = "4)‰Stack detpacks: TF 2.8.1   \n";
 
  centerprint(self, "Detpack options:\n", st1, st2, st3, st4, "5) Nothing                    ");
+ self.StatusRefreshTime = time + 1.5;
 };
 void (float inp)Menu_TG_Detpack_Input
 {
@@ -323,3 +349,65 @@ void (float inp)Menu_TG_Detpack_Input
  }
 
 };
+
+void () Menu_TG_SavePosition =
+{
+ if (saved_position == '0 0 0'){
+  centerprint(self,"\n1) Save Position              \n                              \n                              \n                              \n5) Nothing                    ");
+ }else
+ {
+  centerprint(self,"\n1) Save Position              \n2) Show Position              \n3) Restore Position           \n4) Delete saved position      \n5) Nothing                    ");
+ }
+ self.StatusRefreshTime = time + 1.5;
+};
+
+void (float inp) Menu_TG_SavePosition_Input =
+{
+ local string s1;
+
+   if (inp == 1) {
+    saved_position = self.origin;
+    saved_angle = self.angles;
+    saved_velocity = self.velocity;
+    WriteByte(4, 23);
+    WriteByte(4, 4);
+    WriteCoord(4, saved_position_x);
+    WriteCoord(4, saved_position_y);
+    WriteCoord(4, saved_position_z);
+    multicast(saved_position, 1);
+      ResetMenu();
+      }else{ if(inp == 2 && saved_position != '0 0 0'){
+      WriteByte(4, 23);
+      WriteByte(4, 4);
+      WriteCoord(4, saved_position_x);
+      WriteCoord(4, saved_position_y);
+      WriteCoord(4, saved_position_z);
+      multicast(saved_position, 1);
+      s1 = vtos(saved_position);
+      sprint(self, 2, "Saved position:", s1);
+      s1 = vtos(saved_angle);
+      sprint(self, 2, "\nangle:", s1);
+      s1 = vtos(saved_velocity);
+      sprint(self, 2, "\nspeed:", s1, "\n");
+
+   } else { if (inp == 3 && saved_position != '0 0 0') {
+      self.origin=saved_position;
+      setorigin(self, saved_position);
+      self.angles = saved_angle;
+      self.fixangle=1;
+      self.velocity = saved_velocity;
+      ResetMenu();
+    }else{    if (inp == 4 && saved_position != '0 0 0') {
+      saved_position = '0 0 0';
+      ResetMenu();
+     }
+     if (inp == 5) 
+      ResetMenu();
+  }}}
+ if (inp > 0 && inp < 6) 
+ {
+  self.impulse = 0;
+  self.menu_count = 25;
+
+ }
+}

@@ -230,7 +230,7 @@ void (entity pl) Angel_PrintRules =
  }else
   sprint(pl, 2, "All Grenades Enabled\n"); 
 #ifdef TG
- sprint(pl, 2, "TF2003 training version\n"); 
+ sprint(pl, 2, "TF2003 Training Ground\n"); 
 #endif 
  sprint(pl, 2, #ANGEL_VERSION); 
 

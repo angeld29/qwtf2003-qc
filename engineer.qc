@@ -695,6 +695,10 @@ void (entity gun) Engineer_UseSentryGun =
   sprint(self, 2, st);
   sprint(self, 2, " rockets");
  }
+#ifdef TG
+ if (gun.has_sentry) 
+  sprint(self, 2, ", static");
+#endif
  sprint(self, 2, "\n");
  self.current_menu = 17;
  self.menu_count = 25;
@@ -785,3 +789,111 @@ void (entity eng) Engineer_RemoveBuildings =
 };
 
 
+#ifdef TG
+void () Eng_SGUp =
+{
+ local entity sg;
+
+ sg = find(world, classname, "building_sentrygun");
+ while (sg.weapon == 3 && sg.ammo_shells == 144 && sg.ammo_rockets == 20 && sg.health == sg.max_health) {
+  if (sg == world) {
+   sprint(self, 2, "no sg to upgrade\n");
+   return;
+  }
+  sg = find(sg, classname, "building_sentrygun");
+ }
+ if (sg == world) {
+  sprint(self, 2, "no sg to upgrade\n");
+  return;
+ }
+ sg.weapon = 3;
+ sg.max_health = 216;
+ sg.maxammo_shells = 144;
+ sg.health = sg.max_health;
+ sound(sg, 3, "weapons/turrset.wav", 1, 1);
+ sg.think = lvl3_sentry_stand;
+ sg.skin = 2;
+ sprint(self, 2, "You have upgraded/fixed/reloaded sentrygun\n");
+ sg.ammo_shells = 144;
+ sg.ammo_rockets = 20;
+};
+
+void () Eng_DispLoad =
+{
+ local entity disp;
+ local string st;
+ local float power;
+
+ disp = find(world, classname, "building_dispenser");
+ if (disp == world) {
+  sprint(self, 2, "no disp\n");
+  return;
+ }
+ disp.ammo_cells = disp.ammo_cells + 20;
+ disp.ammo_rockets = disp.ammo_rockets + 15;
+ if (disp.ammo_rockets > 300) 
+  disp.ammo_rockets = 300;
+ if (disp.ammo_cells > 400) 
+  disp.ammo_cells = 400;
+ self.hook_out = 0;
+ power = rint(25 + disp.ammo_rockets * 1.5 + disp.ammo_cells);
+ if (power > 250) 
+  power = 250;
+ st = ftos(power);
+ bprint(2, "maximum detdispenser damage - ");
+ bprint(2, st);
+ bprint(2, "\n");
+};
+
+void () Eng_DispUnload =
+{
+ local entity disp;
+ local string st;
+ local float power;
+
+ disp = find(world, classname, "building_dispenser");
+ if (disp == world) {
+  sprint(self, 2, "no disp\n");
+  return;
+ }
+ disp.ammo_cells = disp.ammo_cells - 20;
+ disp.ammo_rockets = disp.ammo_rockets - 15;
+ if (disp.ammo_rockets > 300) 
+  disp.ammo_rockets = 300;
+ if (disp.ammo_cells > 400) 
+  disp.ammo_cells = 400;
+ self.hook_out = 0;
+ power = rint(25 + disp.ammo_rockets * 1.5 + disp.ammo_cells);
+ if (power > 250) 
+  power = 250;
+ st = ftos(power);
+ bprint(2, "maximum detdispenser damage - ");
+ bprint(2, st);
+ bprint(2, "\n");
+};
+
+void () Eng_SGReload =
+{
+ local entity sg;
+
+ sg = find(world, classname, "building_sentrygun");
+ while (sg.ammo_shells == sg.maxammo_shells && sg.ammo_rockets == sg.maxammo_rockets && sg.health == sg.max_health) {
+  if (sg == world) {
+   sprint(self, 2, "no sg to reload\n");
+   return;
+  }
+  sg = find(sg, classname, "building_sentrygun");
+ }
+ if (sg == world) {
+  sprint(self, 2, "no sg to reload\n");
+  return;
+ }
+ sg.health = sg.max_health;
+ sg.ammo_shells = sg.maxammo_shells;
+ sg.ammo_rockets = sg.maxammo_rockets;
+ sound(sg, 3, "weapons/turrset.wav", 1, 1);
+ sprint(self, 2, "You have fixed/reloaded ONE sentrygun\n");
+};
+
+
+#endif

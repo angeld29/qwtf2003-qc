@@ -74,5 +74,15 @@ void TG_LoadSettings()=
    sgppl=rint(stof(st));
    if(sgppl<0)sgppl=0;
   }
- defaults_loaded=1;
+  st = infokey(world, "dtpb");
+  if(st == "off")
+   detpack_block=0;
+   else detpack_block=1;
+
+  st = infokey(world, "tg_sbar");
+  if(st == "on")
+   tg_sbar=1;
+   else tg_sbar=0;
+
+ //defaults_loaded=1;
 }

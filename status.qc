@@ -130,35 +130,14 @@ void (entity pl) RefreshStatusBar =
  }
  s5 = ClipSizeToString100(pl);
  s2 = "\n";
- if (pl.playerclass == 4) {
-  if (pl.is_detpacking) 
-   s2 = "  setting detpack                      \n";
-  else
-  {
-            te = find(world, classname, "detpack");
-           while (te) {
-      if (te.owner == self) {
-       s7 = "Detpack: ";
-             s2 = ftos(rint(te.nextthink - time));
-             s6 = "                 \n";
-             centerprint(pl, s1, s7, s2, s6, s3, s4, s5);
-             return;
-            }
-             te = find(te, classname, "detpack");
-     } 
-   }
- }
- else {
-  if (pl.playerclass == 8) {
-   s2 = DisguiseToString(pl);
-   if(pl.is_feigning)
-        s6="feigned  ";
-   else s6="         ";
-   centerprint(pl, s1,s6, s2, s3, s4, s5);
-   return;
-  }
-  else {
-   if (pl.playerclass == 9) {
+#ifndef TG
+   if (pl.playerclass == 9) 
+#else
+   if (pl.playerclass == 9 || pl.playerclass == 2 || 
+      pl.playerclass == 3 || pl.playerclass == 5 
+      || pl.playerclass == 6  || pl.playerclass == 7 || tg_sbar) 
+#endif
+    {
     if (pl.has_sentry || pl.has_dispenser) {
      if (pl.has_sentry ) {
       s2 = SentryHealthToString(pl);
@@ -189,53 +168,69 @@ void (entity pl) RefreshStatusBar =
      if (pl.is_building) 
       s2 = "  building                             \n";
     }
+ }else {
+  if (pl.playerclass == 8) {
+   s2 = DisguiseToString(pl);
+   if(pl.is_feigning)
+        s6="feigned  ";
+   else s6="         ";
+   centerprint(pl, s1,s6, s2, s3, s4, s5);
+   return;
+  }
+  else {
+   if (pl.playerclass == 4) {
+    if (pl.is_detpacking) 
+     s2 = "  setting detpack                      \n";
+    else
+    {
+        te = find(world, classname, "detpack");
+        while (te) {
+        if (te.owner == self) {
+         s7 = "Detpack: ";
+               s2 = ftos(rint(te.nextthink - time));
+               s6 = "                 \n";
+               centerprint(pl, s1, s7, s2, s6, s3, s4, s5);
+               return;
+              }
+               te = find(te, classname, "detpack");
+       } 
+     }
+   }else{ 
+    if (pl.playerclass == 1) {
+        s7=ftos(self.ScanRange);
+        if(self.ScanRange<10){
+         if(pl.ScannerOn) s2 = "Scan  ";
+                     else s2 = "Scan  ";
+        }else {
+         if(self.ScanRange<100){
+         if(pl.ScannerOn)s2 = "Scan ";
+                    else s2 = "Scan ";
+        }else{
+         if(pl.ScannerOn) s2 = "Scan";
+                     else s2 = "Scan";
+        }}
+        if((self.tf_items_flags&3)==0){
+         if(pl.ScannerOn) s6 = "      On                        \n";
+                    else  s6 = "      Off                       \n";
+         }
+        if((self.tf_items_flags&3)==3){
+          if(pl.ScannerOn) s6 = " EnFr On                        \n";
+                     else  s6 = " EnFr Off                       \n";
+        }
+        if((self.tf_items_flags&3)==1){
+          if(pl.ScannerOn) s6 = " En   On                        \n";
+                     else  s6 = " En   Off                       \n";
+        }
+        if((self.tf_items_flags&3)==2){
+          if(pl.ScannerOn) s6 = "   Fr On                        \n";
+                     else  s6 = "   Fr Off                       \n";
+        }
+     centerprint(pl, s1, s2, s7,s6,s3, s4, s5);
+     return;
+    } 
    }
   }
  }
-       if (pl.playerclass == 1) {
-           s7=ftos(self.ScanRange);
-           if(self.ScanRange<10)
-           {
-            if(pl.ScannerOn)
-               s2 = "Scan  ";
-          else s2 = "Scan  ";
-           }else {
-           if(self.ScanRange<100)
-           {
-            if(pl.ScannerOn)
-               s2 = "Scan ";
-          else s2 = "Scan ";
-           }else
-           {
-            if(pl.ScannerOn)
-               s2 = "Scan";
-          else s2 = "Scan";
-           }}
-           if((self.tf_items_flags&3)==0)
-           {
-               if(pl.ScannerOn)
-               s6 = "      On                        \n";
-         else  s6 = "      Off                       \n";
-            }
-           if((self.tf_items_flags&3)==3){
-               if(pl.ScannerOn)
-               s6 = " EnFr On                        \n";
-         else  s6 = " EnFr Off                       \n";
-           }
-           if((self.tf_items_flags&3)==1){
-               if(pl.ScannerOn)
-               s6 = " En   On                        \n";
-         else  s6 = " En   Off                       \n";
-           }
-           if((self.tf_items_flags&3)==2){
-               if(pl.ScannerOn)
-               s6 = "   Fr On                        \n";
-         else  s6 = "   Fr Off                       \n";
-           }
-
-        centerprint(pl, s1, s2, s7,s6,s3, s4, s5);
-        return;
-       } 
   centerprint(pl, s1, s2, s3, s4, s5, s6, s7);
 };
 
@@ -5351,6 +5346,9 @@ string (entity pl) SentryHealthToString =
  while (te) {
   if (te.real_owner == self) {
    num = te.health;
+#ifdef TG
+   if(te.has_sentry && num <=0) return "SENTRY:dead";
+#endif
    if (num < 100) {
     if (num < 50) {
      if (num <= 0) 
