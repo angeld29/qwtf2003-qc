@@ -143,6 +143,10 @@ void () worldspawn =
     objerror("QW TF must be run with a gamedir or sv_gamedir of \"fortress\".\n");
   }
  }
+ st = infokey(world, "*version");
+ if(st == "2.62")
+  sv262=1;
+  else sv262=0;
  st = infokey(world, "exec_map_cfgs");
  if (st == "on") {
   st = infokey(world, "cycledir");
@@ -313,6 +317,14 @@ void () worldspawn =
 
 void () StartFrame =
 {
+ local entity te;
+
+ if(!firstplayer){
+  te=spawn();
+  firstplayer=&te / %1;
+  firstplayer= firstplayer / 33;
+  remove(te);
+ }
  teamplay = cvar("teamplay");
  timelimit = cvar("timelimit") * 60;
  fraglimit = cvar("fraglimit");

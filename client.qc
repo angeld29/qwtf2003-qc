@@ -424,6 +424,11 @@ void () DecodeLevelParms =
    new_flash = 1;
    else new_flash = 0;
 
+  st = infokey(world, "new_gas");
+  if (st == "off") 
+   new_gas = 0;
+   else new_gas = 1;
+
   st = infokey(world, "sg");
   if (st == "old") {sentry_type = #SENTRY_OLD; }
   else {if (st == "fix")  sentry_type = #SENTRY_FIX;

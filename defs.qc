@@ -114,6 +114,7 @@
 #define SVC_FINALE 31 
 #define SVC_CDTRACK 32 
 #define SVC_SELLSCREEN 33 
+#define SVC_SETINFO 51 
 
 #ifdef QUAKE_WORLD
 
@@ -1358,6 +1359,9 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 
 //TG defines
 #ifdef TG
+#define TG_CONC_IMPULSE 205
+#define TG_FLASH_IMPULSE 206
+
 #define TG_MAINMENU_IMPULSE 220
 #define TG_SG_REBUILD_IMPULSE 221
 #define TG_SG_RELOAD_IMPULSE 222
@@ -1464,7 +1468,8 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define AUTOSCAN_IMPULSE 210
 #define DEFAULT_AUTOSCAN_RANGE 30
 
+#define NEWSPY 
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
-#define ASSAULT_SPREAD_TIME 5
-#define ANGEL_VERSION "Compiled: 03.02.2004 r1\n"
+#define ASSAULT_SPREAD_TIME 3
+#define ANGEL_VERSION "Compiled: 07.02.2004 r2\n"

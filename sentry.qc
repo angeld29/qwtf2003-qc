@@ -245,7 +245,8 @@ float () Sentry_FindTarget_Angel =
   if(CheckTarget(client))
   {
      self.enemy = client;
-     self.height = time + 0.1 * rint(random() * sgppl);
+     self.height = random() * sgppl;
+     self.height = time + 0.1 * rint(self.height);
 //     self.height = time + 0.1 * rint(sgppl);
      if(self.height == time)
      {

@@ -2031,6 +2031,9 @@ void (entity Viewer, float pc, float rpc) TeamFortress_PrintClassName =
   sprint(Viewer, 2, " (Random)");
  sprint(Viewer, 2, "\n");
 };
+#ifdef NEWSPY
+void (entity pl) ResetSkins;
+#endif
 
 void () TeamFortress_RemoveTimers =
 {
@@ -2047,8 +2050,13 @@ void () TeamFortress_RemoveTimers =
  }
  if (self.tfstate & 16) 
   self.tfstate = self.tfstate - (self.tfstate & 16);
- if (self.tfstate & 16384) 
-  self.tfstate = self.tfstate - (self.tfstate & 16384);
+  if (self.tfstate & 16384) {
+   self.tfstate = self.tfstate - (self.tfstate & 16384);
+  }
+#ifdef NEWSPY
+   if(new_gas)
+    ResetSkins(self);
+#endif
  te = find(world, classname, "timer");
  while (te != world) {
   if (te.owner == self) {
@@ -2099,7 +2107,7 @@ void () TeamFortress_RemoveTimers =
   stuffcmd(self, "v_cshift; wait; bf\n");
   self.FlashTime = 0;
 #ifdef ANTIANTIFLASH
-          if(new_flash) 
+          if(new_flash && sv262) 
                    disable_updates(self, -1); /* server-side flash */
 #endif // antiantiflash
  }

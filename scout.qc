@@ -224,12 +224,14 @@ void () FlashGrenadeExplode =
       te.FlashTime = 16;
        stuffcmd(te, "v_cshift 160 160 160 160\n");
 #ifdef ANTIANTIFLASH
+     if(sv262)
      disable_updates(te, -1); /* server-side flash */
 #endif // antiantiflash
      }else {
       te.FlashTime = 24;
       stuffcmd(te, "v_cshift 255 255 255 255\n");
 #ifdef ANTIANTIFLASH
+     if(sv262)
       disable_updates(te, #NEW_FLASH_START_TIME); /* server-side flash */
 #endif // antiantiflash                 
      }
@@ -866,3 +868,103 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
  W_SetCurrentAmmo();
  return;
 };
+
+#ifdef TG
+void () TG_Eff_Flash=
+{
+ local string st;
+
+  if(new_flash)
+  {
+   if (!self.FlashTime) {
+   newmis = spawn();
+   newmis.classname = "timer";
+   newmis.netname = "flashtimer";
+   newmis.team_no = self.owner.team_no;
+   newmis.owner = self;
+   newmis.think = FlashTimerNew;
+   newmis.nextthink = time + 1;
+   if(gren_time)
+    newmis.gren_eff_time = time + gren_time;
+  }
+   self.FlashTime = 24;
+   stuffcmd(self, "v_cshift 255 255 255 255\n");
+#ifdef ANTIANTIFLASH
+  if(sv262)
+   disable_updates(self, #NEW_FLASH_START_TIME); /* server-side flash */
+#endif // antiantiflash                 
+  }else{
+  if (!self.FlashTime) {
+   newmis = spawn();
+   newmis.classname = "timer";
+   newmis.netname = "flashtimer";
+   newmis.team_no = self.owner.team_no;
+   newmis.owner = self;
+   newmis.think = FlashTimer;
+   newmis.nextthink = time + 1;
+   if(gren_time)
+    newmis.gren_eff_time = time + gren_time;
+  }
+   self.FlashTime = 24;
+  st = ftos(self.FlashTime * 10);
+  stuffcmd(self, "v_cshift ");
+  stuffcmd(self, st);
+  stuffcmd(self, " ");
+  stuffcmd(self, st);
+  stuffcmd(self, " ");
+  stuffcmd(self, st);
+  stuffcmd(self, " ");
+  stuffcmd(self, st);
+  stuffcmd(self, "\n");
+ }
+};
+
+
+void () TG_Eff_Conc=
+{
+  local entity te;
+     te = find(world, classname, "timer");
+     while ((te.owner != self || te.think != ConcussionGrenadeTimer || te.think != OldConcussionGrenadeTimer) && te != world) 
+      te = find(te, classname, "timer");
+     if (te != world) {
+       if (old_grens == 1) {
+        stuffcmd(self, "v_idlescale 100\n");
+        stuffcmd(self, "fov 130\n");
+        te.health = 100;
+        te.nextthink = time + 5;
+       }
+       else {
+        te.health = 800;
+        te.nextthink = time + 0.25;
+       }
+       if(gren_time)
+       te.gren_eff_time= time+gren_time;
+      }
+      else {
+       if (old_grens == 1) {
+        stuffcmd(self, "v_idlescale 100\n");
+        stuffcmd(self, "fov 130\n");
+        stuffcmd(self, "bf\n");
+        te = spawn();
+        te.nextthink = time + 5;
+        te.think = OldConcussionGrenadeTimer;
+        te.team_no = self.team_no;
+        te.classname = "timer";
+        te.owner = self;
+        te.health = 100;
+       }
+       else {
+        te = spawn();
+        te.nextthink = time + 0.25;
+        te.think = ConcussionGrenadeTimer;
+        te.team_no = self.team_no;
+        te.classname = "timer";
+        te.owner = self;
+        te.health = 800;
+       }
+       if(gren_time)
+        te.gren_eff_time= time+gren_time;
+      }
+};
+
+#endif 

@@ -1,9 +1,11 @@
 #ifdef TG
-void ()Eng_StaticSG_Activate;
+void () Eng_StaticSG_Activate;
 void () Eng_SGUp;
 void () Eng_SGReload;
 void () Eng_DispLoad;
 void () Eng_DispUnload;
+void () TG_Eff_Flash;
+void () TG_Eff_Conc;
 #endif 
 void () player_run;
 void () TeamFortress_DisplayDetectionItems;
@@ -83,6 +85,9 @@ void () W_FireIncendiaryCannon;
 void () W_FireTranq;
 void () W_FireLaser;
 void () HallucinationTimer;
+#ifdef NEWSPY
+void (entity pl) ResetSkins;
+#endif
 void () TranquiliserTimer;
 void () TeamFortress_CTF_FlagInfo;
 void () TF_MovePlayer;
@@ -341,7 +346,11 @@ void () W_FireMedikit =
       bprint(1, " healed ");
       bprint(1, trace_ent.netname);
       bprint(1, " of his hallucinations\n");
-      if (old_grens == 1) 
+#ifdef NEWSPY
+      if(new_gas)
+       ResetSkins(trace_ent);
+#endif
+      if (old_grens == 1 && !new_gas) 
        stuffcmd(trace_ent, "v_cshift; wait; bf\n");
       if (te.team_no != self.team_no) 
        TF_AddFrags(self, 1);
@@ -383,7 +392,7 @@ void () W_FireMedikit =
       if (te.team_no != self.team_no) 
        TF_AddFrags(self, 1);
 #ifdef ANTIANTIFLASH
-       if(new_flash) 
+       if(new_flash && sv262) 
                 disable_updates(trace_ent, -1); /* server-side flash */
 #endif // antiantiflash
 //      dremove(te);
@@ -689,20 +698,23 @@ void (float shotcount, vector dir, vector spread) FireBullets =
  src = self.origin + v_forward * 10;
  src_z = self.absmin_z + self.size_z * 0.7;
  ClearMultiDamage();
-#ifndef NEWHWGUY
+#ifdef NEWHWGUY
+ if (self.current_weapon != #WEAP_ASSAULT_CANNON ) {
+#endif
  traceline(src, src + dir * 2048, 0, self);
  puff_org = trace_endpos - dir * 4;
-#else 
- direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
- traceline(src, src + direction * 2048, 0, self);
- puff_org = trace_endpos - normalize(dir) * 4;
+#ifdef NEWHWGUY
+ }else{
+  direction = dir + (crandom() * spread_x /1.5) * v_right + (crandom() * spread_y/1.5) * v_up;
+  traceline(src, src + direction * 2048, 0, self);
+  puff_org = trace_endpos - normalize(dir) * 4;
+ }
 #endif
-
  while (shotcount > 0) {
   direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
   traceline(src, src + direction * 2048, 0, self);
   if (trace_fraction != 1) {
-#ifndef NEWHWGUY
+#ifndef NEWHWGUYold
    if (self.weapon != #WEAP_ASSAULT_CANNON ) 
 #else
    if (self.current_weapon != #WEAP_ASSAULT_CANNON ) 
@@ -947,11 +959,16 @@ void () W_FireAssaultCannon =
 
  dir = aim(self, 100000);
  deathmsg = 20;
-#ifndef NEWHWGUY
+//#ifndef NEWHWGUY
+// FireBullets(5, dir, '0.04 0.04 0');
+//#else
+// FireBullets(5, dir, spread);
+//#endif 
  FireBullets(5, dir, '0.04 0.04 0');
-#else
+#ifdef NEWHWGUY
  FireBullets(5, dir, spread);
 #endif 
+
 };
 
 void () s_explode1 = [0, s_explode2]
@@ -2826,7 +2843,15 @@ void () ImpulseCommands =
      if(self.impulse == #TG_DISP_UNLOAD_IMPULSE){
       Eng_DispUnload();
       self.impulse=0;
-  }}}}}}
+  }else {
+     if(self.impulse == #TG_CONC_IMPULSE){
+      TG_Eff_Conc();
+      self.impulse=0;
+  }else {
+     if(self.impulse == #TG_FLASH_IMPULSE){
+      TG_Eff_Flash();
+      self.impulse=0;
+  }}}}}}}}
 #endif
  if (!self.is_building && !self.is_detpacking && !self.is_feigning) {
   if ((self.impulse >= 1 && self.impulse < 8) || self.impulse == 176) 

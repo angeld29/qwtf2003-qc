@@ -135,10 +135,20 @@ void (entity pl) Angel_PrintRules =
      sprint3(pl, 2, "Sentry: 2.8.1 new find ",st," ppl\n");
    }
 
+ if(new_gas)
+         sprint(pl, 2, "New Spy Gas: ÏÎ\n");
+        else 
+         sprint(pl, 2, "New Spy Gas: ÏÆÆ\n");
+
  if(new_flash)
          sprint(pl, 2, "New Flash: ÏÎ\n");
         else 
          sprint(pl, 2, "New Flash: ÏÆÆ\n");
+
+ if(sv262)
+         sprint(pl, 2, "2.62 server extension: ÏÎ\n");
+        else 
+         sprint(pl, 2, "2.62 server extension: ÏÆÆ\n");
 
  if(!disable_powerups)
          sprint(pl, 2, "Powerups: ÏÎ\n");

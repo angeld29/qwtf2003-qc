@@ -279,7 +279,7 @@ void (entity targ, entity inflictor, entity attacker, float damage, float T_flag
 #ifdef NEWHWGUY
     }else
     {
-     moment = damage;
+     moment = damage / 2 ;
     }
 #endif
    }

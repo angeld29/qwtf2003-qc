@@ -279,13 +279,10 @@ float last_id;
 
 float spy_off;
 float old_grens;
-float new_flash;
 float invis_only;
 float allow_hook;
 float flagem_checked;
 float cease_fire;
-float allow_drop_goal;
-float add_pipe;
 
 .float teamkills;
 
@@ -309,6 +306,10 @@ float snip_range_fix;
 float gren2box;
 float sgppl;
 float random_tf_spawn;
+float new_flash;
+float allow_drop_goal;
+float add_pipe;
+float new_gas;
 
 float topcolor_check;
 float tc1;
@@ -339,6 +340,17 @@ vector saved_angle;
 vector saved_velocity;
 float tg_sbar;
 #endif 
+.float tf_impulse;
+
+.float imp1;
+.float imp2;
+.float imp3;
+.float imp4;
+
+float firstplayer;
+float sv262;
+
+
 void (float psize, entity p) KickPlayer =
 {
  msg_entity = p;
@@ -356,11 +368,4 @@ void () muzzleflash =
 };
 
 
-
-.float tf_impulse;
-
-.float imp1;
-.float imp2;
-.float imp3;
-.float imp4;
 

@@ -4,7 +4,9 @@ void (entity spy) TeamFortress_SpyCalcName;
 void () TeamFortress_SpyUndercoverThink;
 void () GasGrenadeMakeGas;
 void () T_TranqDartTouch;
-
+#ifdef NEWSPY
+void (entity pl) SetGasSkin ;
+#endif
 void () spy_diea1 = [50, spy_diea2]
 {
 };
@@ -909,10 +911,14 @@ void () GasGrenadeMakeGas =
        timer.health = 150;
       timer.nextthink = time + 0.3;
      }
+#ifdef NEWSPY
+    if(new_gas && random()<0.3)
+     SetGasSkin(te);
+#endif
     }
    }
    else {
-    if (old_grens == 1) {
+    if (old_grens == 1 && !new_gas) {
      stuffcmd(te, "v_cshift 50 25 50 -50\n");
      sprint(te, 2, "Far out man!\n");
     }
@@ -925,12 +931,18 @@ void () GasGrenadeMakeGas =
     else 
      timer.nextthink = time + 0.3;
     timer.think = HallucinationTimer;
+#ifdef NEWSPY
+    if(new_gas)
+     SetGasSkin(te);
+#endif
     timer.classname = "timer";
     timer.owner = te;
     if (old_grens == 1) 
      timer.health = 100;
     else 
      timer.health = 150;
+    if(new_gas)
+      timer.health = 100;
     timer.team_no = self.team_no;
    }
   }
@@ -965,6 +977,403 @@ void () GasGrenadeMakeGas =
  dremove(self);
 };
 
+#ifdef NEWSPY
+void (entity pl) ResetSkins =
+{
+  local entity te;
+  local float t;
+  local string st;
+
+  if(pl.has_disconnected)return;
+
+  te=find(world,classname,"player");
+  while(te != world){
+   if(!te.has_disconnected /*te!=pl*/){
+    t=  &te / %1;
+    t = (t - firstplayer ) /  firstplayer ;
+
+     msg_entity = pl;
+     st=infokey(te,"topcolor");
+
+     WriteByte(#MSG_ONE,#SVC_SETINFO );
+     WriteByte(#MSG_ONE,t );
+     WriteString(#MSG_ONE,"topcolor" );
+     WriteString(#MSG_ONE, st);
+
+     st=infokey(te,"bottomcolor");
+     WriteByte(#MSG_ONE,#SVC_SETINFO );
+     WriteByte(#MSG_ONE,t );
+     WriteString(#MSG_ONE,"bottomcolor" );
+     WriteString(#MSG_ONE, st);
+
+     st=infokey(te,"skin");
+     WriteByte(#MSG_ONE,#SVC_SETINFO );
+     WriteByte(#MSG_ONE,t );
+     WriteString(#MSG_ONE,"skin" );
+     WriteString(#MSG_ONE,st );
+   }
+   te=find(te,classname,"player");
+  }
+}
+
+string (float tn,float pc) TF_GetSkin =
+{
+ local string st;
+
+ if (tn == 4) {
+  if (pc == 1) {
+   st = infokey(world, "sk_t4_scout");
+   if (st != string_null) 
+    return st;
+   return "tf_scout";
+  }
+  else {
+   if (pc == 2) {
+    st = infokey(world, "sk_t4_sniper");
+    if (st != string_null) 
+     return st;
+    return "tf_snipe";
+   }
+   else {
+    if (pc == 3) {
+     st = infokey(world, "sk_t4_soldier");
+     if (st != string_null) 
+      return st;
+     return "tf_sold";
+    }
+    else {
+     if (pc == 4) {
+      st = infokey(world, "sk_t4_demoman");
+      if (st != string_null) 
+       return st;
+      return "tf_demo";
+     }
+     else {
+      if (pc == 5) {
+       st = infokey(world, "sk_t4_medic");
+       if (st != string_null) 
+        return st;
+       return "tf_medic";
+      }
+      else {
+       if (pc == 6) {
+        st = infokey(world, "sk_t4_hwguy");
+        if (st != string_null) 
+         return st;
+        return "tf_hwguy";
+       }
+       else {
+        if (pc == 7) {
+         st = infokey(world, "sk_t4_pyro");
+         if (st != string_null) 
+          return st;
+         return "tf_pyro";
+        }
+        else {
+         if (pc == 8) {
+          st = infokey(world, "sk_t4_spy");
+          if (st != string_null) 
+           return st;
+          return "tf_spy";
+         }
+         else {
+          if (pc == 9) {
+           st = infokey(world, "sk_t4_engineer");
+           if (st != string_null) 
+            return st;
+           return "tf_eng";
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ else {
+  if (tn == 3) {
+   if (pc == 1) {
+    st = infokey(world, "sk_t3_scout");
+    if (st != string_null) 
+     return st;
+    return "tf_scout";
+   }
+   else {
+    if (pc == 2) {
+     st = infokey(world, "sk_t3_sniper");
+     if (st != string_null) 
+      return st;
+     return "tf_snipe";
+    }
+    else {
+     if (pc == 3) {
+      st = infokey(world, "sk_t3_soldier");
+      if (st != string_null) 
+       return st;
+      return "tf_sold";
+     }
+     else {
+      if (pc == 4) {
+       st = infokey(world, "sk_t3_demoman");
+       if (st != string_null) 
+        return st;
+       return "tf_demo";
+      }
+      else {
+       if (pc == 5) {
+        st = infokey(world, "sk_t3_medic");
+        if (st != string_null) 
+         return st;
+        return "tf_medic";
+       }
+       else {
+        if (pc == 6) {
+         st = infokey(world, "sk_t3_hwguy");
+         if (st != string_null) 
+          return st;
+         return "tf_hwguy";
+        }
+        else {
+         if (pc == 7) {
+          st = infokey(world, "sk_t3_pyro");
+          if (st != string_null) 
+           return st;
+          return "tf_pyro";
+         }
+         else {
+          if (pc == 8) {
+           st = infokey(world, "sk_t3_spy");
+           if (st != string_null) 
+            return st;
+           return "tf_spy";
+          }
+          else {
+           if (pc == 9) {
+            st = infokey(world, "sk_t3_engineer");
+            if (st != string_null) 
+             return st;
+            return "tf_eng";
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  else {
+   if (tn == 2) {
+    if (pc == 1) {
+     st = infokey(world, "sk_t2_scout");
+     if (st != string_null) 
+      return st;
+     return "tf_scout";
+    }
+    else {
+     if (pc == 2) {
+      st = infokey(world, "sk_t2_sniper");
+      if (st != string_null) 
+       return st;
+      return "tf_snipe";
+     }
+     else {
+      if (pc == 3) {
+       st = infokey(world, "sk_t2_soldier");
+       if (st != string_null) 
+        return st;
+       return "tf_sold";
+      }
+      else {
+       if (pc == 4) {
+        st = infokey(world, "sk_t2_demoman");
+        if (st != string_null) 
+         return st;
+        return "tf_demo";
+       }
+       else {
+        if (pc == 5) {
+         st = infokey(world, "sk_t2_medic");
+         if (st != string_null) 
+          return st;
+         return "tf_medic";
+        }
+        else {
+         if (pc == 6) {
+          st = infokey(world, "sk_t2_hwguy");
+          if (st != string_null) 
+           return st;
+          return "tf_hwguy";
+         }
+         else {
+          if (pc == 7) {
+           st = infokey(world, "sk_t2_pyro");
+           if (st != string_null) 
+            return st;
+           return "tf_pyro";
+          }
+          else {
+           if (pc == 8) {
+            st = infokey(world, "sk_t2_spy");
+            if (st != string_null) 
+             return st;
+            return "tf_spy";
+           }
+           else {
+            if (pc == 9) {
+             st = infokey(world, "sk_t2_engineer");
+             if (st != string_null) 
+              return st;
+             return "tf_eng";
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+   else {
+    if (pc == 1) {
+     st = infokey(world, "sk_t1_scout");
+     if (st != string_null) 
+      return st;
+     return "tf_scout";
+    }
+    else {
+     if (pc == 2) {
+      st = infokey(world, "sk_t1_sniper");
+      if (st != string_null) 
+       return st;
+      return "tf_snipe";
+     }
+     else {
+      if (pc == 3) {
+       st = infokey(world, "sk_t1_soldier");
+       if (st != string_null) 
+        return st;
+       return "tf_sold";
+      }
+      else {
+       if (pc == 4) {
+        st = infokey(world, "sk_t1_demoman");
+        if (st != string_null) 
+         return st;
+        return "tf_demo";
+       }
+       else {
+        if (pc == 5) {
+         st = infokey(world, "sk_t1_medic");
+         if (st != string_null) 
+          return st;
+         return "tf_medic";
+        }
+        else {
+         if (pc == 6) {
+          st = infokey(world, "sk_t1_hwguy");
+          if (st != string_null) 
+           return st;
+          return "tf_hwguy";
+         }
+         else {
+          if (pc == 7) {
+           st = infokey(world, "sk_t1_pyro");
+           if (st != string_null) 
+            return st;
+           return "tf_pyro";
+          }
+          else {
+           if (pc == 8) {
+            st = infokey(world, "sk_t1_spy");
+            if (st != string_null) 
+             return st;
+            return "tf_spy";
+           }
+           else {
+            if (pc == 9) {
+             st = infokey(world, "sk_t1_engineer");
+             if (st != string_null) 
+              return st;
+             return "tf_eng";
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+};
+
+void (entity pl) SetGasSkin =
+{
+  local entity te;
+  local float t,rskin,rteam,rcol;
+  local string st;
+  
+  if(pl.has_disconnected)return;
+  te=find(world,classname,"player");
+  while(te != world){
+
+   if( te != pl && !te.has_disconnected && random()<0.4){
+     
+     t=  &te / %1;
+     st=ftos(t);
+     t = (t - firstplayer ) /  firstplayer ;
+     msg_entity = pl;
+
+/*     sprint(pl,2,te.netname," gasing ");
+     sprint(pl,2,st," ");
+     st=ftos(t);
+     sprint(pl,2,st," ");
+     st=ftos(firstplayer);
+     sprint(pl,2,st,"\n");*/
+
+     rteam=random() * number_of_teams;
+     rteam=floor(rteam) + 1 ;
+     rcol = TeamFortress_TeamGetTopColor(rteam) ;
+     st=ftos(rcol);
+
+  
+     WriteByte(#MSG_ONE,#SVC_SETINFO );
+     WriteByte(#MSG_ONE,t );
+     WriteString(#MSG_ONE,"topcolor" );
+     WriteString(#MSG_ONE, st);
+
+     rcol = TeamFortress_TeamGetColor(rteam) - 1;
+     st=ftos(rcol);
+
+     WriteByte(#MSG_ONE,#SVC_SETINFO );
+     WriteByte(#MSG_ONE,t );
+     WriteString(#MSG_ONE,"bottomcolor" );
+     WriteString(#MSG_ONE, st);
+
+     if(random()<0.5){
+      rskin=random() * 9;
+      rskin=floor(rskin)+1;
+
+      st=TF_GetSkin(rteam,rskin);
+
+      WriteByte(#MSG_ONE,#SVC_SETINFO );
+      WriteByte(#MSG_ONE,t );
+      WriteString(#MSG_ONE,"skin" );
+      WriteString(#MSG_ONE,st );
+     }
+   }
+   te=find(te,classname,"player");
+  }
+}
+
+#endif
 void () HallucinationTimer =
 {
  local entity te;
@@ -974,29 +1383,50 @@ void () HallucinationTimer =
  local float halltype2;
  local string st;
 
+
  self.health = self.health - 2.5;
  if (self.owner.playerclass == 5) 
   self.health = self.health - 2.5;
  if (self.health <= 0 || self.owner.deadflag || self.owner.has_disconnected == 1) 
   self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & 16384);
+ 
  if (self.owner.deadflag || self.owner.has_disconnected == 1) {
+#ifdef NEWSPY
+  if(new_gas)
+  ResetSkins(self.owner);
+#endif
   dremove(self);
   return;
  }
  if (!(self.owner.tfstate & 16384)) {
-  if (old_grens == 1) 
+#ifdef NEWSPY
+  if(new_gas)
+  ResetSkins(self.owner);
+#endif
+  if (old_grens == 1 && !new_gas) 
    stuffcmd(self.owner, "v_cshift; wait; bf\n");
   sprint(self.owner, 2, "You feel a little better now.\n");
   dremove(self);
   return;
  }
+
+
  if (old_grens == 1) 
   self.nextthink = time + 0.5;
  else 
   self.nextthink = time + 0.3;
+
+#ifdef NEWSPY
+   if(new_gas ){
+   if(random()<0.5)
+     SetGasSkin(self.owner);
+    self.nextthink = time + 0.5;
+   }
+#endif
+
  if (random() < 0.5) 
   KickPlayer(-10, self.owner);
- if (old_grens == 1) {
+ if (old_grens == 1 && !new_gas) {
   stuffcmd(self.owner, "v_cshift ");
   halltype = random() * 100;
   st = ftos(halltype);
@@ -1029,7 +1459,7 @@ void () HallucinationTimer =
   WriteCoord(1, msg_entity.origin_x + tmpx);
   WriteCoord(1, msg_entity.origin_y + tmpy);
   WriteCoord(1, msg_entity.origin_z);
-  if (old_grens != 1) 
+ if (old_grens != 1) 
    T_Damage(self.owner, self.owner, self.owner, 0);
  }
  else {
@@ -1039,7 +1469,7 @@ void () HallucinationTimer =
    WriteCoord(1, msg_entity.origin_x + tmpx);
    WriteCoord(1, msg_entity.origin_y + tmpy);
    WriteCoord(1, msg_entity.origin_z);
-   if (old_grens != 1) {
+   if (old_grens != 1 && new_gas !=1) {
     if (halltype2 < 0.1) 
      stuffcmd(self.owner, "play weapons/r_exp3.wav\n");
     else {

@@ -590,6 +590,8 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
    st = "20";
   stuffcmd(self, st);
   stuffcmd(self, "\n");
+#else 
+//  stuffcmd(self, "v_idlescale 0\n");
 #endif
  }
  else {
@@ -600,11 +602,15 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
    self.weaponframe = 2;
 #ifndef NEWHWGUY
   stuffcmd(self, "v_idlescale 5\n");
+#else 
+//  stuffcmd(self, "v_idlescale 0\n");
 #endif
  }
  if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
 #ifndef  NEWHWGUY
   stuffcmd(self, "v_idlescale 0\n");
+#else 
+//  stuffcmd(self, "v_idlescale 0\n");
 #endif
   self.tfstate = self.tfstate - (self.tfstate & 2048);
   TeamFortress_SetSpeed(self);
@@ -624,6 +630,8 @@ void () player_assaultcannon2 = [104, player_assaultcannon1]
  v_z=0;
 #ifndef NEWHWGUY
  stuffcmd(self, "v_idlescale 0\n");
+#else 
+//  stuffcmd(self, "v_idlescale 0\n");
 #endif
 // if (vlen(self.velocity) < 50 && (self.flags & #FL_ONGROUND)) {
  if (vlen(v) < 20 && (self.flags & #FL_ONGROUND)) {
