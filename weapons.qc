@@ -1635,7 +1635,7 @@ void () W_SetCurrentAmmo =
               if (self.current_weapon == 4096) {
                self.currentammo = self.ammo_cells;
                if (!(self.tfstate & 2)) {
-                self.weaponmodel = "progs/v_rock.mdl";
+                self.weaponmodel = "progs/v_flame.mdl";
                 self.weaponframe = 0;
                }
                self.items = self.items | 2048;
@@ -1668,7 +1668,7 @@ void () W_SetCurrentAmmo =
                   if (self.current_weapon == 262144) {
                    self.currentammo = self.ammo_shells;
                    if (!(self.tfstate & 2)) {
-                    self.weaponmodel = "progs/v_shot.mdl";
+                    self.weaponmodel = "progs/v_tgun.mdl";
                     self.weaponframe = 0;
                    }
                    self.items = self.items | 256;
@@ -2739,8 +2739,8 @@ void () ImpulseCommands =
            TeamFortress_Discard();
          }}}}}}}}}}}}}}}
      }
- if (self.impulse == 135) 
-  TeamFortress_Inventory();
+     if (self.impulse == 135) 
+        TeamFortress_Inventory();
        else {
         if (self.playerclass && self.impulse == 181) 
          TeamFortress_SaveMe();
@@ -2983,11 +2983,17 @@ void () W_WeaponFrame =
  if (time < self.attack_finished) 
  {
   if (self.impulse) 
-   Omi_SaveImpulse();
+   Angel_SaveImpulse();
   return;
  } 
- if (!self.impulse ) // fixme: save this impulse?
-  self.impulse = Omi_GetSavedImpulse();
+ if (self.impulse && !self.has_disconnected)
+  ImpulseCommands();
+ self.impulse=0;
+
+ while( (self.impulse = Angel_GetSavedImpulse()) && !self.has_disconnected)
+  ImpulseCommands();
+/* if (!self.impulse ) // fixme: save this impulse?
+  self.impulse = Angel_GetSavedImpulse();*/
 
  if (self.impulse && !self.has_disconnected) 
   ImpulseCommands();

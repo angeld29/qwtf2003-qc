@@ -8,7 +8,7 @@ float (entity spot)CheckTelefragSpot=
   local entity at_spot;
   at_spot = findradius(spot.origin, 40);
   while (at_spot != world) {
-   if (at_spot.classname == "player" && !at_spot.deadflag) 
+   if (at_spot.classname == "player" && !at_spot.deadflag && at_spot.team_no == self.team_no && at_spot != self) 
     return 0;
    at_spot = at_spot.chain;
   }
@@ -21,10 +21,11 @@ entity (float team_num) FindRandomTeamSpawnPoint =
  local entity spot;
  local entity at_spot;
  local float numspots;
+ local float rndspot;
  local string teststr;
 
  if (team_num == 1)
-  teststr="ts1";
+     teststr="ts1";
   else if (team_num == 2) 
          teststr="ts2";
   else if (team_num == 3) 
@@ -34,28 +35,50 @@ entity (float team_num) FindRandomTeamSpawnPoint =
          else  return world;
 
   spot = find(world, team_str_home, teststr);
-         if (spot == world) 
-          return world;
-         numspots=0;
-         while(spot != world)
-         {
-           if( CheckTelefragSpot(spot) && Activated(spot, self))
-             numspots=numspots+1;
-           spot = find(spot, team_str_home, teststr);
-         }
-         if(numspots == 0) return world;
-         numspots = rint(random() * (numspots - 1));
-
-         spot = find(world, team_str_home, teststr);
-  while(1 && spot != world)
-  {
-   if( CheckTelefragSpot(spot) && Activated(spot, self))
+   if (spot == world) 
+    return world;
+   numspots=0;
+   while(spot != world)
    {
-    if(!numspots)return spot;
-    numspots = numspots - 1;
+     if( CheckTelefragSpot(spot) && Activated(spot, self))
+       numspots=numspots+1;
+     spot = find(spot, team_str_home, teststr);
+   }
+   if(numspots != 0){
+   rndspot = rint(random() * (numspots - 1));
+
+   spot = find(world, team_str_home, teststr);
+   while(spot != world)
+   {
+    if( CheckTelefragSpot(spot) && Activated(spot, self))
+    {
+     if(!rndspot)return spot;
+     rndspot = rndspot - 1;
+    }
+    spot = find(spot, team_str_home, teststr);
+   }
+  }
+   numspots=0;
+   while(spot != world)
+   {
+     if(Activated(spot, self))
+       numspots=numspots+1;
+     spot = find(spot, team_str_home, teststr);
+   }
+   if(numspots == 0) return world;
+   rndspot = rint(random() * (numspots - 1));
+
+  spot = find(world, team_str_home, teststr);
+  while(spot != world)
+  {
+   if( Activated(spot, self))
+   {
+    if(!rndspot)return spot;
+    rndspot = rndspot - 1;
    }
    spot = find(spot, team_str_home, teststr);
   }
+
   return spot;
 };
 
@@ -136,6 +159,10 @@ void (entity pl) Angel_PrintRules =
         else 
          sprint(pl, 2, "Random Team Spawn: ÏÆÆ\n");
 
+ if(allow_drop_goal)
+         sprint(pl, 2, "Drop Goals: ÏÎ\n");
+        else 
+         sprint(pl, 2, "Drop Goals: ÏÆÆ\n");
 
  if (gren2box) 
  {

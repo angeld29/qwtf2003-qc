@@ -1918,7 +1918,7 @@ void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer =
   }
   else {
    if (Item.goal_activation & 4) {
-    if (method == 2 && (Item.goal_activation & 4096)) 
+    if (method == 2 && ((Item.goal_activation & 4096)||allow_drop_goal)) 
      tfgoalitem_drop(Item, 1, AP);
     else 
      tfgoalitem_drop(Item, 0, AP);
@@ -2399,7 +2399,7 @@ void () DropGoalItems =
  te = find(world, classname, "item_tfgoal");
  while (te) {
   if (te.owner == self) {
-   if (te.goal_activation & 4096) 
+   if ((te.goal_activation & 4096)|| allow_drop_goal) 
     tfgoalitem_RemoveFromPlayer(te, self, 2);
   }
   te = find(te, classname, "item_tfgoal");

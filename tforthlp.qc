@@ -20,8 +20,8 @@ void () TeamFortress_MOTD =
   if (!self.got_aliases) 
   sprint(self, 2, "\n\n\n");
   sprint(self, 2, "Type help for more info.\n");
-  sprint(self, 2, "TeamFortress QuakeWorld 2003\n");
-  sprint(self, 2, "http://mtfl.sd.ru\n");
+  sprint(self, 2, "Ñõáëå×ïòìä ÔåáíÆïòôòåóó ”’’•\n");
+  sprint(self, 2, "http://íôæì®óä®òõ\n");
 
   self.menu_displaytime = 0;
   self.current_menu = 5;

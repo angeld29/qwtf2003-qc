@@ -401,6 +401,12 @@ void () DecodeLevelParms =
                   }
                 }
 
+  st = infokey(world, "adg");
+  if (st == string_null) 
+   st = infokey(world, "allow_drop_goal");
+  if (st == "on") 
+   allow_drop_goal=1;
+   else  allow_drop_goal=0;
   st = infokey(world, "nf");
   if (st == string_null) 
    st = infokey(world, "new_flash");
@@ -436,13 +442,13 @@ void () DecodeLevelParms =
       st = infokey(world, "disable_grens");
   disable_grens=stof(st);
 
-                st = infokey(world, "dp");
+  st = infokey(world, "dp");
   if (st == string_null) 
       st = infokey(world, "disable_powerups");
   if(st == "on")
    disable_powerups=1;
 
-                st = infokey(world, "ft");
+  st = infokey(world, "ft");
   if (st == string_null) 
       st = infokey(world, "flag_timer");
   if(st == "on")
@@ -492,10 +498,10 @@ void () DecodeLevelParms =
   self.tfstate = parm11;
  if (!self.playerclass) 
   self.playerclass = parm12;
- if (parm13) 
+/* if (parm13) 
   self.StatusBarRes = parm13;
  if (parm14) 
-  self.StatusBarSize = parm14;
+  self.StatusBarSize = parm14;*/
  if (parm15) {
   self.is_admin = parm15;
  }
@@ -1798,8 +1804,8 @@ void () PlayerPostThink =
   if (!self.cheat_check) 
    self.cheat_check = time + 5;
   else {
-          if(time > self.StatusRefreshTime)
-          {
+  if(time > self.StatusRefreshTime)
+  {
    if (self.StatusBarSize) 
     RefreshStatusBar(self);
    }
@@ -1829,14 +1835,15 @@ void () ClientConnect =
  st = infokey(self, "sbr");
  if (st == string_null) 
   st = infokey(self, "sbar_res");
- if (st == "768") 
-  self.StatusBarRes = 8;
- else {
-  if (st == "600") 
-   self.StatusBarRes = 7;
+// if(st != string_null) {
+  if (st == "768") 
+   self.StatusBarRes = 8;
   else {
-   if (st == "480") 
-    self.StatusBarRes = 6;
+   if (st == "600") 
+    self.StatusBarRes = 7;
+   else {
+    if (st == "480") 
+     self.StatusBarRes = 6;
    else {
     if (st == "400") 
      self.StatusBarRes = 5;
@@ -1861,12 +1868,15 @@ void () ClientConnect =
    }
   }
  }
+// }
  st = infokey(self, "sbs");
  if (st == string_null) 
   st = infokey(self, "sbar_size");
- self.StatusBarSize = stof(st);
- if (self.StatusBarSize > 2 || self.StatusBarSize < 0) 
-  self.StatusBarSize = 0;
+// if(st!=string_null) {
+  self.StatusBarSize = stof(st);
+  if (self.StatusBarSize > 2 || self.StatusBarSize < 0) 
+   self.StatusBarSize = 0;
+// }
  TeamFortress_ExecMapScript(self);
  self.has_disconnected = 0;
  if (self.netname == string_null) 

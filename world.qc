@@ -227,6 +227,8 @@ void () worldspawn =
  precache_model("progs/v_shot2.mdl");
  precache_model("progs/v_nail2.mdl");
  precache_model("progs/v_rock2.mdl");
+ precache_model("progs/v_flame.mdl");
+ precache_model("progs/v_tgun.mdl");
  precache_model("progs/grenade.mdl");
  precache_model("progs/bolt.mdl");
  precache_model("progs/bolt2.mdl");

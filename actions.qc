@@ -209,6 +209,8 @@ void () TeamFortress_ID =
  local string cls;
  local entity te;
 
+ if(new_flash && (self.FlashTime >= (24 - #NEW_FLASH_START_TIME)))return;
+ makevectors(self.v_angle);
  src = self.origin + v_forward * 10;
  src_z = self.absmin_z + self.size_z * 0.7;
  traceline(src, src + v_forward * 2048, 0, self);
@@ -292,8 +294,8 @@ void () TeamFortress_ID =
     } 
     else 
     {
-                                  if (self.team_no && self.team_no == trace_ent.team_no)  {
-                                        st = NumberToString1000(trace_ent.health);
+     if (self.team_no && self.team_no == trace_ent.team_no && self.playerclass == 9)  {
+           st = NumberToString1000(trace_ent.health);
      centerprint(self, "\n\n\n\nDispenser made by ", trace_ent.real_owner.netname,"\nHealth: ",st);                                  
       }
                                   else
@@ -311,42 +313,41 @@ void () TeamFortress_ID =
             }else te = trace_ent;
      self.StatusRefreshTime = time + 1.5;
      if (self == trace_ent.real_owner) {
-                                               if( self.playerclass == 9)
-                                               {
-                                                st = NumberToString1000(te.health);
-                                                st_s = NumberToString1000(te.ammo_shells);
-                                                if(te.weapon != 3)
-                                                centerprint(self, "\n\n\nYour SentryGun\nHealth: ",st,"\nAmmo: ",st_s);
-                                                else
-                                                {
-                                                 st_r = NumberToString1000(te.ammo_rockets);
-                                                 centerprint(self, "\n\n\nYour SentryGun\nHealth: ",st,"\nAmmo: ",st_s,st_r);
-                                                }
-                                               }
-                                               else 
-                                                 centerprint(self, "\n\n\n\nYour SentryGun");
-                                               
-          } 
+         if( self.playerclass == 9)
+         {
+          st = NumberToString1000(te.health);
+          st_s = NumberToString1000(te.ammo_shells);
+          if(te.weapon != 3)
+          centerprint(self, "\n\n\nYour SentryGun\nHealth: ",st,"\nAmmo: ",st_s);
+          else
+          {
+           st_r = NumberToString1000(te.ammo_rockets);
+           centerprint(self, "\n\n\nYour SentryGun\nHealth: ",st,"\nAmmo: ",st_s,st_r);
+          }
+         }
+         else 
+           centerprint(self, "\n\n\n\nYour SentryGun");
+         
+        } 
      else {
       if (!teamplay) 
        centerprint(self, "\n\n\n\nSentrygun made by\n", trace_ent.real_owner.netname);
       else {
        if (self.team_no && self.team_no == trace_ent.team_no) 
        {
-                                                         if( self.playerclass == 9) {
-                                                          st = NumberToString1000(te.health);
-                                                          st_s = NumberToString1000(te.ammo_shells);
-                                                          if(te.weapon!=3)
-                                                          centerprint(self, "\n\n\nFriendly Sentrygun made by\n", trace_ent.real_owner.netname,"\nHealth: ",st,"\nAmmo: ",st_s);
-                                                          else {
-                                                           st_r = NumberToString1000(te.ammo_rockets);
-                                                           centerprint(self, "\n\n\nFriendly Sentrygun made by\n", trace_ent.real_owner.netname,"\nHealth: ",st,"\nAmmo: ",st_s,st_r);
-                                                          }
-                                                         }
-                                                         else
+        if( self.playerclass == 9) {
+         st = NumberToString1000(te.health);
+         st_s = NumberToString1000(te.ammo_shells);
+         if(te.weapon!=3)
+         centerprint(self, "\n\n\nFriendly Sentrygun made by\n", trace_ent.real_owner.netname,"\nHealth: ",st,"\nAmmo: ",st_s);
+         else {
+          st_r = NumberToString1000(te.ammo_rockets);
+          centerprint(self, "\n\n\nFriendly Sentrygun made by\n", trace_ent.real_owner.netname,"\nHealth: ",st,"\nAmmo: ",st_s,st_r);
+         }
+        }
+        else
         centerprint(self, "\n\n\n\nFriendly Sentrygun made by\n", trace_ent.real_owner.netname);
-              }
-       else 
+        }else 
         centerprint(self, "\n\n\n\nEnemy Sentrygun made by\n", trace_ent.real_owner.netname);
       }
      }
