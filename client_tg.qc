@@ -34,6 +34,11 @@ void TG_LoadSettings()=
   if (st == "on") godmode=1;
    else  godmode=0;
 
+  st = infokey(world, "disable_reload");
+  if (st == "on") disable_reload=1;
+   else  disable_reload=0;
+
+
   st = infokey(world, "unl_ammo");
   if (st == "on") unlimit_ammo=1;
    else  unlimit_ammo=0;
@@ -50,9 +55,9 @@ void TG_LoadSettings()=
   if (st == "on") detpack_drop=1;
    else  detpack_drop=0;
 
-  st = infokey(world, "full_flash");
+/*  st = infokey(world, "full_flash");
   if (st == "on") fullflash_for_self=1;
-   else  fullflash_for_self=0;
+   else  fullflash_for_self=0;*/
 
   st = infokey(world, "dp_clip");
   if (st == "off") detpack_clip = 0;

@@ -321,7 +321,7 @@ void () StartFrame =
 
  if(!firstplayer){
   te=spawn();
-  firstplayer=&te / %1;
+  firstplayer= &te / %1;
   firstplayer= firstplayer / 33;
   remove(te);
  }

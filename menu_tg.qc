@@ -211,10 +211,15 @@ void () Menu_TG_Cheats =
  else 
   s5 = "5)‡God Mode OFF               \n";
 
- if (fullflash_for_self) 
+/* if (fullflash_for_self) 
   s6 = "6)‰Flash for self: FULL       \n7) Nothing                    \n";
  else 
-  s6 = "6)‡Flash for self: STD        \n7) Nothing                    \n";
+  s6 = "6)‡Flash for self: STD        \n7) Nothing                    \n";*/
+
+ if (disable_reload) 
+  s6 = "6)‡Reload Disabled            \n7) Nothing                    \n";
+ else 
+  s6 = "6)‰Reload Enabled             \n7) Nothing                    \n";
 
  centerprint(self, "Cheats menu:\n", s1, s2, s3, s4, s5,s6 );
  self.StatusRefreshTime = time + 1.5;
@@ -255,10 +260,14 @@ void (float inp) Menu_TG_Cheats_Input =
        godmode = 1;
      }else {
       if (inp == 6) {
-       if (fullflash_for_self) 
+/*       if (fullflash_for_self) 
         fullflash_for_self = 0;
        else 
-        fullflash_for_self = 1;
+        fullflash_for_self = 1;*/
+       if (disable_reload) 
+        disable_reload = 0;
+       else 
+        disable_reload = 1;
       }
       else {
       if (inp == 7) 

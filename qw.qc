@@ -341,6 +341,7 @@ vector saved_position;
 vector saved_angle;
 vector saved_velocity;
 float tg_sbar;
+float disable_reload;
 #endif 
 .float tf_impulse;
 

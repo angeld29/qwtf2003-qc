@@ -1,5 +1,40 @@
 string (float pc) TeamFortress_GetClassName;
 float (entity Goal, entity AP) Activated;
+float (float tno) TeamFortress_TeamGetTopColor;
+string (float tno) TeamFortress_TeamGetColorString;
+/////////////////////////////////////////////////////////////
+string (float col) TeamFortress_GetColorString =
+{
+ if (col == 0) 
+  return "White";
+ if (col == 1) 
+  return "Brown";
+ if (col == 2) 
+  return "Blue";
+ if (col == 3) 
+  return "Green";
+ if (col == 4) 
+  return "Red";
+ if (col == 5) 
+  return "Tan";
+ if (col == 6) 
+  return "Pink";
+ if (col == 7) 
+  return "Orange";
+ if (col == 8) 
+  return "Purple";
+ if (col == 9 ) 
+  return "DarkPurple";
+ if (col == 10) 
+  return "Grey";
+ if (col == 11) 
+  return "DarkGreen";
+ if (col == 12) 
+  return "Yellow";
+
+ return "DarkBlue";
+
+};
 
 /////////////////////////////////////////////////////////////
 
@@ -88,6 +123,7 @@ entity (float team_num) FindRandomTeamSpawnPoint =
 void (entity pl) Angel_PrintRules =
 {
  local string st;
+ local string st1;
  local float fl;
 
  if (clanbattle == 1) {
@@ -113,6 +149,38 @@ void (entity pl) Angel_PrintRules =
  else 
   sprint(pl, 2, "нев grenades\n");
 
+ if(topcolor_check)
+ {
+   sprint(pl, 2, "Topcolor checking enabled\n");
+  fl = TeamFortress_TeamGetTopColor(1);
+  st=ftos(fl);
+  st1 = TeamFortress_GetColorString(fl);
+  sprint(pl, 2, " Team 1 topcolor: ",st," ",st1,"\n");
+  
+  if(number_of_teams >=2)
+  {
+   fl = TeamFortress_TeamGetTopColor(2);
+   st=ftos(fl);
+   st1 = TeamFortress_GetColorString(fl);
+   sprint(pl, 2, " Team 2 topcolor: ",st," ",st1,"\n");
+  }
+  if(number_of_teams >=3)
+  {
+   fl = TeamFortress_TeamGetTopColor(3);
+   st=ftos(fl);
+   st1 = TeamFortress_GetColorString(fl);
+   sprint(pl, 2, " Team 3 topcolor: ",st," ",st1,"\n");
+  }
+  if(number_of_teams >=4)
+  {
+   fl = TeamFortress_TeamGetTopColor(4);
+   st=ftos(fl);
+   st1 = TeamFortress_GetColorString(fl); 
+   sprint(pl, 2, " Team 4 topcolor: ",st," ",st1,"\n");
+  }
+
+ }else
+  sprint(pl, 2, "Topcolor checking disabled\n");
  if (sentry_type == #SENTRY_MTFL) 
   sprint(pl, 2, "Sentry: 2.8.1 fixed(mtfl)\n");
  if (sentry_type == #SENTRY_OLD) 

@@ -31,6 +31,7 @@ void () TeamFortress_MOTD =
   sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•(QWLAN TF)\n");
 #else
   sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•\n");
+  sprint(self, 2, "Official ΝΤΖΜ version\n");
 #endif
 #endif
   sprint(self, 2, "by sd‘ angel for ΝΤΖΜ\n");
@@ -72,6 +73,12 @@ void () TeamFortress_MOTD =
   TeamFortress_Alias("scanf", 161, 0);
   TeamFortress_Alias("scane", 160, 0);
   TeamFortress_Alias("autoscan", #AUTOSCAN_IMPULSE, 0);
+  TeamFortress_Alias("scanf_off", #TF_SCAN, #TF_POST_SCANF_OFF);
+  TeamFortress_Alias("scanf_on" , #TF_SCAN, #TF_POST_SCANF_ON );
+  TeamFortress_Alias("scane_off", #TF_SCAN, #TF_POST_SCANE_OFF);
+  TeamFortress_Alias("scane_on" , #TF_SCAN, #TF_POST_SCANE_ON );
+  TeamFortress_Alias("autoscan_on" ,  #TF_SCAN, #TF_POST_AUTOSCAN_ON  );
+  TeamFortress_Alias("autoscan_off" , #TF_SCAN, #TF_POST_AUTOSCAN_OFF );
   return;
  }
  if (self.motd == 35) {

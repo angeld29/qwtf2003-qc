@@ -826,9 +826,7 @@ void () W_FireSniperRifle =
   if (!unlimit_ammo) 
 #endif
  self.ammo_shells = self.ammo_shells - snip_ammo;
-#ifdef TG
-  if (!unlimit_ammo) 
-#endif
+
  self.currentammo = self.ammo_shells;
  makevectors(self.v_angle);
  if(snip_range_fix)
@@ -1983,6 +1981,16 @@ float () CheckForReload =
 {
  local entity tWeapon;
 
+#ifdef TG
+ if(disable_reload)
+ {
+  self.reload_shotgun = 0;
+  self.reload_super_shotgun = 0;
+  self.reload_grenade_launcher = 0;
+  self.reload_rocket_launcher = 0;
+  return 0;
+ }
+#endif
  if (self.current_weapon == 128) {
   if (self.reload_shotgun >= 8 && self.ammo_shells > 0) {
    self.reload_shotgun = 0;

@@ -362,6 +362,15 @@
 #define TF_SCAN_10   162  // Scan using 10 enery (1 cell)
 #define TF_SCAN_30   163  // Scan using 30 energy (2 cells)
 #define TF_SCAN_100   164  // Scan using 100 energy (5 cells)
+
+#define TF_POST_SCANF_OFF 162   //"Friendly Scanning disabled.\n"
+#define TF_POST_SCANF_ON  163   //"Friendly Scanning enabled.\n"
+#define TF_POST_SCANE_OFF 164   //"Enemy Scanning disabled.\n"
+#define TF_POST_SCANE_ON  165   //"Enemy Scanning enabled.\n"
+#define TF_POST_AUTOSCAN_OFF  166   //"Scanner off.\n"
+#define TF_POST_AUTOSCAN_ON   167   //"Scanner on.\n"
+
+
 #define TF_DETPACK_5  165  // Detpack set to 5 seconds
 #define TF_DETPACK_20  166  // Detpack set to 20 seconds
 #define TF_DETPACK_50  167  // Detpack set to 50 seconds
@@ -1497,5 +1506,5 @@ float api_version;
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 3
-#define ANGEL_VERSION "Compiled: 04.03.2004 r1\nOfficial MTFL version\n"
+#define ANGEL_VERSION "Compiled: 10.03.2004 r1\nOfficial Õ‘∆Ã version\n"
 

@@ -220,7 +220,7 @@ void () FlashGrenadeExplode =
 #ifndef TG
      if (te == self.owner){
 #else
-     if (te == self.owner && !fullflash_for_self){
+     if (te == self.owner /*&& !fullflash_for_self*/){
 #endif 
       te.FlashTime = 16;
        stuffcmd(te, "v_cshift 160 160 160 160\n");
@@ -253,7 +253,7 @@ void () FlashGrenadeExplode =
 #ifndef TG
      if (te == self.owner){
 #else
-     if (te == self.owner && !fullflash_for_self){
+     if (te == self.owner /*&& !fullflash_for_self*/){
 #endif 
       te.FlashTime = 16;
      }else {
@@ -439,7 +439,7 @@ void () ScannerSwitch =
   sprint(self, #PRINT_HIGH, "Scanner Off.\n");
   self.ScannerOn = 0;
  }
-       self.StatusRefreshTime = time + 0.1;
+ self.StatusRefreshTime = time + 0.1;
 };
 
 
@@ -717,7 +717,7 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
      return;
         if (!(self.tf_items & #NIT_SCANNER)) 
          return;
-        if (scanrange == 160) {
+        if (scanrange == #TF_SCAN_ENEMY) {
          if (self.tf_items_flags & 1) {
           sprint(self, 2, "Enemy Scanning disabled.\n");
           self.tf_items_flags = self.tf_items_flags - 1;
@@ -729,7 +729,7 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
          self.StatusRefreshTime = time + 0.1;
          return;
         }
-        if (scanrange == 161) {
+        if (scanrange == #TF_SCAN_FRIENDLY) {
          if (self.tf_items_flags & 2) {
           sprint(self, #PRINT_HIGH, "Friendly Scanning disabled.\n");
           self.tf_items_flags = self.tf_items_flags - 2;
@@ -741,6 +741,56 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
          self.StatusRefreshTime = time + 0.1;
          return;
         }
+        if (scanrange == #TF_POST_SCANF_OFF) {
+          sprint(self, #PRINT_HIGH, "Friendly Scanning disabled.\n");
+         if (self.tf_items_flags & 2) 
+          self.tf_items_flags = self.tf_items_flags - 2;
+          self.StatusRefreshTime = time + 0.1;
+          return;
+         }
+
+        if (scanrange == #TF_POST_SCANF_ON) {
+          sprint(self, #PRINT_HIGH, "Friendly Scanning enabled.\n");
+          self.tf_items_flags = self.tf_items_flags | 2;
+          self.StatusRefreshTime = time + 0.1;
+          return;
+         }
+
+        if (scanrange == #TF_POST_SCANE_OFF) {
+          sprint(self, #PRINT_HIGH, "Enemy Scanning disabled.\n");
+         if (self.tf_items_flags & 1) 
+          self.tf_items_flags = self.tf_items_flags - 1;
+          self.StatusRefreshTime = time + 0.1;
+          return;
+         }
+        if (scanrange == #TF_POST_SCANE_ON) {
+          sprint(self, #PRINT_HIGH, "Enemy Scanning enabled.\n");
+          self.tf_items_flags = self.tf_items_flags | 1;
+          self.StatusRefreshTime = time + 0.1;
+          return;
+         }
+        if (scanrange == #TF_POST_AUTOSCAN_ON) 
+        {
+         if (self.ScannerOn != 1)
+         {
+          ScannerSwitch();
+         }else
+         {
+          sprint(self, #PRINT_HIGH, "Scanner On.\n");
+         }
+        }
+
+        if (scanrange == #TF_POST_AUTOSCAN_OFF) 
+        {
+         if (self.ScannerOn == 1)
+         {
+          ScannerSwitch();
+         }else
+         {
+          sprint(self, #PRINT_HIGH, "Scanner Off.\n");
+         }
+        }
+
         if (scanrange > 50) 
          scanrange = 50;
 
