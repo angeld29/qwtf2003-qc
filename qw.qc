@@ -307,20 +307,27 @@ float gren2box;
 float sgppl;
 float random_tf_spawn;
 
+float topcolor_check;
+float tc1;
+float tc2;
+float tc3;
+float tc4;
+float cheat_pause;
+
 void (float psize, entity p) KickPlayer =
 {
-	msg_entity = p;
-	if (psize > -3) 
-		WriteByte(1, 34);
-	else 
-		WriteByte(1, 35);
+ msg_entity = p;
+ if (psize > -3) 
+  WriteByte(1, 34);
+ else 
+  WriteByte(1, 35);
 };
 
 void () muzzleflash =
 {
-	WriteByte(4, 39);
-	WriteEntity(4, self);
-	multicast(self.origin, 2);
+ WriteByte(4, 39);
+ WriteEntity(4, self);
+ multicast(self.origin, 2);
 };
 
 

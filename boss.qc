@@ -3,22 +3,22 @@ void (vector p) boss_missile;
 
 void () boss_face =
 {
-	if (self.enemy.health <= 0 || random() < 0.02) {
-		self.enemy = find(self.enemy, classname, "player");
-		if (!self.enemy) 
-			self.enemy = find(self.enemy, classname, "player");
-	}
-	ai_face();
+ if (self.enemy.health <= 0 || random() < 0.02) {
+  self.enemy = find(self.enemy, classname, "player");
+  if (!self.enemy) 
+   self.enemy = find(self.enemy, classname, "player");
+ }
+ ai_face();
 };
 
 void () boss_rise1 = [0, boss_rise2]
 {
-	sound(self, 1, "boss1/out1.wav", 1, 1);
+ sound(self, 1, "boss1/out1.wav", 1, 1);
 };
 
 void () boss_rise2 = [1, boss_rise3]
 {
-	sound(self, 2, "boss1/sight1.wav", 1, 1);
+ sound(self, 2, "boss1/sight1.wav", 1, 1);
 };
 
 void () boss_rise3 = [2, boss_rise4]
@@ -90,267 +90,267 @@ void () boss_idle1 = [17, boss_idle2]
 
 void () boss_idle2 = [18, boss_idle3]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle3 = [19, boss_idle4]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle4 = [20, boss_idle5]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle5 = [21, boss_idle6]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle6 = [22, boss_idle7]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle7 = [23, boss_idle8]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle8 = [24, boss_idle9]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle9 = [25, boss_idle10]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle10 = [26, boss_idle11]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle11 = [27, boss_idle12]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle12 = [28, boss_idle13]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle13 = [29, boss_idle14]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle14 = [30, boss_idle15]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle15 = [31, boss_idle16]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle16 = [32, boss_idle17]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle17 = [33, boss_idle18]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle18 = [34, boss_idle19]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle19 = [35, boss_idle20]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle20 = [36, boss_idle21]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle21 = [37, boss_idle22]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle22 = [38, boss_idle23]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle23 = [39, boss_idle24]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle24 = [40, boss_idle25]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle25 = [41, boss_idle26]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle26 = [42, boss_idle27]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle27 = [43, boss_idle28]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle28 = [44, boss_idle29]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle29 = [45, boss_idle30]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle30 = [46, boss_idle31]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_idle31 = [47, boss_idle1]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile1 = [57, boss_missile2]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile2 = [58, boss_missile3]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile3 = [59, boss_missile4]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile4 = [60, boss_missile5]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile5 = [61, boss_missile6]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile6 = [62, boss_missile7]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile7 = [63, boss_missile8]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile8 = [64, boss_missile9]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile9 = [65, boss_missile10]
 {
-	boss_missile('100 100 200');
+ boss_missile('100 100 200');
 };
 
 void () boss_missile10 = [66, boss_missile11]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile11 = [67, boss_missile12]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile12 = [68, boss_missile13]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile13 = [69, boss_missile14]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile14 = [70, boss_missile15]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile15 = [71, boss_missile16]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile16 = [72, boss_missile17]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile17 = [73, boss_missile18]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile18 = [74, boss_missile19]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile19 = [75, boss_missile20]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile20 = [76, boss_missile21]
 {
-	boss_missile('100 -100 200');
+ boss_missile('100 -100 200');
 };
 
 void () boss_missile21 = [77, boss_missile22]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile22 = [78, boss_missile23]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_missile23 = [79, boss_missile1]
 {
-	boss_face();
+ boss_face();
 };
 
 void () boss_shocka1 = [80, boss_shocka2]
@@ -475,7 +475,7 @@ void () boss_shockc10 = [105, boss_death1]
 
 void () boss_death1 = [48, boss_death2]
 {
-	sound(self, 2, "boss1/death.wav", 1, 1);
+ sound(self, 2, "boss1/death.wav", 1, 1);
 };
 
 void () boss_death2 = [49, boss_death3]
@@ -508,95 +508,95 @@ void () boss_death8 = [55, boss_death9]
 
 void () boss_death9 = [56, boss_death10]
 {
-	sound(self, 4, "boss1/out1.wav", 1, 1);
-	WriteByte(4, 23);
-	WriteByte(4, 10);
-	WriteCoord(4, self.origin_x);
-	WriteCoord(4, self.origin_y);
-	WriteCoord(4, self.origin_z);
+ sound(self, 4, "boss1/out1.wav", 1, 1);
+ WriteByte(4, 23);
+ WriteByte(4, 10);
+ WriteCoord(4, self.origin_x);
+ WriteCoord(4, self.origin_y);
+ WriteCoord(4, self.origin_z);
 };
 
 void () boss_death10 = [56, boss_death10]
 {
-	killed_monsters = killed_monsters + 1;
-	WriteByte(2, 27);
-	SUB_UseTargets();
-	remove(self);
+ killed_monsters = killed_monsters + 1;
+ WriteByte(2, 27);
+ SUB_UseTargets();
+ remove(self);
 };
 
 void (vector p) boss_missile =
 {
-	local vector offang;
-	local vector org;
-	local vector vec;
-	local vector d;
-	local float t;
+ local vector offang;
+ local vector org;
+ local vector vec;
+ local vector d;
+ local float t;
 
-	offang = vectoangles(self.enemy.origin - self.origin);
-	makevectors(offang);
-	org = self.origin + p_x * v_forward + p_y * v_right + p_z * '0 0 1';
-	if (skill > 1) {
-		t = vlen(self.enemy.origin - org) / 300;
-		vec = self.enemy.velocity;
-		vec_z = 0;
-		d = self.enemy.origin + t * vec;
-	}
-	else 
-		d = self.enemy.origin;
-	vec = normalize(d - org);
-	launch_spike(org, vec);
-	setmodel(newmis, "progs/lavaball.mdl");
-	newmis.avelocity = '200 100 300';
-	setsize(newmis, '0 0 0', '0 0 0');
-	newmis.velocity = vec * 300;
-	newmis.touch = T_MissileTouch;
-	sound(self, 1, "boss1/throw.wav", 1, 1);
-	if (self.enemy.health <= 0) 
-		boss_idle1();
+ offang = vectoangles(self.enemy.origin - self.origin);
+ makevectors(offang);
+ org = self.origin + p_x * v_forward + p_y * v_right + p_z * '0 0 1';
+ if (skill > 1) {
+  t = vlen(self.enemy.origin - org) / 300;
+  vec = self.enemy.velocity;
+  vec_z = 0;
+  d = self.enemy.origin + t * vec;
+ }
+ else 
+  d = self.enemy.origin;
+ vec = normalize(d - org);
+ launch_spike(org, vec);
+ setmodel(newmis, "progs/lavaball.mdl");
+ newmis.avelocity = '200 100 300';
+ setsize(newmis, '0 0 0', '0 0 0');
+ newmis.velocity = vec * 300;
+ newmis.touch = T_MissileTouch;
+ sound(self, 1, "boss1/throw.wav", 1, 1);
+ if (self.enemy.health <= 0) 
+  boss_idle1();
 };
 
 void () boss_awake =
 {
-	self.solid = 3;
-	self.movetype = 4;
-	self.takedamage = 0;
-	setmodel(self, "progs/boss.mdl");
-	setsize(self, '-128 -128 -24', '128 128 256');
-	if (!skill) 
-		self.health = 1;
-	else 
-		self.health = 3;
-	self.enemy = activator;
-	WriteByte(4, 23);
-	WriteByte(4, 10);
-	WriteCoord(4, self.origin_x);
-	WriteCoord(4, self.origin_y);
-	WriteCoord(4, self.origin_z);
-	self.yaw_speed = 20;
-	boss_rise1();
+ self.solid = 3;
+ self.movetype = 4;
+ self.takedamage = 0;
+ setmodel(self, "progs/boss.mdl");
+ setsize(self, '-128 -128 -24', '128 128 256');
+ if (!skill) 
+  self.health = 1;
+ else 
+  self.health = 3;
+ self.enemy = activator;
+ WriteByte(4, 23);
+ WriteByte(4, 10);
+ WriteCoord(4, self.origin_x);
+ WriteCoord(4, self.origin_y);
+ WriteCoord(4, self.origin_z);
+ self.yaw_speed = 20;
+ boss_rise1();
 };
 
 void () monster_boss =
 {
-	if (!CheckExistence()) {
-		dremove(self);
-		return;
-	}
-	if (deathmatch) {
-		dremove(self);
-		return;
-	}
-	precache_model("progs/boss.mdl");
-	precache_model("progs/lavaball.mdl");
-	precache_sound("weapons/rocket1i.wav");
-	precache_sound("boss1/out1.wav");
-	precache_sound("boss1/sight1.wav");
-	precache_sound("misc/power.wav");
-	precache_sound("boss1/throw.wav");
-	precache_sound("boss1/pain.wav");
-	precache_sound("boss1/death.wav");
-	total_monsters = total_monsters + 1;
-	self.use = boss_awake;
+ if (!CheckExistence()) {
+  dremove(self);
+  return;
+ }
+ if (deathmatch) {
+  dremove(self);
+  return;
+ }
+ precache_model("progs/boss.mdl");
+ precache_model("progs/lavaball.mdl");
+ precache_sound("weapons/rocket1i.wav");
+ precache_sound("boss1/out1.wav");
+ precache_sound("boss1/sight1.wav");
+ precache_sound("misc/power.wav");
+ precache_sound("boss1/throw.wav");
+ precache_sound("boss1/pain.wav");
+ precache_sound("boss1/death.wav");
+ total_monsters = total_monsters + 1;
+ self.use = boss_awake;
 };
 
 entity le1;
@@ -605,73 +605,73 @@ float lightning_end;
 
 void () lightning_fire =
 {
-	local vector p1;
-	local vector p2;
+ local vector p1;
+ local vector p2;
 
-	if (time >= lightning_end) {
-		self = le1;
-		door_go_down();
-		self = le2;
-		door_go_down();
-		return;
-	}
-	p1 = (le1.mins + le1.maxs) * 0.5;
-	p1_z = le1.absmin_z - 16;
-	p2 = (le2.mins + le2.maxs) * 0.5;
-	p2_z = le2.absmin_z - 16;
-	p2 = p2 - normalize(p2 - p1) * 100;
-	self.nextthink = time + 0.1;
-	self.think = lightning_fire;
-	WriteByte(2, 23);
-	WriteByte(2, 9);
-	WriteEntity(2, world);
-	WriteCoord(2, p1_x);
-	WriteCoord(2, p1_y);
-	WriteCoord(2, p1_z);
-	WriteCoord(2, p2_x);
-	WriteCoord(2, p2_y);
-	WriteCoord(2, p2_z);
+ if (time >= lightning_end) {
+  self = le1;
+  door_go_down();
+  self = le2;
+  door_go_down();
+  return;
+ }
+ p1 = (le1.mins + le1.maxs) * 0.5;
+ p1_z = le1.absmin_z - 16;
+ p2 = (le2.mins + le2.maxs) * 0.5;
+ p2_z = le2.absmin_z - 16;
+ p2 = p2 - normalize(p2 - p1) * 100;
+ self.nextthink = time + 0.1;
+ self.think = lightning_fire;
+ WriteByte(2, 23);
+ WriteByte(2, 9);
+ WriteEntity(2, world);
+ WriteCoord(2, p1_x);
+ WriteCoord(2, p1_y);
+ WriteCoord(2, p1_z);
+ WriteCoord(2, p2_x);
+ WriteCoord(2, p2_y);
+ WriteCoord(2, p2_z);
 };
 
 void () lightning_use =
 {
-	if (lightning_end >= time + 1) 
-		return;
-	le1 = find(world, target, "lightning");
-	le2 = find(le1, target, "lightning");
-	if (!le1 || !le2) {
-		dprint("missing lightning targets\n");
-		return;
-	}
-	if ((le1.state && le1.state != 1) || (le2.state && le2.state != 1) || le1.state != le2.state) 
-		return;
-	le1.nextthink = -1;
-	le2.nextthink = -1;
-	lightning_end = time + 1;
-	sound(self, 2, "misc/power.wav", 1, 1);
-	lightning_fire();
-	self = find(world, classname, "monster_boss");
-	if (!self) 
-		return;
-	self.enemy = activator;
-	if (!le1.state && self.health > 0) {
-		sound(self, 2, "boss1/pain.wav", 1, 1);
-		self.health = self.health - 1;
-		if (self.health >= 2) 
-			boss_shocka1();
-		else {
-			if (self.health == 1) 
-				boss_shockb1();
-			else {
-				if (!self.health) 
-					boss_shockc1();
-			}
-		}
-	}
+ if (lightning_end >= time + 1) 
+  return;
+ le1 = find(world, target, "lightning");
+ le2 = find(le1, target, "lightning");
+ if (!le1 || !le2) {
+  dprint("missing lightning targets\n");
+  return;
+ }
+ if ((le1.state && le1.state != 1) || (le2.state && le2.state != 1) || le1.state != le2.state) 
+  return;
+ le1.nextthink = -1;
+ le2.nextthink = -1;
+ lightning_end = time + 1;
+ sound(self, 2, "misc/power.wav", 1, 1);
+ lightning_fire();
+ self = find(world, classname, "monster_boss");
+ if (!self) 
+  return;
+ self.enemy = activator;
+ if (!le1.state && self.health > 0) {
+  sound(self, 2, "boss1/pain.wav", 1, 1);
+  self.health = self.health - 1;
+  if (self.health >= 2) 
+   boss_shocka1();
+  else {
+   if (self.health == 1) 
+    boss_shockb1();
+   else {
+    if (!self.health) 
+     boss_shockc1();
+   }
+  }
+ }
 };
 
 void () event_lightning =
 {
-	self.use = lightning_use;
+ self.use = lightning_use;
 };
 
