@@ -97,6 +97,8 @@ void (float timer) TeamFortress_SetDetpack =
 	self.last_impulse = 0;
 	if (!(self.weapons_carried & #WEAP_DETPACK)) 
 		return;
+	if(disable_grens & #DG_TYPE_DETPACK)
+	     return;
 	if (self.ammo_detpack <= 0) 
 		return;
 	at_spot = findradius(self.origin, 65);

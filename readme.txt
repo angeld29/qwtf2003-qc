@@ -7,8 +7,26 @@ Fixed & updated by [sd] angel
    [+] Поддержка нового типа flash гранаты
        включается на сервере 
        "localinfo new_flash on" или "localinfo nf on"
-       требуется qwsv262
-       
+       требуется qwsv262 (OmiTF)
+Общее:
+   [+] "localinfo flag_timer on" или "localinfo ft on"
+       flaginfo показывает время до возврата флага
+
+   [+] "localinfo disable_powerups on" или "localinfo dp on"
+   [+] Возможность запрета использования определенных гранат и детпака
+       включается на сервере 
+       "localinfo disable_grens <число>" или "localinfo dg <число>"
+              NORMAL		2                     
+              CONCUSSION	4              
+              NAIL		8              
+              MIRV		16             
+              NAPALM		32             
+              FLARE		64             
+              GAS		128    
+              EMP		256    
+              FLASH		512            
+              CALTROPS		1024   
+              DETPACK		2048       
 ////////////////////////////////////////////////////    
 Внесенные изменения (на 04.06.2003):
 

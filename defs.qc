@@ -1337,3 +1337,16 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define TF_EXEC_CLASS_MASK  2
 #define TF_CLASS_HELP_MASK  4
 #define TF_AUTOID_MASK  8
+
+#define DG_TYPE_NORMAL		2 
+#define DG_TYPE_CONCUSSION	4 
+#define DG_TYPE_NAIL		8 
+#define DG_TYPE_MIRV		16
+#define DG_TYPE_NAPALM		32
+#define DG_TYPE_FLARE		64
+#define DG_TYPE_GAS			128
+#define DG_TYPE_EMP			256
+#define DG_TYPE_FLASH		512
+#define DG_TYPE_CALTROPS		1024
+#define DG_TYPE_DETPACK		2048
+

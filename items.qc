@@ -1229,6 +1229,8 @@ void () powerup_touch =
 		return;
 	if (cb_prematch_time > time) 
 		return;
+	if(disable_powerups)
+ 	        return;
 	sprint(other, 0, "You got the ");
 	sprint(other, 0, self.netname);
 	sprint(other, 0, "\n");

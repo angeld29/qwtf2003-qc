@@ -50,7 +50,7 @@ void () SetChangeParms =
 		SetNewParms();
 		return;
 	}
-	self.items = self.items - (self.items & (131072 | 262144 | 524288 | 1048576 | 2097152 | 4194304));
+	self.items = self.items - (self.items & (#IT_KEY1 | #IT_KEY2 | #IT_INVISIBILITY | #IT_INVULNERABILITY | #IT_SUIT | #IT_QUAD));
 	if (self.health > 100) 
 		self.health = 100;
 	if (self.health < 50) 
@@ -359,7 +359,25 @@ void () DecodeLevelParms =
                         else 
                                 sentry_type = 1;
                 }
+                st = infokey(world, "dg");
+		if (st == string_null) 
+		    st = infokey(world, "disable_grens");
+		disable_grens=stof(st);
+
+                st = infokey(world, "dp");
+		if (st == string_null) 
+		    st = infokey(world, "disable_powerups");
+		if(st == "on")
+		 disable_powerups=1;
+
+                st = infokey(world, "ft");
+		if (st == string_null) 
+		    st = infokey(world, "flag_timer");
+		if(st == "on")
+		 flag_timer=1;
+
 //////////////
+
 		st = infokey(world, "rd");
 		if (st == string_null) 
 			st = infokey(world, "respawn_delay");
@@ -1547,7 +1565,7 @@ void () CheckPowerups =
 		}
 	}
 	if (self.super_damage_finished) {
-		if (self.tfstate & 128) {
+		if (self.tfstate & #TFSTATE_QUAD) {
 			if (self.super_damage_finished == time + 10) 
 				self.super_damage_finished = time + 666;
 		}
@@ -1564,7 +1582,7 @@ void () CheckPowerups =
 			}
 		}
 		if (self.super_damage_finished < time) {
-			self.items = self.items - 4194304;
+			self.items = self.items - #IT_QUAD;
 			self.super_damage_finished = 0;
 			self.super_time = 0;
 		}

@@ -505,6 +505,17 @@ void () TeamFortress_PrimeGrenade =
 		return;
 	if (self.impulse == 150) {
 		gtype = self.tp_grenades_1;
+                if( (gtype == #GR_TYPE_NORMAL) && (disable_grens & #DG_TYPE_NORMAL)) return;	
+                if( (gtype == #GR_TYPE_CONCUSSION) && (disable_grens & #DG_TYPE_CONCUSSION)) return;
+                if( (gtype == #GR_TYPE_NAIL) && (disable_grens & #DG_TYPE_NAIL)) return;	
+                if( (gtype == #GR_TYPE_MIRV) && (disable_grens & #DG_TYPE_MIRV)) return;	
+                if( (gtype == #GR_TYPE_NAPALM) && (disable_grens & #DG_TYPE_NAPALM)) return;	
+                if( (gtype == #GR_TYPE_FLARE) && (disable_grens & #DG_TYPE_FLARE)) return;	
+                if( (gtype == #GR_TYPE_GAS) && (disable_grens & #DG_TYPE_GAS)) return;	
+                if( (gtype == #GR_TYPE_EMP) && (disable_grens & #DG_TYPE_EMP)) return;	
+                if( (gtype == #GR_TYPE_FLASH) && (disable_grens & #DG_TYPE_FLASH)) return;	
+                if( (gtype == #GR_TYPE_CALTROPS) && (disable_grens & #DG_TYPE_CALTROPS)) return;
+
 		if (self.tp_grenades_1 == 2) 
 			gs = "Concussion grenade";
 		else {
@@ -587,6 +598,17 @@ void () TeamFortress_PrimeGrenade =
 	}
 	if (self.impulse == 151) {
 		gtype = self.tp_grenades_2;
+                if( (gtype == #GR_TYPE_NORMAL) && (disable_grens & #DG_TYPE_NORMAL)) return;	
+                if( (gtype == #GR_TYPE_CONCUSSION) && (disable_grens & #DG_TYPE_CONCUSSION)) return;
+                if( (gtype == #GR_TYPE_NAIL) && (disable_grens & #DG_TYPE_NAIL)) return;	
+                if( (gtype == #GR_TYPE_MIRV) && (disable_grens & #DG_TYPE_MIRV)) return;	
+                if( (gtype == #GR_TYPE_NAPALM) && (disable_grens & #DG_TYPE_NAPALM)) return;	
+                if( (gtype == #GR_TYPE_FLARE) && (disable_grens & #DG_TYPE_FLARE)) return;	
+                if( (gtype == #GR_TYPE_GAS) && (disable_grens & #DG_TYPE_GAS)) return;	
+                if( (gtype == #GR_TYPE_EMP) && (disable_grens & #DG_TYPE_EMP)) return;	
+                if( (gtype == #GR_TYPE_FLASH) && (disable_grens & #DG_TYPE_FLASH)) return;	
+                if( (gtype == #GR_TYPE_CALTROPS) && (disable_grens & #DG_TYPE_CALTROPS)) return;
+
 		if (self.tp_grenades_2 == 2) 
 			gs = "Concussion grenade";
 		else {

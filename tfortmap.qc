@@ -28,6 +28,7 @@ void (entity Item, float PAlive, entity P) tfgoalitem_drop;
 void (entity Item) tfgoalitem_checkgoalreturn;
 void () ReturnItem;
 void (entity P) ForceRespawn;
+string (float num) NumberToString1000;
 
 void (entity Goal) UpdateAbbreviations =
 {
@@ -676,7 +677,7 @@ void (entity Goal, entity Player, entity AP, float addb) Apply_Results =
 						te = find(te, classname, "primer");
 				}
 			}
-			if (Goal.invincible_finished > 0) {
+			if (!disable_powerups && (Goal.invincible_finished > 0)) {
 				Player.items = Player.items | 1048576;
 				Player.invincible_time = 1;
 				Player.invincible_finished = time + Goal.invincible_finished;
@@ -685,7 +686,7 @@ void (entity Goal, entity Player, entity AP, float addb) Apply_Results =
 					Player.invincible_finished = time + 666;
 				}
 			}
-			if (Goal.invisible_finished > 0) {
+			if (!disable_powerups && (Goal.invisible_finished > 0)) {
 				Player.items = Player.items | 524288;
 				Player.invisible_time = 1;
 				Player.invisible_finished = time + Goal.invisible_finished;
@@ -694,7 +695,7 @@ void (entity Goal, entity Player, entity AP, float addb) Apply_Results =
 					Player.invisible_finished = time + 666;
 				}
 			}
-			if (Goal.super_damage_finished > 0) {
+			if (!disable_powerups && (Goal.super_damage_finished > 0)) {
 				Player.items = Player.items | 4194304;
 				Player.super_time = 1;
 				Player.super_damage_finished = time + Goal.super_damage_finished;
@@ -703,7 +704,7 @@ void (entity Goal, entity Player, entity AP, float addb) Apply_Results =
 					Player.super_damage_finished = time + 666;
 				}
 			}
-			if (Goal.radsuit_finished > 0) {
+			if (!disable_powerups && (Goal.radsuit_finished > 0)) {
 				Player.items = Player.items | 2097152;
 				Player.rad_time = 1;
 				Player.radsuit_finished = time + Goal.radsuit_finished;
@@ -868,25 +869,25 @@ void (entity Goal, entity Player) RemoveResults =
 		}
 		te = find(te, classname, "item_tfgoal");
 	}
-	if (Goal.invincible_finished > 0 && !puinvin) {
+	if (!disable_powerups && Goal.invincible_finished > 0 && !puinvin) {
 		Player.tfstate = Player.tfstate - (Player.tfstate & 32);
 		Player.items = Player.items | 1048576;
 		Player.invincible_time = 1;
 		Player.invincible_finished = time + Goal.invincible_finished;
 	}
-	if (Goal.invisible_finished > 0 && !puinvis) {
+	if (!disable_powerups && Goal.invisible_finished > 0 && !puinvis) {
 		Player.tfstate = Player.tfstate - (Player.tfstate & 64);
 		Player.items = Player.items | 524288;
 		Player.invisible_time = 1;
 		Player.invisible_finished = time + Goal.invisible_finished;
 	}
-	if (Goal.super_damage_finished > 0 && !puquad) {
+	if (!disable_powerups && Goal.super_damage_finished > 0 && !puquad) {
 		Player.tfstate = Player.tfstate - (Player.tfstate & 128);
 		Player.items = Player.items | 4194304;
 		Player.super_time = 1;
 		Player.super_damage_finished = time + Goal.super_damage_finished;
 	}
-	if (Goal.radsuit_finished > 0 && !purad) {
+	if (!disable_powerups && Goal.radsuit_finished > 0 && !purad) {
 		Player.tfstate = Player.tfstate - (Player.tfstate & 256);
 		Player.items = Player.items | 2097152;
 		Player.rad_time = 1;
@@ -2080,6 +2081,9 @@ void (entity Item) tfgoalitem_checkgoalreturn =
 
 void (entity Goal, entity Player, entity Item) DisplayItemStatus =
 {
+	local entity te;
+	local string flag_time;
+
 	if (Item.goal_state == 1) {
 		if (Goal.team_str_carried != string_null || Goal.non_team_str_carried != string_null) {
 			if (Player.team_no == Item.owned_by) 
@@ -2097,11 +2101,28 @@ void (entity Goal, entity Player, entity Item) DisplayItemStatus =
 	else {
 		if (Item.origin != Item.oldorigin) {
 			if (Goal.team_str_moved != string_null || Goal.non_team_str_moved != string_null) {
+
 				if (Player.team_no == Item.owned_by) 
 					sprint(Player, 2, Goal.team_str_moved);
 				else 
 					sprint(Player, 2, Goal.non_team_str_moved);
+
+			      if(flag_timer)
+			      {
+				if(Item.think == tfgoalitem_remove )
+				{
+ 				 flag_time=ftos(rint(Item.nextthink - time));
+ 				}
+
+				if(Item.think == tfgoalitem_dropthink )	
+				{
+				 flag_time=ftos(rint(Item.nextthink - time+Item.pausetime));
+				}
+				sprint(Player,2," :");
+                                sprint(Player,2,flag_time);
+                              }
 				sprint(Player, 2, "\n");
+
 			}
 		}
 		else {

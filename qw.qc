@@ -298,6 +298,9 @@ float deathmsg;
 float birthday;
 //angel fix
 float sentry_type;
+float disable_grens;
+float disable_powerups;
+float flag_timer;
 
 void (float psize, entity p) KickPlayer =
 {
