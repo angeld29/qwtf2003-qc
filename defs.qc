@@ -1365,4 +1365,4 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define DEFAULT_AUTOSCAN_RANGE 30
 
 #define ASSAULT_MIN_SHELLS 20
-#define ANGEL_VERSION "Compiled: 13.11.2003 r1\n"
+#define ANGEL_VERSION "Compiled: 14.11.2003 r1\n"

@@ -806,7 +806,7 @@ void (float teamno) TeamFortress_SpyChangeColor =
    sprint(self, 2, "Colors reset.\n");
    return;
   }
-  sprint(self, 2, "Colors reset.");
+  sprint(self, 2, "Colors reset.\n");
   self.immune_to_check = time + cheat_pause;//10;
   self.undercover_team = 0;
   stuffcmd(self, "color ");

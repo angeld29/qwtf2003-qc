@@ -96,7 +96,7 @@ void (entity pl) RefreshStatusBar =
  }
  else {
   if (!win) 
-   s3 = BlueScoreToString1000(team1score);
+   s3 = BlueScoreToString100(team1score);
   else {
    if (win == 1) 
     s3 = BlueScoreToString100(team1score);

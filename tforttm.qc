@@ -486,10 +486,11 @@ float () TeamFortress_TeamGetWinner =
  highestteam = 0;
  while (i < number_of_teams + 1) {
   j = TeamFortress_TeamGetScoreFrags(i);
-  if (j > highest) {
+  if (j > highest || highestteam==0) {
    highest = j;
    highestteam = i;
   }
+
   i = i + 1;
  }
  return highestteam;
@@ -506,12 +507,13 @@ float () TeamFortress_TeamGetSecond =
 
  i = 1;
  highestteam = TeamFortress_TeamGetWinner();
+
  highest = TeamFortress_TeamGetScoreFrags(highestteam);
  secondteam = 0;
  second = 0;
  while (i < number_of_teams + 1) {
   j = TeamFortress_TeamGetScoreFrags(i);
-  if (j < highest && j > second) {
+  if (j <= highest && (j > second || secondteam==0) && i != highestteam ) {
    second = j;
    secondteam = i;
   }
