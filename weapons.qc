@@ -1205,10 +1205,10 @@ void (float tno) ExplodeOldPipebomb =
 
  if (tno) {
   index = num_team_pipebombs(tno);
-  index = index - 15 / number_of_teams;
+  index = index - #MAX_WORLD_PIPEBOMBS / number_of_teams;
  }
  else 
-  index = num_world_pipebombs - 15;
+  index = num_world_pipebombs - #MAX_WORLD_PIPEBOMBS;
  old = find(world, classname, "pipebomb");
  while (index > 0) {
   if (old == world) {
@@ -1369,12 +1369,12 @@ void () W_FireGrenade =
  else {
   if (self.team_no) {
    increment_team_pipebombs(self.team_no);
-   if (num_team_pipebombs(self.team_no) > 15 / number_of_teams) 
+   if (num_team_pipebombs(self.team_no) > #MAX_WORLD_PIPEBOMBS / number_of_teams) 
     ExplodeOldPipebomb(self.team_no);
   }
   else {
    num_world_pipebombs = num_world_pipebombs + 1;
-   if (num_world_pipebombs > 15) 
+   if (num_world_pipebombs > #MAX_WORLD_PIPEBOMBS) 
     ExplodeOldPipebomb(0);
   }
   newmis.classname = "pipebomb";

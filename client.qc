@@ -164,6 +164,9 @@ void () DecodeLevelParms =
    }
    else 
     number_of_teams = 4;
+#ifdef LAN_SERVER
+//   cvar_set("sv_aim", "1");
+#endif
    team1lives = -1;
    team2lives = -1;
    team3lives = -1;

@@ -1,5 +1,6 @@
-./tg/qwprogs.dat
+./tg/altprogs/qwprogs.dat
 
+lan.pqc
 tg.pqc
 options.pqc
 defs.pqc

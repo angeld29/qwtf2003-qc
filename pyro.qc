@@ -8,10 +8,12 @@ entity (string type, entity p_owner) FlameSpawn =
 {
  if (cb_prematch_time > time) 
   return world;
+#ifndef LAN_SERVER
  if (type != "1") 
   return world;
+#endif
  num_world_flames = num_world_flames + 1;
- while (num_world_flames > 20) {
+ while (num_world_flames > #FLAME_MAXWORLDNUM) {
   if (!RemoveFlameFromQueue(type)) 
    return;
  }
@@ -67,7 +69,7 @@ float (string id_flame) RemoveFlameFromQueue =
 {
  local entity tmp;
 
- if (num_world_flames < 20) {
+ if (num_world_flames < #FLAME_MAXWORLDNUM) {
   dprint("ERROR in RemoveFlameFromQueue\n");
   return;
  }
@@ -149,7 +151,7 @@ void () NapalmGrenadeNetThink =
   dremove(self);
  }
 };
-
+#ifndef LAN_SERVER
 void () NapalmGrenadeExplode =
 {
  local float i;
@@ -193,7 +195,28 @@ void () NapalmGrenadeExplode =
         self.velocity = '0 0 0';
 
 };
+#else
+void () NapalmGrenadeExplode =
+{
+ local float i;
 
+ sound(self, 0, "weapons/flmgrexp.wav", 1, 1);
+ traceline(self.origin, self.origin, 1, self);
+ if (trace_inwater == 1) {
+  dremove(self);
+  return;
+ }
+ deathmsg = 15;
+ T_RadiusDamage(self, self.owner, 20, world);
+ i = 0;
+ while (i < 15) {
+  NapalmGrenadeLaunch(self.origin + '0 0 5', self.owner);
+  i = i + 1;
+ }
+ self.solid = 0;
+ BecomeExplosion();
+};
+#endif
 void (vector org, entity shooter) NapalmGrenadeLaunch =
 {
  local float xdir;

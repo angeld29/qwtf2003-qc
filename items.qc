@@ -1176,6 +1176,9 @@ void () sigil_touch =
   return;
  if (cb_prematch_time > time) 
   return;
+#ifdef LAN_SERVER
+ CenterPrint(other, "You got the rune!");
+#endif
  sound(other, 3, self.noise, 1, 1);
  stuffcmd(other, "bf\n");
  self.solid = 0;

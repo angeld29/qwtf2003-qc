@@ -1425,6 +1425,36 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define BP_TYPE_HEALTH  8
 #define BP_TYPE_DETPACK  16
 
+#ifndef LAN_SERVER
+//	#define SPY_INVIS_ONLY		 #OFF	// Spy becomes invisible instead of changing skin/color
+//	#define DEFAULT_AUTOZOOM     #OFF
+	#define WEINER_SNIPER			 	// autoaiming for sniper rifle
+	#define FLAME_MAXWORLDNUM	 20	 	// maximum number of flames in the world. DO NOT PUT BELOW 20.
+	#define MAX_WORLD_PIPEBOMBS	 15	 	// This is divided between teams - this is the most you should have on a net server
+	#define MAX_WORLD_AMMOBOXES	 20		// This is divided between teams - this is the most you should have on a net server
+	#define GR_TYPE_MIRV_NO		 4	 	// Number of Mirvs a Mirv Grenade breaks into
+	#define GR_TYPE_NAPALM_NO	 8 	 	// Number of flames napalm grenade breaks into (unused if net server)
+	#define MEDIKIT_IS_BIOWEAPON 	 	// Medikit acts as a bioweapon against enemies
+//	#define RESTORE_DEAD_SPEEDS     	// If defined, we restore the cl_speeds 
+										// everytime a player dies, and set them 
+										// everytime a player spawns. This makes
+										// more net traffic, but players disconnecting
+										// will have their speeds restored, on the
+										// assumption people disconnect when dead.
+										// I know this isn't strictly true, but we
+										// can't do it any other way.
+#else			
+	// LAN options
+//	#define SPY_INVIS_ONLY		 #OFF	// Spy changes skin/color instead of becoming invisible
+//	#define DEFAULT_AUTOZOOM 	 #OFF
+	#define FLAME_MAXWORLDNUM	 60		// maximum number of flames in the world. DO NOT PUT BELOW 20. 	
+	#define MAX_WORLD_PIPEBOMBS	 30 	// This is divided between teams
+	#define MAX_WORLD_AMMOBOXES	 20 	// This is divided between teams
+	#define GR_TYPE_MIRV_NO		 12		// Number of Mirvs a Mirv Grenade breaks into
+	#define GR_TYPE_NAPALM_NO	 12  	// Number of flames napalm grenade breaks into
+#endif
+
+
 // sniper rifle control
 #define SR_INITDAMAGE 50
 #define SR_INCDAMAGE 216 // by second

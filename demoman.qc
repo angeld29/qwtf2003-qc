@@ -50,7 +50,7 @@ void () MirvGrenadeExplode =
  multicast(self.origin, 1);
  self.solid = 0;
  i = 0;
- while (i < 4) {
+ while (i < #GR_TYPE_MIRV_NO) {
   MirvGrenadeLaunch(self.origin + '0 0 -1', self.owner);
   i = i + 1;
  }
@@ -72,8 +72,13 @@ void (vector org, entity shooter) MirvGrenadeLaunch =
  newmis.solid = 2;
  newmis.classname = "grenade";
  newmis.weapon = 10;
+#ifndef LAN_SERVER
  newmis.touch = NormalGrenadeTouch;
  newmis.think = NormalGrenadeExplode;
+#else
+ newmis.touch = GrenadeTouch;
+ newmis.think = GrenadeExplode;
+#endif
  newmis.nextthink = time + 2 + random();
  newmis.velocity_x = xdir * 2;
  newmis.velocity_y = ydir * 2;

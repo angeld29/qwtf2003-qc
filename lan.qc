@@ -1,0 +1,1 @@
+#define LAN_SERVER
