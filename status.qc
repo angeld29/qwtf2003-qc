@@ -60,7 +60,7 @@ void (entity pl) RefreshStatusBar =
  s1 = GetStatusSize(pl);
  win = TeamFortress_TeamGetWinner();
  sec = TeamFortress_TeamGetSecond();
- if (TeamFortress_TeamGetScore(win) > 100 || TeamFortress_TeamGetScore(sec) > 100) {
+ if (TeamFortress_TeamGetScore(win) >= 100 || TeamFortress_TeamGetScore(sec) >= 100) {
   if (!win) 
    s3 = BlueScoreToString1000(team1score);
   else {
@@ -112,7 +112,7 @@ void (entity pl) RefreshStatusBar =
    }
   }
   if (!sec) 
-   s4 = RedScoreToString1000(team2score);
+   s4 = RedScoreToString100(team2score);
   else {
    if (sec == 1) 
     s4 = BlueScoreToString100(team1score);

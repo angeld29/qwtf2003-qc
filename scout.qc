@@ -159,8 +159,8 @@ void () FlashTimerNew =
   return;
  }
  st = ftos(te.FlashTime * 10);
- if(te.FlashTime < (24 - #NEW_FLASH_START_TIME))
- {
+// if(te.FlashTime < (24 - #NEW_FLASH_START_TIME))
+// {
   stuffcmd(te, "v_cshift ");
   stuffcmd(te, st);
   stuffcmd(te, " ");
@@ -170,7 +170,7 @@ void () FlashTimerNew =
   stuffcmd(te, " ");
   stuffcmd(te, st);
   stuffcmd(te, "\n");
- }
+// }
  self.nextthink = time + 0.6;
 };
 
@@ -210,7 +210,8 @@ void () FlashGrenadeExplode =
       newmis.team_no = self.owner.team_no;
       newmis.owner = te;
       newmis.think = FlashTimerNew;
-      newmis.nextthink = time + 1;
+//      newmis.nextthink = time + 1;
+      newmis.nextthink = time + #NEW_FLASH_START_TIME;
 #ifdef TG
       if(gren_time)
        newmis.gren_eff_time = time + gren_time;
@@ -883,7 +884,8 @@ void () TG_Eff_Flash=
    newmis.team_no = self.owner.team_no;
    newmis.owner = self;
    newmis.think = FlashTimerNew;
-   newmis.nextthink = time + 1;
+//   newmis.nextthink = time + 1;
+   newmis.nextthink = time + #NEW_FLASH_START_TIME;
    if(gren_time)
     newmis.gren_eff_time = time + gren_time;
   }

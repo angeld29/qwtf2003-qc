@@ -437,6 +437,14 @@ void () Flamer_stream_touch =
  local entity flame;
  local vector dir;
  local vector vtemp;
+ local float pos;
+
+ pos = pointcontents(self.origin + '0 0 1');
+ if( pos == #CONTENT_WATER || pos == #CONTENT_SLIME )
+ {
+  dremove(self);
+  return;
+ }
 
  if (other.classname == "fire") 
   return;
@@ -633,10 +641,13 @@ void () T_IncendiaryTouch =
  local float points;
  local entity head;
  local vector org;
+ local float pos;
 
  if (other == self.owner) 
   return;
- if (pointcontents(self.origin) == -6) {
+ pos = pointcontents(self.origin);
+
+ if (pos == -6 ) {
   remove(self);
   return;
  }
@@ -654,7 +665,8 @@ void () T_IncendiaryTouch =
     deathmsg = 15;
     TF_T_Damage(head, self, self.owner, 10, 2, 16);
     other = head;
-    Napalm_touch();
+    if(!trace_inwater)
+     Napalm_touch();
     if (other.classname == "player") 
      stuffcmd(other, "bf\nbf\n");
    }

@@ -969,28 +969,42 @@ void () W_FireAssaultCannon =
 
 };
 
+void check_water()=
+{
+ traceline(self.origin, self.origin, 1, self);
+ if (trace_inwater) {
+   sound(self, 2, "misc/vapeur2.wav", 1, 1);
+   dremove(self);
+  }
+}
 void () s_explode1 = [0, s_explode2]
 {
+ check_water();
 };
 
 void () s_explode2 = [1, s_explode3]
 {
+ check_water();
 };
 
 void () s_explode3 = [2, s_explode4]
 {
+ check_water();
 };
 
 void () s_explode4 = [3, s_explode5]
 {
+  check_water();
 };
 
 void () s_explode5 = [4, s_explode6]
 {
+ check_water();
 };
 
 void () s_explode6 = [5, SUB_Remove]
 {
+ check_water();
 };
 
 void () BecomeExplosion =
@@ -2206,6 +2220,9 @@ void () W_Attack =
     if (self.ammo_cells < 4) 
      sprint(self, 1, "Insufficient cells to power up the Assault Cannon.\n");
     else {
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
      self.ammo_cells = self.ammo_cells - 4;
      self.heat = 1;
 //     self.immune_to_check = time + 5;

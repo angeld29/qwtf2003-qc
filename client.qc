@@ -483,9 +483,12 @@ void () DecodeLevelParms =
   if (st == string_null) 
       st = infokey(world, "snip_fps");
 
-  snip_fps=stof(st);
+  if(st == string_null)
+    snip_fps = 72;
+   else 
+    snip_fps=stof(st);
 
-  if(snip_fps<=0)snip_fps=72;
+  if(snip_fps<0)snip_fps=72;
 
   st = infokey(world, "srf");
   if (st == string_null) 

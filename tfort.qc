@@ -1586,7 +1586,7 @@ void () TeamFortress_SetEquipment =
          te.think = TeamFortress_AutoID;
          te.owner = self;
          te.classname = "timer";
-         }
+        }
 
 //         self.ScannerOn = 0;
   self.allow_snip_time = 0;
