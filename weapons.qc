@@ -2052,7 +2052,7 @@ void () W_Attack =
 				else {
 					self.ammo_cells = self.ammo_cells - 4;
 					self.heat = 1;
-					self.immune_to_check = time + 5;
+//					self.immune_to_check = time + 5;
 					self.tfstate = self.tfstate | 2048;
 					TeamFortress_SetSpeed(self);
 					player_assaultcannonup1();

@@ -255,7 +255,7 @@ void () DecodeLevelParms =
 				te = find(world, classname, "player");
 				while (te) {
 					centerprint(te, "CEASE FIRE\n");
-					te.immune_to_check = time + 10;
+//					te.immune_to_check = time + 10;
 					te.tfstate = te.tfstate | 65536;
 					TeamFortress_SetSpeed(te);
 					te = find(te, classname, "player");
@@ -1136,7 +1136,7 @@ void () PutClientInServer =
 		rj = 1;
 	if (cease_fire) {
 		sprint(self, 2, "\n\nCEASE FIRE MODE\n");
-		self.immune_to_check = time + 10;
+//		self.immune_to_check = time + 10;
 		self.tfstate = self.tfstate | 65536;
 		TeamFortress_SetSpeed(self);
 	}
@@ -1342,6 +1342,16 @@ void () PlayerJump =
 			else 
 				sound(self, 4, "misc/water2.wav", 1, 1);
 		}
+/*		if (self.fire_held_down && self.current_weapon == 32768) {
+			stuffcmd(self, "v_idlescale 0\n");
+			self.tfstate = self.tfstate - (self.tfstate & 2048);
+			TeamFortress_SetSpeed(self);
+			self.weaponframe = 0;
+			self.heat = 0;
+			self.count = 1;
+			player_assaultcannondown1();
+		}*/
+
 		return;
 	}
 	if (!(self.flags & 512)) 
@@ -1351,6 +1361,17 @@ void () PlayerJump =
 	self.flags = self.flags - (self.flags & 4096);
 	self.button2 = 0;
 	sound(self, 4, "player/plyrjmp8.wav", 1, 1);
+/*	if (self.fire_held_down && self.current_weapon == 32768) {
+		stuffcmd(self, "v_idlescale 0\n");
+		sprint(self, 1, "You cannot fire the assault cannon without your feet on the ground...\n");
+		self.tfstate = self.tfstate - (self.tfstate & 2048);
+		TeamFortress_SetSpeed(self);
+		self.weaponframe = 0;
+		self.count = 1;
+		self.heat = 0;
+		player_assaultcannondown1();
+	}*/
+
 };
 
 

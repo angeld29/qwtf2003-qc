@@ -367,7 +367,7 @@ void (float objtobuild) TeamFortress_Build =
 		return;
 	}
 	self.is_building = 1;
-	self.immune_to_check = time + 5;
+//	self.immune_to_check = time + 5;
 	self.tfstate = self.tfstate | 65536;
 	self.weapon = self.current_weapon;
 	self.current_weapon = 0;

@@ -1793,11 +1793,11 @@ void () ReturnItem =
 {
 	local entity te;
 
-	if (self.enemy.goal_state == 1) //#TFGS_ACTIVE
+/*	if (self.enemy.goal_state == 1) //#TFGS_ACTIVE
 	{
            dremove(self);
 	   return;
-	}         
+	}         */
 
 	self.enemy.goal_state = 2;
 	if ((self.enemy.goal_activation & 8192) && self.enemy.classname == "item_tfgoal") 
@@ -2016,7 +2016,6 @@ void () tfgoalitem_droptouch =
 
 void (entity Item, float PAlive, entity P) tfgoalitem_drop =
 {
-//        sprint(P,2,"tfgoalitem_drop\n"); //debug
 	Item.origin = Item.owner.origin;
 	setorigin(Item, Item.origin);
 	Item.camangle = Item.owner.origin - '0 0 8';
@@ -2057,6 +2056,7 @@ void (entity Item, float PAlive, entity P) tfgoalitem_drop =
 void () tfgoalitem_remove =
 {
 	local entity te;
+	local entity oldself;
 
 	if (self.goal_state == 1) 
 		return;
@@ -2064,8 +2064,12 @@ void () tfgoalitem_remove =
 		te = spawn();
 		te.enemy = self;
 		te.weapon = 3;
-		te.nextthink = time + 0.1;
-		te.think = ReturnItem;
+		oldself=self;
+		self=te;
+		ReturnItem();
+		self=oldself;
+//		te.nextthink = time + 0.1;
+//		te.think = ReturnItem;
 		return;
 	}
 	dremove(self);

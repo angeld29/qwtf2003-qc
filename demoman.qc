@@ -166,7 +166,7 @@ void (float timer) TeamFortress_SetDetpack =
 	}
 	self.is_detpacking = 1;
 	self.ammo_detpack = self.ammo_detpack - 1;
-	self.immune_to_check = time + 10;
+//	self.immune_to_check = time + 10;
 	self.tfstate = self.tfstate | #TFSTATE_CANT_MOVE;
 	self.weapon = self.current_weapon;
 	self.current_weapon = 0;
@@ -352,7 +352,7 @@ void () TeamFortress_DetpackTouch =
 	traceline(source, source + v_forward * 64, 0, other);
 	if (trace_fraction == 1 || trace_ent != self) 
 		return;
-	other.immune_to_check = time + 5;
+//	other.immune_to_check = time + 5;
 	other.tfstate = other.tfstate | #TFSTATE_CANT_MOVE;
 	sprint(other, 2, "Disarming detpack...\n");
 	TeamFortress_SetSpeed(other);

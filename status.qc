@@ -197,28 +197,42 @@ void (entity pl) RefreshStatusBar =
       	    if(self.ScanRange<10)
       	    {
       	     if(pl.ScannerOn)
-  	            s2 = "Scanner On    ";
-  	       else s2 = "Scanner Off   ";
+  	            s2 = "Scan  ";
+  	       else s2 = "Scan  ";
       	    }else {
       	    if(self.ScanRange<100)
       	    {
       	     if(pl.ScannerOn)
-  	            s2 = "Scanner On   ";
-  	       else s2 = "Scanner Off  ";
+  	            s2 = "Scan ";
+  	       else s2 = "Scan ";
       	    }else
       	    {
       	     if(pl.ScannerOn)
-  	            s2 = "Scanner On  ";
-  	       else s2 = "Scanner Off ";
+  	            s2 = "Scan";
+  	       else s2 = "Scan";
       	    }}
       	    if((self.tf_items_flags&3)==0)
-      		 s6 = "                         \n";
-      	    if((self.tf_items_flags&3)==3)
-      		 s6 = " EnFr                    \n";
-      	    if((self.tf_items_flags&3)==1)
-      		 s6 = " En                      \n";
-      	    if((self.tf_items_flags&3)==2)
-      		 s6 = "   Fr                    \n";
+      	    {
+      	        if(pl.ScannerOn)
+      		       s6 = "      On                        \n";
+      		 else  s6 = "      Off                       \n";
+            }
+      	    if((self.tf_items_flags&3)==3){
+      	        if(pl.ScannerOn)
+      		       s6 = " EnFr On                        \n";
+      		 else  s6 = " EnFr Off                       \n";
+      	    }
+      	    if((self.tf_items_flags&3)==1){
+      	        if(pl.ScannerOn)
+      		       s6 = " En   On                        \n";
+      		 else  s6 = " En   Off                       \n";
+      	    }
+      	    if((self.tf_items_flags&3)==2){
+      	        if(pl.ScannerOn)
+      		       s6 = "   Fr On                        \n";
+      		 else  s6 = "   Fr Off                       \n";
+      	    }
+
       	 centerprint(pl, s1, s2, s7,s6,s3, s4, s5);
       	 return;
       	}	

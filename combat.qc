@@ -121,7 +121,7 @@ void (entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 		targ.dmg_inflictor = inflictor;
 	}
 	if (inflictor != world && targ.movetype == 3) {
-		targ.immune_to_check = time + damage / 20;
+//		targ.immune_to_check = time + damage / 20;
 		dir = targ.origin - (inflictor.absmin + inflictor.absmax) * 0.5;
 		dir = normalize(dir);
 		if ((damage < 60) & (attacker.classname == "player") & (targ.classname == "player") & (attacker.netname != targ.netname)) 
@@ -261,7 +261,7 @@ void (entity targ, entity inflictor, entity attacker, float damage, float T_flag
 	}
 	if (inflictor != world && targ.movetype == 3 && !(targ.tfstate & 65536)) {
 		if (deathmsg != 9) {
-			targ.immune_to_check = time + damage / 20;
+//			targ.immune_to_check = time + damage / 20;
 			dir = targ.origin - (inflictor.absmin + inflictor.absmax) * 0.5;
 			dir = normalize(dir);
 			if (targ.playerclass == 6) {

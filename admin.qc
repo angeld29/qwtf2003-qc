@@ -67,7 +67,7 @@ void () CeaseFire_think =
 		te = find(world, classname, "player");
 		while (te) {
 			centerprint(te, "RESUME FIRE\n");
-			te.immune_to_check = time + 10;
+//			te.immune_to_check = time + 10;
 			te.tfstate = te.tfstate - (te.tfstate & 65536);
 			TeamFortress_SetSpeed(te);
 			te = find(te, classname, "player");
@@ -97,7 +97,7 @@ void () Admin_CeaseFire =
 		te = find(world, classname, "player");
 		while (te) {
 			centerprint(te, "CEASE FIRE\n");
-			te.immune_to_check = time + 10;
+//			te.immune_to_check = time + 10;
 			te.tfstate = te.tfstate | 65536;
 			TeamFortress_SetSpeed(te);
 			te = find(te, classname, "player");
@@ -116,7 +116,7 @@ void () Admin_CeaseFire =
 		te = find(world, classname, "player");
 		while (te) {
 			centerprint(te, "RESUME FIRE\n");
-			te.immune_to_check = time + 10;
+//			te.immune_to_check = time + 10;
 			te.tfstate = te.tfstate - (te.tfstate & 65536);
 			TeamFortress_SetSpeed(te);
 			te = find(te, classname, "player");

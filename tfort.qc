@@ -133,7 +133,8 @@ void () TeamFortress_ChangeClass =
 		self.nextpc = self.impulse - 100;
 		sprint(self, 2, "After dying, you will return as a ");
 		TeamFortress_PrintClassName(self, self.nextpc, self.tfstate & 8);
-		self.immune_to_check = time + 10;
+		if(self.deadflag)
+		 self.immune_to_check = time + 10;
 		return;
 	}
 	if (teamplay && !self.team_no) {
@@ -241,7 +242,7 @@ void () TeamFortress_ChangeClass =
 	TeamFortress_ExecClassScript(self);
 	if (cease_fire) {
 		sprint(self, 2, "\n\nCEASE FIRE MODE\n");
-		self.immune_to_check = time + 10;
+//		self.immune_to_check = time + 10;
 		self.tfstate = self.tfstate | 65536;
 		TeamFortress_SetSpeed(self);
 	}

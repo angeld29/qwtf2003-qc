@@ -569,7 +569,7 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
 {
 	/* ERROR: Fields and functions must be global: player_assaultcannon2 */
 	local string st;
-	if (vlen(self.velocity) < 20) {
+	if (vlen(self.velocity) < 50 && (self.flags & #FL_ONGROUND)) {
 		muzzleflash();
 		sound(self, 1, "weapons/asscan2.wav", 1, 1);
 		if (self.weaponframe == 2) 
@@ -593,6 +593,10 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
 		else 
 			self.weaponframe = 2;
 		stuffcmd(self, "v_idlescale 5\n");
+/*		st=ftos(vlen(self.velocity));
+		stuffcmd(self,"echo ");
+		stuffcmd(self,st);
+		stuffcmd(self,"\n");*/
 	}
 	if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
 		stuffcmd(self, "v_idlescale 0\n");
@@ -610,7 +614,7 @@ void () player_assaultcannon2 = [104, player_assaultcannon1]
 {
 	local string st;
 	stuffcmd(self, "v_idlescale 0\n");
-	if (vlen(self.velocity) < 20) {
+	if (vlen(self.velocity) < 50 && (self.flags & #FL_ONGROUND)) {
 		if (self.weaponframe == 2) 
 			self.weaponframe = 4;
 		else 

@@ -570,7 +570,7 @@ void (float issilent) TeamFortress_SpyFeignDeath =
 			}
 			at_spot = at_spot.chain;
 		}
-		self.immune_to_check = time + 5;
+//		self.immune_to_check = time + 5;
 		self.tfstate = self.tfstate | #TFSTATE_CANT_MOVE;
 		TeamFortress_SetSpeed(self);
 		self.is_feigning = 1;
