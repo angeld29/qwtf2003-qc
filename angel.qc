@@ -113,16 +113,26 @@ void (entity pl) Angel_PrintRules =
  else 
   sprint(pl, 2, "нев grenades\n");
 
- if (sentry_type == 1) 
+ if (sentry_type == #SENTRY_MTFL) 
   sprint(pl, 2, "Sentry: 2.8.1 fixed(mtfl)\n");
- if (sentry_type == 0) 
+ if (sentry_type == #SENTRY_OLD) 
   sprint(pl, 2, "Sentry: 2.8.1\n");
- if (sentry_type == 2) 
+ if (sentry_type == #SENTRY_FIX) 
   sprint(pl, 2, "Sentry: 2.8.1 fixed new\n");
- if (sentry_type == 3) 
+ if (sentry_type == #SENTRY_NEW) 
    {
      st=ftos(sgppl);
      sprint3(pl, 2, "Sentry: NEW ",st," ppl\n");
+   }
+ if (sentry_type == #SENTRY_MTFL_NEWFIND) 
+   {
+     st=ftos(sgppl);
+     sprint3(pl, 2, "Sentry: MTFL new find ",st," ppl\n");
+   }
+ if (sentry_type == #SENTRY_OLD_NEWFIND) 
+   {
+     st=ftos(sgppl);
+     sprint3(pl, 2, "Sentry: 2.8.1 new find ",st," ppl\n");
    }
 
  if(new_flash)

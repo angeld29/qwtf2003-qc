@@ -416,19 +416,24 @@ void () DecodeLevelParms =
 
     st = infokey(world, "sg");
     if (st == "old") {
-            sentry_type = 0;
+            sentry_type = #SENTRY_OLD;
     }
     else {
             if (st == "fix") 
-                    sentry_type = 2;
+                    sentry_type = #SENTRY_FIX;
             else 
             {
             if (st == "new") 
-                   sentry_type = 3;
-                  else
-                    sentry_type = 1;
-            }
-    }
+                   sentry_type = #SENTRY_NEW;
+              else{
+               if (st == "mtflf") 
+                      sentry_type = #SENTRY_MTFL_NEWFIND;
+                 else{
+               if (st == "oldf") 
+                      sentry_type = #SENTRY_OLD_NEWFIND;
+                 else{
+                    sentry_type = #SENTRY_MTFL;
+    }}}}}
     st = infokey(world, "sgppl");
     if(st == string_null)
      sgppl=12;

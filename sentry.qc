@@ -129,7 +129,7 @@ void () Sentry_Rotate =
 
  self.effects = self.effects - (self.effects & 8);
  CheckSentry(self);
- if(sentry_type == 3)
+ if(sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || #SENTRY_OLD_NEWFIND)
  {
   if (Sentry_FindTarget_Angel()) 
   return;
@@ -421,23 +421,26 @@ void FireSentryLighting(entity targ)=
  local vector dst;
  local vector dir;
  local float rs;
- makevectors(self.v_angle);
- if(sentry_type == 2 || sentry_type == 3)
+
+ if(sentry_type == #SENTRY_FIX || sentry_type == #SENTRY_NEW)
  {
   self.v_angle = self.angles;
+  makevectors(self.v_angle);
   src = self.origin + self.view_ofs;
   dst = targ.origin + targ.view_ofs;
   dir=dst-src;
   normalize(dir);
  }else{
-  if(sentry_type==1)
+  if(sentry_type==#SENTRY_MTFL || sentry_type == #SENTRY_MTFL_NEWFIND)
   {
    self.v_angle = self.angles;
   }
+  makevectors(self.v_angle);
   src = self.origin + v_forward * 10;
   src_z = self.absmin_z + self.size_z * 0.7;
   dir=targ.origin - self.origin;
  }
+ trace_ent=world;
  traceline(src, src + dir * 2048, 0, self);
 
  WriteByte(4, 23);
@@ -541,12 +544,12 @@ float () Sentry_Fire =
      FireSentryLighting(self.enemy);
     }else{
 #endif
-    if (sentry_type == 1 ) {//mtfl sentry
+    if (sentry_type == #SENTRY_MTFL || sentry_type == #SENTRY_MTFL_NEWFIND ) {//mtfl sentry
                 self.v_angle = self.angles;
                 FireBullets(4, dir, '0.1 0.1 0');
         }
         else {
-                if (sentry_type == 2 || sentry_type == 3) {
+                if (sentry_type == #SENTRY_FIX || sentry_type == #SENTRY_NEW) {
                         self.v_angle = self.angles;
                           FireSentryBullets(4,self.enemy, '0.1 0.1 0');
                 }

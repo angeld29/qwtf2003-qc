@@ -36,21 +36,31 @@ void ()Menu_TG_SGOptions=
  local string _sgftype;
  local string _sgchtype;
  _sgppl="";
- if (sentry_type == 1){
+ if (sentry_type == #SENTRY_MTFL){
     _sgtype="Sentry Gun Options:\nSentry: 2.8.1 fixed(mtfl)";
    }
- if (sentry_type == 0) {
+ if (sentry_type == #SENTRY_OLD) {
     _sgtype="Sentry Gun Options:\nSentry: 2.8.1";
   }
- if (sentry_type == 2) {
+ if (sentry_type == #SENTRY_FIX) {
     _sgtype="Sentry Gun Options:\nSentry: 2.8.1 fixed new";
   }
- if (sentry_type == 3) 
+ if (sentry_type == #SENTRY_NEW) 
    {
     _sgppl=NumberToString100(sgppl);
     _sgtype="Sentry Gun Options:\nSentry: NEW,SGPPL =";
-                                
    }
+ if (sentry_type == #SENTRY_MTFL_NEWFIND) 
+   {
+    _sgppl=NumberToString100(sgppl);
+    _sgtype="Sentry Gun Options:\nSentry: MTFL new find,SGPPL =";
+   }
+ if (sentry_type == #SENTRY_OLD_NEWFIND) 
+   {
+    _sgppl=NumberToString100(sgppl);
+    _sgtype="Sentry Gun Options:\nSentry: 2.8.1 new find,SGPPL =";
+   }
+
  if (sg_allow_fire) 
   _sgfire = "4)‰fire ON                    \n";
  else 
@@ -80,7 +90,7 @@ void ()Menu_TG_SGOptions=
    _sgftype = "6) Fire lightning (no damage) \n7) Nothing                    ";
  }
 
- if(sentry_type == 3)
+ if((sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || sentry_type == #SENTRY_OLD_NEWFIND))
  _sgchtype="\n1) Change SG type             \n2) Increase SGPPL             \n3) Decrease SGPPL             \n";
  else
  _sgchtype="\n1) Change SG type             \n                              \n                              \n";
@@ -93,13 +103,13 @@ void (float inp)Menu_TG_SGOptions_Input=
  if(inp == 1)
  {
   sentry_type=sentry_type+1;
-  if(sentry_type >3)sentry_type=0;
+  if(sentry_type>#MAX_SENTRY_TYPES )sentry_type=0;
  }
- if((inp == 2) && (sentry_type == 3))
+ if((inp == 2) && (sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || sentry_type == #SENTRY_OLD_NEWFIND))
  {
   sgppl=sgppl+1;
  }
- if((inp == 3) && (sentry_type == 3))
+ if((inp == 3) && (sentry_type == #SENTRY_NEW || sentry_type == #SENTRY_MTFL_NEWFIND || sentry_type == #SENTRY_OLD_NEWFIND))
  {
   if(sgppl>0){
    sgppl = sgppl - 1;
@@ -125,7 +135,10 @@ void (float inp)Menu_TG_SGOptions_Input=
  {
   ResetMenu();
  }
+ if (inp > 0 && inp <= 7) {
   self.impulse = 0;
+  self.menu_count = 23;
+ }
 
 };
 
