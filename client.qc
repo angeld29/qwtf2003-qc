@@ -1660,11 +1660,9 @@ void () PlayerPostThink =
 		TeamFortress_CheckTeamCheats();
 		self.cheat_check = time + 3;
 	}
-	st = infokey(self, "aid");
-	if (st == string_null) 
           st = infokey(self, "autoid");
         if (st == "on")
-          TeamFortress_ID();
+          TeamFortress_AutoID();
 };
 
 void () ClientConnect =
