@@ -361,9 +361,13 @@ void () DecodeLevelParms =
                                 sentry_type = 1;
                 }
                 st = infokey(world, "sgppl");
-		sgppl=rint(stof(st));
-		if(sgppl<0)sgppl=0;
-
+                if(st == string_null)
+                 sgppl=12;
+                else
+                {
+ 		 sgppl=rint(stof(st));
+		 if(sgppl<0)sgppl=0;
+		}
                 st = infokey(world, "dg");
 		if (st == string_null) 
 		    st = infokey(world, "disable_grens");
@@ -397,13 +401,12 @@ void () DecodeLevelParms =
 		gren2box=stof(st);
 		if(gren2box<0)gren2box=0;
 
-		random_tf_spawn = 1;
+
                 st = infokey(world, "rts");
 		if (st == string_null) 
 		    st = infokey(world, "random_team_spawn");
-		if(st == "off")
-		 random_tf_spawn = 0;
-		else 
+		if(st == "on")
+		 random_tf_spawn = 1;
 
 //////////////
 

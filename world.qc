@@ -129,6 +129,11 @@ void () worldspawn =
 		cvar_set("sv_gravity", "100");
 	else 
 		cvar_set("sv_gravity", "800");
+
+//	cvar_set("pausable", "0");
+//	cvar_set("sv_friction", "6");
+//	cvar_set("sv_waterfriction", "1");
+
 	st = infokey(world, "*sv_gamedir");
 	if (st != string_null && st != "fortress") 
 		objerror("QW TF must be run with a sv_gamedir of \"fortress\".\n");

@@ -1533,6 +1533,7 @@ void () TeamFortress_SetEquipment =
         	te.owner = self;
         	te.classname = "timer";
          }
+         self.ScannerOn = 0;
 ////////
 	if (self.playerclass == 1) {
 		self.weapons_carried = self.weapons_carried | #PC_SCOUT_WEAPONS;
@@ -1783,6 +1784,7 @@ void () TeamFortress_SetEquipment =
 									else {
 										if (self.playerclass == 9) {
 											self.weapons_carried = self.weapons_carried | 8 | 524288 | 256;
+											
 											self.ammo_rockets = 0;
 											self.ammo_nails = 25;
 											self.ammo_shells = 20;
@@ -2049,7 +2051,7 @@ void () TeamFortress_RemoveTimers =
 		self.FlashTime = 0;
 #ifdef ANTIANTIFLASH
        	  if(new_flash)	
-                   disable_updates(te, -1); /* server-side flash */
+                   disable_updates(self, -1); /* server-side flash */
 #endif // antiantiflash
 	}
 	self.item_list = 0;

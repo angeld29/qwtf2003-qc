@@ -754,3 +754,4 @@ void (entity eng) Engineer_RemoveBuildings =
 	DestroyBuilding(eng, "building_sentrygun");
 };
 
+

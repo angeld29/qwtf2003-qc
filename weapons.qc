@@ -868,8 +868,15 @@ void () W_FireAssaultCannon =
 	local vector dir;
 
 	KickPlayer(-4, self);
-	self.ammo_shells = self.ammo_shells - 1;
-	self.currentammo = self.ammo_shells - 1;
+
+	if(self.ScanRange >= 1)
+	{
+ 	 self.ammo_shells = self.ammo_shells - 1;
+	 self.currentammo = self.ammo_shells - 1;
+	 self.ScanRange=0;
+	}else
+	  self.ScanRange= self.ScanRange + 1;
+
 	dir = aim(self, 100000);
 	deathmsg = 20;
 	FireBullets(5, dir, '0.04 0.04 0');
@@ -1687,7 +1694,7 @@ float () W_BestWeapon =
 	if (self.ammo_cells >= 1 && (it & 65536) && self.waterlevel <= 1) 
 		return 65536;
 	else {
-		if (self.ammo_cells >= 6 && self.ammo_shells >= 1 && (it & 32768)) 
+		if (self.ammo_cells >= 6 && self.ammo_shells > #ASSAULT_MIN_SHELLS && (it & 32768)) 
 			return 32768;
 		else {
 			if (self.ammo_cells >= 1 && (it & 4096)) 
@@ -2351,7 +2358,7 @@ void () W_ChangeWeapon =
 											else {
 												if (it & 32768) {
 													fl = 32768;
-													if (self.ammo_shells < 1) 
+													if (self.ammo_shells <= #ASSAULT_MIN_SHELLS) 
 														am = 1;
 													else {
 														if (self.ammo_cells < 4) 
@@ -2386,6 +2393,9 @@ void () W_ChangeWeapon =
 											else {
 												if (self.impulse == 69) {
 													fl = self.last_weapon;
+                                                                                                        if((fl & #WEAP_ASSAULT_CANNON) && self.ammo_shells <= #ASSAULT_MIN_SHELLS)
+                                                                                                         am = 1;
+													
 													if (it & self.last_weapon) 
 														usable = 1;
 													if (fl & (32 | 64 | 128 | 256 | 32768 | 262144) && self.ammo_shells < 1) {
@@ -2404,7 +2414,7 @@ void () W_ChangeWeapon =
 																	if (fl == 16384 && self.ammo_rockets < 3) 
 																		am = 1;
 																	else {
-																		if (fl == 32768 && self.ammo_cells < 4) 
+																		if (fl == #WEAP_ASSAULT_CANNON && self.ammo_cells < 4) 
 																			am = 2;
 																	}
 																}
@@ -2559,7 +2569,7 @@ void () CycleWeaponCommand =
 																		self.current_weapon = 32768;
 																		if (self.ammo_cells < 4) 
 																			am = 1;
-																		if (self.ammo_shells < 1) 
+																		if (self.ammo_shells <= #ASSAULT_MIN_SHELLS) 
 																			am = 1;
 																	}
 																	else {
