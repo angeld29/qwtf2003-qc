@@ -301,6 +301,7 @@ float birthday;
 float sentry_type;
 float disable_grens;
 float disable_powerups;
+float detpack_block;
 float flag_timer;
 float snip_fps;
 float snip_range_fix;

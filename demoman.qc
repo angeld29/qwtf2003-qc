@@ -133,20 +133,23 @@ void (float timer) TeamFortress_SetDetpack =
   }
   at_spot = at_spot.chain;
  }
- at_spot = findradius(self.origin, 100);
- while (at_spot != world)
+ if(detpack_block)
  {
-   if (birthday == 1 && at_spot.mdl == "progs/detpack2.mdl") {
-   sprint(self, 2, "Detpacks can't be stacked!\n");
-  return;
-  }
-  else {
-   if (at_spot.classname == "detpack") {
-   sprint(self, 2, "Detpacks can't be stacked!\n");
+  at_spot = findradius(self.origin, 100);
+  while (at_spot != world)
+  {
+    if (birthday == 1 && at_spot.mdl == "progs/detpack2.mdl") {
+    sprint(self, 2, "Detpacks can't be stacked!\n");
    return;
+   }
+   else {
+    if (at_spot.classname == "detpack") {
+    sprint(self, 2, "Detpacks can't be stacked!\n");
+    return;
+   }
+   }
+   at_spot = at_spot.chain;
   }
-  }
-  at_spot = at_spot.chain;
  }
  if (!(self.flags & #FL_ONGROUND)) {
   sprint(self, 2, "You can't set detpacks in the air!\n");

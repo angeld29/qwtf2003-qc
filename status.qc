@@ -131,7 +131,7 @@ void (entity pl) RefreshStatusBar =
  s5 = ClipSizeToString100(pl);
  s2 = "\n";
  if (pl.playerclass == 4) {
-  if (self.is_detpacking) 
+  if (pl.is_detpacking) 
    s2 = "  setting detpack                      \n";
   else
   {
@@ -159,8 +159,8 @@ void (entity pl) RefreshStatusBar =
   }
   else {
    if (pl.playerclass == 9) {
-    if (self.has_sentry || self.has_dispenser) {
-     if (self.has_sentry ) {
+    if (pl.has_sentry || pl.has_dispenser) {
+     if (pl.has_sentry ) {
       s2 = SentryHealthToString(pl);
       s6 = SentryDetailsToString(pl);
      }
@@ -169,15 +169,15 @@ void (entity pl) RefreshStatusBar =
       s7 = DispHealthToString(pl);
 
      }
-     if (self.has_sentry && self.has_dispenser) 
+     if (pl.has_sentry && pl.has_dispenser) 
      {
       centerprint(pl, s1, s7, s2, s6, s3, s4, s5);
      } 
      else {
-      if (self.has_sentry) 
+      if (pl.has_sentry) 
        centerprint(pl, s1, s2, s6, s3, s4, s5, s7);
       else {
-       if (self.has_dispenser) {
+       if (pl.has_dispenser) {
         s2 = "                                       \n";
         centerprint(pl, s1, s7, s2, s3, s4, s5, s6);
        }
@@ -186,7 +186,7 @@ void (entity pl) RefreshStatusBar =
      return;
     }
     else {
-     if (self.is_building) 
+     if (pl.is_building) 
       s2 = "  building                             \n";
     }
    }

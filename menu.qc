@@ -485,7 +485,7 @@ void () Menu_Intro =
   centerprint(self, st1, "\n", st2);
  }
  else 
-    CenterPrint(self, "Welcome to TeamFortress 2003\nby [sd] angel for MTFL\n======================================\nhttp://mtfl.sd.ru\n");
+    CenterPrint(self, "Welcome to ÔåáíÆïòôòåóó ”’’•\nby sd‘ angel for ÍÔÆÌ\n======================================\nhttp://mtfl.sd.ru\n");
 };
 
 void () Menu_ClassHelp =

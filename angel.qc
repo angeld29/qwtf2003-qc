@@ -59,14 +59,15 @@ entity (float team_num) FindRandomTeamSpawnPoint =
    }
   }
    numspots=0;
+   spot = find(world, team_str_home, teststr);
    while(spot != world)
    {
      if(Activated(spot, self))
        numspots=numspots+1;
      spot = find(spot, team_str_home, teststr);
    }
-   if(numspots == 0) return world;
-   rndspot = rint(random() * (numspots - 1));
+  if(numspots == 0) return world;
+  rndspot = rint(random() * (numspots - 1));
 
   spot = find(world, team_str_home, teststr);
   while(spot != world)
@@ -227,6 +228,7 @@ void (entity pl) Angel_PrintRules =
 void (entity Player) TeamFortress_TeamShowMemberClasses_New =
 {
  local entity e;
+ local entity te;
  local float found;
  local string st;
  local float stf;
@@ -235,7 +237,7 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
  stf=0;
  if(st != string_null)
  {
-  stf=stof(stf);
+  stf=stof(st);
  }
  e = find(world, classname, "player");
  while (e) {
@@ -245,7 +247,9 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
      found = 1;
      sprint(self, 2, "The other members of your team are:\n");
     }
+//    sprint(Player, 2, "\"");
     sprint(Player, 2, e.netname);
+//    sprint(Player, 2, "\"");
     sprint(Player, 2, " : ");
                           st = TeamFortress_GetClassName(e.playerclass);
                           sprint(Player, 2, st);
@@ -301,12 +305,39 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
        if(e.undercover_skin == 9)
         sprint(Player, 2, " Engineer");
       }
-    if((stf & #TF_STATUS_COORD_MASK) ==0)
+    if((e.playerclass == #PC_DEMOMAN) && ((stf & #TF_STATUS_DETPACK_MASK) !=0))
+    {
+     te = find(world, classname, "detpack");
+      while (te) {
+      if (te.owner == e) {
+             st=ftos(rint(te.nextthink - time));
+             sprint2(self, 2, " DTP:", st);
+                          }
+       te = find(te, classname, "detpack");
+                 }
+    }
+    if((e.playerclass == #PC_ENGINEER) && ((stf & #TF_STATUS_SENTRY_MASK) !=0))
+    {
+     if(e.has_sentry)
+     {
+      te = find(world, classname, "building_sentrygun");
+       while (te) {
+       if (te.real_owner == e) {
+             st=ftos(te.weapon);
+             sprint2(self, 2, " SENTRY:", st);
+                                }
+       te = find(te, classname, "building_sentrygun");
+                 }
+     }else{
+      sprint(self, 2, " NOSENTRY");
+     }
+    }
+    if((stf & #TF_STATUS_COORD_MASK) !=0)
     {
        st = vtos(e.origin);
        sprint2(self, 2, " ", st);
     }
-    }
+   }
     sprint(self, 2, "\n");
    }
   }

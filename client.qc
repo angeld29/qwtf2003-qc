@@ -441,6 +441,10 @@ void () DecodeLevelParms =
   if (st == string_null) 
       st = infokey(world, "disable_grens");
   disable_grens=stof(st);
+  st = infokey(world, "dtpb");
+  if(st == "off")
+   detpack_block=0;
+   else detpack_block=1;
 
   st = infokey(world, "dp");
   if (st == string_null) 
