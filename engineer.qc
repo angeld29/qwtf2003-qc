@@ -280,7 +280,6 @@ float (entity obj, entity builder) CheckArea =
  local vector end;
  local float pos;
  local entity te;
- local string st;
 
  pos = pointcontents(obj.origin);
  if (pos == -2 || pos == -6) 
