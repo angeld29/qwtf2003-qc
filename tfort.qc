@@ -2252,8 +2252,8 @@ void (float type) TeamFortress_DropAmmo =
       self.ammo_cells = self.ammo_cells - (ammo - self.ammo_shells) * #AMMO_COST_SHELLS;
       self.ammo_shells = ammo;
      }
-   }else 
-//   if (self.ammo_shells < ammo) 
+   }
+   if (self.ammo_shells < ammo) 
     return;
   }
   self.ammo_shells = self.ammo_shells - ammo;
@@ -2378,8 +2378,12 @@ void () TeamFortress_AmmoboxTouch =
   return;
  if (other.health <= 0) 
   return;
- num_world_ammoboxes = num_world_ammoboxes - 1;
- decrement_team_ammoboxes(self.team_no);
+
+ if(self.team_no)
+  	decrement_team_ammoboxes(self.team_no);
+  else
+	num_world_ammoboxes = num_world_ammoboxes - 1;
+
  if (!self.weapon) {
   sprint(other, 2, "You got ");
   if (self.ammo_shells > 0) {

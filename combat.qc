@@ -175,6 +175,7 @@ void (entity targ, entity inflictor, entity attacker, float damage) T_Damage =
  if (take < 1 && take) 
   take = 1;
  targ.health = targ.health - take;
+
  if (targ.armorvalue < 1) {
   targ.armorclass = 0;
   targ.armorvalue = 0;

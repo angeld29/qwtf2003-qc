@@ -280,11 +280,11 @@ float (entity obj, entity builder) CheckAreaNew =
  local entity te;
  local string st;
 
- traceline(obj.origin, obj.origin , 0, obj , #VEC_CB_MIN , #VEC_CB_MAX );
+ tracecapsule(obj.origin, obj.origin , 0, obj , #VEC_CB_MIN , #VEC_CB_MAX );
  if(trace_startsolid == 1)
  {
-  traceline(obj.origin, obj.origin - '0 0 48', 0, obj, '-16 -16 0','16 16 4' );
-  traceline(trace_endpos + '0 0 1', trace_endpos + '0 0 1', 0, obj  , #VEC_CB_MIN , #VEC_CB_MAX);
+  tracecapsule(obj.origin, obj.origin - '0 0 48', 0, obj, '-16 -16 0','16 16 4' );
+  tracecapsule(trace_endpos + '0 0 1', trace_endpos + '0 0 1', 0, obj  , #VEC_CB_MIN , #VEC_CB_MAX);
   if(trace_startsolid == 1)
   {
    return 0;

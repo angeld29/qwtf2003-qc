@@ -3,65 +3,65 @@ by [sd] angel for MTFL
 
 ////////////////////////////////////////////////////
 Внесенные изменения (на 20.08.2004 r1):
+
 Инженер:
- новая проверка места для построек.
-TG:
-eff_remove
+[+] Новая проверка места для построек (исправленная и дополненная).
+
+Тренировочная версия:
+[+] Команда для лечения всех эффектов (флэш, конк, газ, транк, инфекция) - "eff_remove".
 
 ////////////////////////////////////////////////////
 Внесенные изменения (на 27.03.2004 r1):
-Скаут:
- сообщения 
- You are flashed
- You are conced
-Инженер:
- новая проверка места для построек опциональна
-  localinfo  new_build_check off
-  localinfo  nbc off
-  при вкюченоой новой проверке старая проверка отключена
 
+Инженер:
+[+] Новая проверка места для построек сделана опциональной.
+    Выключается на сервере "localinfo new_build_check off" или "localinfo nbc off".
+    При включенной новой проверке, старая проверка отключена.
+
+Общее:
+[+] Добавлены консольные сообщения:
+    "You are flashed"
+    "You are conced"
 
 ////////////////////////////////////////////////////
 Внесенные изменения (на 18.03.2004 r1):
+
 Инженер:
 [+] Более точная проверка места для постройки.
 
 Общее:
 [+] При localinfo mtfl on часть настроек выставляется в соответсвии с конфигом MTFL
-  (для данных настроек значение localinfo игнорируется)
- в showtf "MTFL Settings ON"
+    (для данных настроек значение localinfo игнорируется)
+    в "showtf" при этом пишется "MTFL Settings ON"
 
-   mtfl = 1;
-   allow_hook = 0;
-   old_grens = 1;
-   invis_only = 0;
-   cheat_pause=1;
-   topcolor_check=1;
-   allow_drop_goal=0;
-   add_pipe =1;
-   new_flash = 1;
-   new_gas = 131;
-
-   sentry_type = SENTRY_NEW;
-   sgppl=12;
-   disable_grens=0;
-   
-   dtpb=1;
-   disable_powerups=0;
-   flag_timer=1;
-   snip_fps = 72;
-   snip_range_fix=0;	
-   snip_ammo=1;
-   snip_time = 1.5;
-   gren2box=0;
-   random_tf_spawn = 1;
-
+    mtfl = 1;
+    allow_hook = 0;
+    old_grens = 1;
+    invis_only = 0;
+    cheat_pause=1;
+    topcolor_check=1;
+    allow_drop_goal=0;
+    add_pipe =1;
+    new_flash = 1;
+    new_gas = 131;
+    sentry_type = SENTRY_NEW;
+    sgppl=12;
+    disable_grens=0;
+    dtpb=1;
+    disable_powerups=0;
+    flag_timer=1;
+    snip_fps = 72;
+    snip_range_fix=0;	
+    snip_ammo=1;
+    snip_time = 1.5;
+    gren2box=0;
+    random_tf_spawn = 1;
 
 ////////////////////////////////////////////////////
 Внесенные изменения (на 10.03.2004 r1):
 
 Общее:
-[+] Теперь topcolor checking показывается в showtf.
+[+] Теперь topcolor chacking показывается в showtf.
 
 Тренировочная версия:
 [+] Убран full_flash.
