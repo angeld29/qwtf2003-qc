@@ -21,8 +21,8 @@ void () UseSpecialSkill =
 
  self.impulse = 0;
  if (self.playerclass == 1) 
-//  self.impulse = 163;
-                ScannerSwitch();
+  self.impulse = 163;
+//                ScannerSwitch();
  else {
   if (self.playerclass == 2) 
    self.impulse = 174;
@@ -1572,7 +1572,7 @@ void () TeamFortress_SetEquipment =
   self.tp_grenades_2 = #PC_SCOUT_GRENADE_TYPE_2;
   self.tf_items = #PC_SCOUT_TF_ITEMS;
                 self.ScannerOn = 0;
-                self.ScanRange = 50;
+                self.ScanRange = #DEFAULT_AUTOSCAN_RANGE;
                 if(self.tf_items_flags <= 0)
    self.tf_items_flags = self.tf_items_flags | #NIT_SCANNER_ENEMY;
   self.armorclass = self.armorclass | #PC_SCOUT_INITARMORCLASS;
@@ -2801,7 +2801,7 @@ void (string halias, float himpulse1, float himpulse2) TeamFortress_Alias =
 
 void () TeamFortress_Regenerate =
 {
-        local entity oldself;
+ local entity oldself;
  if (self.owner.playerclass == 5) {
   self.nextthink = time + 3;
   if (self.owner.has_disconnected == 1) {
@@ -2823,11 +2823,11 @@ void () TeamFortress_Regenerate =
   if (self.owner.health > self.owner.max_health) 
    self.owner.health = self.owner.max_health;
 
-         oldself=self;
-         self=self.owner;
-         W_SetCurrentAmmo();
-         self=oldself;
-
+/*   oldself=self;
+   self=self.owner;
+   W_SetCurrentAmmo();
+   self=oldself;*/
+   self.owner.currentammo = self.owner.ammo_medikit;
  }
 };
 

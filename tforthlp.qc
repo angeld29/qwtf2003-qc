@@ -19,9 +19,13 @@ void () TeamFortress_MOTD =
   }
   if (!self.got_aliases) 
    sprint(self, 2, "\n\n\n");
+//  sprint(self, 2, "Type help for more info.\n");
+//  sprint(self, 2, "TeamFortress QuakeWorld v2.8.1\n");
+//  sprint(self, 2, " fixed by [sd] angel\n");
   sprint(self, 2, "Type help for more info.\n");
-  sprint(self, 2, "TeamFortress QuakeWorld v2.8.1\n");
-  sprint(self, 2, " fixed by [sd] angel\n");
+  sprint(self, 2, "TeamFortress QuakeWorld 2003\n");
+  sprint(self, 2, "http://mtfl.sd.ru\n");
+
   self.menu_displaytime = 0;
   self.current_menu = 5;
   self.menu_count = 25;
@@ -57,6 +61,7 @@ void () TeamFortress_MOTD =
   TeamFortress_Alias("scan100", 164, 0);
   TeamFortress_Alias("scanf", 161, 0);
   TeamFortress_Alias("scane", 160, 0);
+  TeamFortress_Alias("autoscan", #AUTOSCAN_IMPULSE, 0);
   return;
  }
  if (self.motd == 35) {

@@ -483,6 +483,9 @@ void (entity p) bound_other_ammo =
   p.ammo_medikit = p.maxammo_medikit;
  if (p.armorvalue > p.maxarmor) 
   p.armorvalue = p.maxarmor;
+ if (p.ammo_detpack > p.maxammo_detpack) 
+  p.ammo_detpack = p.maxammo_detpack;
+
  if (p.no_grenades_1 > 4) 
   p.no_grenades_1 = 4;
  if (p.no_grenades_2 > 4) 
@@ -1376,11 +1379,24 @@ void () BackpackTouch =
  other.ammo_cells = other.ammo_cells + self.ammo_cells;
  if(gren2box & #BP_TYPE_HEALTH)
   if (self.ammo_medikit > 0) {
+
   best = other.max_health - other.health;
-  T_Heal(other, self.ammo_medikit, 1);
-  if (other.health == other.max_health && other.playerclass == #PC_MEDIC) 
-   other.ammo_medikit = other.ammo_medikit + self.ammo_medikit - best;
+  if(best>0)
+  {
+   if(best>=self.ammo_medikit)
+   {
+    T_Heal(other, self.ammo_medikit, 0);
+    self.ammo_medikit=0;
+   }else
+   {
+    T_Heal(other, best, 0);
+    self.ammo_medikit=self.ammo_medikit-best;
+   }
+   
   }
+  if (self.ammo_medikit>0 && other.playerclass == #PC_MEDIC) 
+   other.ammo_medikit = other.ammo_medikit + self.ammo_medikit;
+ }
  if(gren2box & #BP_TYPE_ARMOR)
        if (other.armorvalue * other.armortype < self.armorvalue * self.armortype) {
         other.armorvalue = self.armorvalue;
@@ -1400,13 +1416,16 @@ void () BackpackTouch =
               } 
        }else  if(gren2box & #BP_GREN)
        {
-  other.no_grenades_1 = other.no_grenades_1 + self.no_grenades_1;
-  other.no_grenades_2 = other.no_grenades_2 + self.no_grenades_2;
-  gotgren1=1;
-  gotgren2=1;
+        other.no_grenades_1 = other.no_grenades_1 + self.no_grenades_1;
+        other.no_grenades_2 = other.no_grenades_2 + self.no_grenades_2;
+        gotgren1=1;
+        gotgren2=1;
        }
  if(gren2box & #BP_TYPE_DETPACK)
-  other.ammo_detpack = self.ammo_detpack;
+ {
+  if(self.ammo_detpack>0 && other.playerclass == #PC_DEMOMAN)
+   other.ammo_detpack = other.ammo_detpack + self.ammo_detpack;
+ }
 
 
  bound_other_ammo(other);

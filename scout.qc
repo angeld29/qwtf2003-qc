@@ -151,11 +151,12 @@ void () FlashTimerNew =
   return;
  }
  st = ftos(te.FlashTime * 10);
- if(te.FlashTime > (24 - #NEW_FLASH_START_TIME))
+ if(te.FlashTime < (24 - #NEW_FLASH_START_TIME))
  {
+/*
 //     stuffcmd(te, "v_cshift 255 255 255 255\n");
  }else
- {
+ {*/
   stuffcmd(te, "v_cshift ");
   stuffcmd(te, st);
   stuffcmd(te, " ");
@@ -374,7 +375,7 @@ void () TeamFortress_AutoScan =
  local entity oldself;
  oldself=self;
  self=oldself.owner;
- TeamFortress_Scan_Angel(self.ScanRange);
+ TeamFortress_Scan_Angel(self.ScanRange,1);
  self=oldself;
  self.nextthink = time + #TF_AUTOSCAN_TIME;
 };
@@ -464,7 +465,8 @@ void (float scanrange) TeamFortress_Scan =
    sprint(self, #PRINT_HIGH, "All scanner functions are disabled.\n");
    return;
   }
-//  sprint(self, #PRINT_HIGH, "Scanning...\n");
+  if(self.ScannerOn == 0)
+   sprint(self, #PRINT_HIGH, "Scanning...\n");
   scanrange = scanrange * 25;
   list = T_RadiusScan(self, scanrange, scen, scfr);
  }
@@ -516,7 +518,8 @@ void (float scanrange) TeamFortress_Scan =
   list = list.linked_list;
  }
  if (!scen && !scfr) {
-//  sprint(self, #PRINT_HIGH, "No blips.\n");
+  if(self.ScannerOn == 0)
+   sprint(self, #PRINT_HIGH, "No blips.\n");
   return;
  }
  W_SetCurrentAmmo();
@@ -635,7 +638,7 @@ entity (entity scanner, float scanrange, float enemies, float friends) T_RadiusS
 
 //////////////////////////////////////////
 
-void (float scanrange) TeamFortress_Scan_Angel =
+void (float scanrange,float typescan) TeamFortress_Scan_Angel =
 {
  local string power;
  local entity list;
@@ -649,6 +652,7 @@ void (float scanrange) TeamFortress_Scan_Angel =
  local float enemy_detected;
  local float friend_detected;
  local float any_detected;
+ local float any_detected2;
  local vector vf;
  local vector vr;
  local vector e;
@@ -690,6 +694,7 @@ void (float scanrange) TeamFortress_Scan_Angel =
         }
         if (scanrange > 50) 
          scanrange = 50;
+
         if(self.ScanRange != scanrange)
         {
          self.ScanRange=scanrange;
@@ -705,7 +710,9 @@ void (float scanrange) TeamFortress_Scan_Angel =
          sprint(self, #PRINT_HIGH, "All scanner functions are disabled.\n");
          return;
         }
-//  sprint(self, #PRINT_HIGH, "Scanning...\n");
+    if(typescan == 0)
+       sprint(self, #PRINT_HIGH, "Scanning...\n");
+       any_detected2=0;
         scanrange = scanrange * 25;
         minlen=scanrange+100;
         list = findradius(self.origin, scanrange + 40);
@@ -738,6 +745,7 @@ void (float scanrange) TeamFortress_Scan_Angel =
           }
          if(any_detected)
          {
+           any_detected2=1;
            /*len=vlen(list.origin - self.origin);
            if(!saveent || (len < minlen))
            {
@@ -776,6 +784,9 @@ void (float scanrange) TeamFortress_Scan_Angel =
          WriteCoord(#MSG_ONE, lightningvec_y);
          WriteCoord(#MSG_ONE, lightningvec_z + 8);
         }*/
+   if(typescan == 0 && any_detected2==0)
+    sprint(self, #PRINT_HIGH, "No blips.\n");
+
  W_SetCurrentAmmo();
  return;
 };
