@@ -359,14 +359,48 @@ void () Sentry_Die =
  self.nextthink = time + 0.1;
 };
 
+void (float shotcount, entity targ, vector spread) FireSentryBullets2 =
+{
+ local vector direction;
+ local vector src;
+ local vector dst;
+ local vector dir;
+ local string st;
+
+ makevectors(self.v_angle);
+ src = self.origin + self.view_ofs;
+ dst = targ.origin + targ.view_ofs;
+// src = self.origin + v_forward * 10;
+// src_z = self.absmin_z + self.size_z * 0.7;
+
+ dir=dst-src;
+ ClearMultiDamage();
+ traceline(src, src + dir * 2048, 0, self);
+ puff_org = trace_endpos - dir * 4;
+ while (shotcount > 0) {
+  direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
+  normalize(direction);
+  traceline(src, src + direction*2048 , 0, self);
+  if (trace_fraction != 1) {
+    TraceAttack(4, direction);
+  }
+  shotcount = shotcount - 1;
+ }
+ ApplyMultiDamage();
+ Multi_Finish();
+};
+
 void (float shotcount, vector target, vector spread) FireSentryBullets =
 {
  local vector direction;
  local vector src;
  local vector dir;
+ local string st;
+
  makevectors(self.v_angle);
  src = self.origin + v_forward * 10;
  src_z = self.absmin_z + self.size_z * 0.7;
+
  dir=target-src;
  ClearMultiDamage();
  traceline(src, src + dir * 2048, 0, self);
@@ -435,7 +469,8 @@ float () Sentry_Fire =
                         self.v_angle = self.angles;
 //                        dir = normalize(dir);
 //                        FireBullets(4, dir, '0.1 0.1 0');
-                        FireSentryBullets(4,self.enemy.origin, '0.1 0.1 0');
+                          FireSentryBullets2(4,self.enemy, '0.1 0.1 0');
+//                        FireSentryBullets(4,self.enemy.origin, '0.1 0.1 0');
 /*                        FireBullets(5, dir, '0.08 0.08 0');*/
                 }
                 else 

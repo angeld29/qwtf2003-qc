@@ -1,4 +1,4 @@
-#pragma PROGS_DAT "./bin/qwprogs.dat"
+#pragma PROGS_DAT "./qwprogs.dat"
 #pragma PROGS_SRC "progs.src"
 
 #includelist
