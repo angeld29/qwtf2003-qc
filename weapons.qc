@@ -1134,6 +1134,19 @@ void () W_FireLightning =
  LightningDamage(self.origin, trace_endpos + v_forward * 4, self, 30);
 };
 
+float (entity player) CountPlayerPipebombs =
+{
+ local entity old;
+ local float num_pipes;
+  
+  num_pipes = 0;
+  old = find(world, classname, "pipebomb");
+  while(old){
+   if(old.owner == player) num_pipes = num_pipes + 1;
+   old = find(old, classname, "pipebomb");
+  }
+ return num_pipes;
+}
 float (float tno) num_team_pipebombs =
 {
  if (tno == 1) 
@@ -1198,14 +1211,17 @@ void (float tno) RemoveOldFlare =
  }
 };
 
-void (float tno) ExplodeOldPipebomb =
+
+void (float tno,float extra) ExplodeOldPipebomb =
+//void (float tno) ExplodeOldPipebomb =
 {
  local entity old;
  local float index;
 
  if (tno) {
   index = num_team_pipebombs(tno);
-  index = index - #MAX_WORLD_PIPEBOMBS / number_of_teams;
+  index = index - #MAX_WORLD_PIPEBOMBS / number_of_teams ;//- 1 ;//extra pipepomb
+  if( extra)index = index - 1;
  }
  else 
   index = num_world_pipebombs - #MAX_WORLD_PIPEBOMBS;
@@ -1220,8 +1236,8 @@ void (float tno) ExplodeOldPipebomb =
    return;
   }
   if (old.owner.team_no == tno || !tno) {
-   old.nextthink = time + 0.5;
-   index = index - 1;
+    old.nextthink = time + 0.5;
+    index = index - 1;
   }
   old = find(old, classname, "pipebomb");
  }
@@ -1307,8 +1323,10 @@ void () GrenadeExplode =
   return;
  self.voided = 1;
  if (self.classname == "pipebomb") {
-  num_world_pipebombs = num_world_pipebombs - 1;
-  decrement_team_pipebombs(self.team_no);
+ if(!self.team_no)
+   num_world_pipebombs = num_world_pipebombs - 1;
+  else
+   decrement_team_pipebombs(self.team_no);
   if (!(self.flags & 512)) 
    self.weapon = 40;
  }
@@ -1350,6 +1368,8 @@ void () GrenadeTouch =
 
 void () W_FireGrenade =
 {
+ local float num_pipes;
+ local float num_team_pipes;
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
@@ -1370,15 +1390,27 @@ void () W_FireGrenade =
   newmis.nextthink = time + 2.5;
  }
  else {
+  num_pipes = CountPlayerPipebombs(self);
   if (self.team_no) {
    increment_team_pipebombs(self.team_no);
-   if (num_team_pipebombs(self.team_no) > #MAX_WORLD_PIPEBOMBS / number_of_teams) 
-    ExplodeOldPipebomb(self.team_no);
-  }
-  else {
+   num_team_pipes = num_team_pipebombs(self.team_no);
+
+   if(num_pipes == 0 && add_pipe == 1){
+    if (num_team_pipes  >  #MAX_WORLD_PIPEBOMBS / number_of_teams + 1) 
+      ExplodeOldPipebomb(self.team_no,1);
+   }else{
+     if (num_team_pipes >  (#MAX_WORLD_PIPEBOMBS / number_of_teams )) 
+       ExplodeOldPipebomb(self.team_no,0);
+   }
+  }else {
    num_world_pipebombs = num_world_pipebombs + 1;
-   if (num_world_pipebombs > #MAX_WORLD_PIPEBOMBS) 
-    ExplodeOldPipebomb(0);
+   if(num_pipes == 0 && add_pipe == 1 ){
+    if (num_world_pipebombs > #MAX_WORLD_PIPEBOMBS+1) 
+     ExplodeOldPipebomb(0,1);
+   }else{
+     if (num_world_pipebombs > #MAX_WORLD_PIPEBOMBS)
+      ExplodeOldPipebomb(0,0);
+    }
   }
   newmis.classname = "pipebomb";
   newmis.skin = 2;

@@ -412,6 +412,11 @@ void () DecodeLevelParms =
   if (st == "on") 
    allow_drop_goal=1;
    else  allow_drop_goal=0;
+  st = infokey(world, "add_pipe");
+  if (st == "on") 
+  add_pipe = 1;
+  else add_pipe =0;
+
   st = infokey(world, "nf");
   if (st == string_null) 
    st = infokey(world, "new_flash");

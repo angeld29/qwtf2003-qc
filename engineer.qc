@@ -280,7 +280,6 @@ float (entity obj, entity builder) CheckArea =
  local vector end;
  local float pos;
  local entity te;
-
  pos = pointcontents(obj.origin);
  if (pos == -2 || pos == -6) 
   return 0;
@@ -309,6 +308,7 @@ float (entity obj, entity builder) CheckArea =
  end_y = obj.origin_y + obj.mins_y - 16;
  end_z = obj.origin_z + obj.mins_z - 16;
  traceline(src, end, 1, obj);
+
  if (trace_fraction != 1) 
   return 0;
  pos = pointcontents(end);
@@ -322,6 +322,78 @@ float (entity obj, entity builder) CheckArea =
   return 0;
  return 1;
 };
+
+float (entity obj, entity builder) CheckArea_test =
+{
+ local vector src;
+ local vector end;
+ local float pos;
+ local entity te;
+ local vector qq;
+ local string st;
+
+ qq=builder.origin;
+ qq_z = builder.origin_z - 24;
+ st=vtos(qq);
+ sprint(builder,2,st," ");
+ qq=obj.origin;
+ st=vtos(qq);
+ sprint(builder,2,st,"\n");
+
+ pos = pointcontents(obj.origin);
+ if (pos == -2 || pos == -6) 
+  return 0;
+ src_x = obj.origin_x + obj.maxs_x + 24;
+ src_y = obj.origin_y + obj.maxs_y + 24;
+ src_z = obj.origin_z + obj.maxs_z + 16;
+ pos = pointcontents(src);
+ if (pos == -2 || pos == -6) 
+  return 0;
+ end_x = obj.origin_x + obj.mins_x - 16;
+ end_y = obj.origin_y + obj.mins_y - 16;
+ end_z = obj.origin_z + obj.mins_z - 16;
+ traceline(src, end, 1, obj);
+
+ st=vtos(src);
+ sprint(builder,2,st," ");
+ st=vtos(end);
+ sprint(builder,2,st,"\n");
+
+ if (trace_fraction != 1) 
+  return 0;
+ pos = pointcontents(end);
+ if (pos == -2 || pos == -6) 
+  return 0;
+ src_x = obj.origin_x + obj.mins_x - 16;
+ src_y = obj.origin_y + obj.maxs_y + 16;
+ src_z = obj.origin_z + obj.maxs_z + 16;
+ pos = pointcontents(src);
+ if (pos == -2 || pos == -6) 
+  return 0;
+ end_x = obj.origin_x + obj.maxs_x + 16;
+ end_y = obj.origin_y + obj.mins_y - 16;
+ end_z = obj.origin_z + obj.mins_z - 16;
+ traceline(src, end, 1, obj);
+
+ st=vtos(src);
+ sprint(builder,2,st," ");
+ st=vtos(end);
+ sprint(builder,2,st,"\n");
+
+ if (trace_fraction != 1) 
+  return 0;
+ pos = pointcontents(end);
+ if (pos == -2 || pos == -6) 
+  return 0;
+ traceline(builder.origin, obj.origin, 1, builder);
+ if (trace_fraction != 1) 
+  return 0;
+ te = findradius(obj.origin, 64);
+ if (te != world) 
+  return 0;
+ return 1;
+};
+
 
 void (float objtobuild) TeamFortress_Build =
 {
@@ -371,6 +443,7 @@ void (float objtobuild) TeamFortress_Build =
 #endif
   }
  }
+ 	
  if (!CheckArea(newmis, self)) {
   sprint(self, 2, "Not enough room to build here\n");
   dremove(newmis);
@@ -410,15 +483,19 @@ void (entity bld) CheckBelowBuilding =
  local vector below;
 
  below = bld.origin;
- if (bld.classname == "detpack") 
+ if (bld.classname == "detpack")
   below_z = below_z - 8;
  else 
   below_z = below_z - 24;
- traceline(bld.origin, below, 1, bld);
+ traceline(bld.origin , below, 1, bld);
  if (trace_fraction == 1) {
   bld.movetype = 6;
   bld.flags = bld.flags - (bld.flags & 512);
  }
+ /*else{
+  bld.flags = (bld.flags | 512);
+ }*/
+
 };
 
 void () DispenserThink =

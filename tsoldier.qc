@@ -35,10 +35,12 @@ void () NailGrenadeExplode =
   neworigin_x=0;
   neworigin_y=0;
   neworigin_z=32;
+#ifndef TG
  traceline(self.origin, self.origin + neworigin, 1, self);
  if (trace_fraction != 1){
   neworigin_z =   neworigin_z *trace_fraction - 1;
  }
+#endif
  setorigin(self, self.origin + neworigin);
 // setorigin(self, self.origin + '0 0 32');
  self.avelocity = '0 500 0';

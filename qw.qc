@@ -285,6 +285,7 @@ float allow_hook;
 float flagem_checked;
 float cease_fire;
 float allow_drop_goal;
+float add_pipe;
 
 .float teamkills;
 

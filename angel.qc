@@ -175,6 +175,11 @@ void (entity pl) Angel_PrintRules =
         else 
          sprint(pl, 2, "Drop Goals: ÏÆÆ\n");
 
+ if(add_pipe)
+         sprint(pl, 2, "Additional pipebomb: ÏÎ\n");
+        else 
+         sprint(pl, 2, "Additional pipebomb: ÏÆÆ\n");
+
  if (gren2box) 
  {
    sprint(pl, 2, "Extended Backpack:\n");
