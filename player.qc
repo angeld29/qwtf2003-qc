@@ -1084,6 +1084,7 @@ void () PlayerDie =
  local float i;
  local entity te;
  local string s;
+ local entity saveself;
 
  if (self.hook_out) {
   Reset_Grapple(self.hook);
@@ -1100,7 +1101,15 @@ void () PlayerDie =
  while (te != world && te.owner != self) 
   te = find(te, classname, "primer");
  if (te != world) 
-  te.nextthink = time;
+//  te.nextthink = time;
+ {
+   self.deadflag = 1;
+   saveself=self;
+   self=te;
+   te.think();
+   self=saveself;
+   self.deadflag = 0;
+ }
  self.items = self.items - (self.items & 524288);
  self.invisible_finished = 0;
  self.invincible_finished = 0;

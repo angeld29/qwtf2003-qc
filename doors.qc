@@ -14,6 +14,9 @@ void () door_blocked =
   dremove(other);
   return;
  }
+ if (other.classname == "player" && other.health <= 0) 
+  return;
+
  T_Damage(other, self, self, self.dmg);
  if (self.wait >= 0) {
   if (self.state == 3) 

@@ -49,8 +49,13 @@ float () button_touch =
 {
  local entity te;
 
+
  if (cb_prematch_time > time) 
   return;
+
+ if (other.health <= 0) 
+  return;
+
  if (other.classname != "player") 
   return;
  if (self.goal_activation & 8) 

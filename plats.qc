@@ -143,6 +143,9 @@ void () plat_crush =
   dremove(other);
   return;
  }
+ if (other.classname == "player" && other.health <= 0) 
+  return;
+
  T_Damage(other, self, self, 1);
  if (self.state == 2) 
   plat_go_down();
