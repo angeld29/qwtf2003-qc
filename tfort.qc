@@ -1563,7 +1563,7 @@ void () TeamFortress_SetEquipment =
          te.owner = self;
          te.classname = "timer";
          }
-         self.ScannerOn = 0;
+//         self.ScannerOn = 0;
 ////////
  if (self.playerclass == 1) {
   self.weapons_carried = self.weapons_carried | #PC_SCOUT_WEAPONS;
@@ -1583,9 +1583,14 @@ void () TeamFortress_SetEquipment =
    self.tp_grenades_1 = 10;
   self.tp_grenades_2 = #PC_SCOUT_GRENADE_TYPE_2;
   self.tf_items = #PC_SCOUT_TF_ITEMS;
-                self.ScannerOn = 0;
-                self.ScanRange = #DEFAULT_AUTOSCAN_RANGE;
-                if(self.tf_items_flags <= 0)
+  if(self.ScannerOn)
+   {
+    self.ScannerOn = 0;
+    ScannerSwitch();
+   }
+  if(self.ScanRange == 0)
+   self.ScanRange = #DEFAULT_AUTOSCAN_RANGE;
+  if(self.tf_items_flags <= 0)
    self.tf_items_flags = self.tf_items_flags | #NIT_SCANNER_ENEMY;
   self.armorclass = self.armorclass | #PC_SCOUT_INITARMORCLASS;
   self.armortype = #PC_SCOUT_INITARMORTYPE;

@@ -2787,7 +2787,7 @@ void () ImpulseCommands =
        if (self.impulse == 179 && self.playerclass == 9) 
         TeamFortress_EngineerBuild();
        else {
-       if (self.impulse == #AUTOSCAN_IMPULSE && self.playerclass == 1) 
+       if (self.impulse == #AUTOSCAN_IMPULSE && self.playerclass == #PC_SCOUT) 
        {
         ScannerSwitch();
        }else
