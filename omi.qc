@@ -223,7 +223,5 @@ float () Omi_GetSavedImpulse =
   return 173;
  }
 
-
-
  return 0;
 };

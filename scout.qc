@@ -189,9 +189,12 @@ void () FlashGrenadeExplode =
      deathmsg = 35;
      TF_T_Damage(te, self, self.owner, 60, 2, 16 | 4);
     }
+#ifdef TG
+    if ((te != self.owner || gren_effect != 2) && gren_effect) {
+#endif
     if (te.health > 0) {
-            if(new_flash)
-            {
+      if(new_flash)
+      {
       if (!te.FlashTime) {
       newmis = spawn();
       newmis.classname = "timer";
@@ -241,6 +244,9 @@ void () FlashGrenadeExplode =
      stuffcmd(te, "\n");
      }
     }
+#ifdef TG
+    }
+#endif
    }
   }
   te = te.chain;
@@ -544,6 +550,9 @@ void (entity inflictor, entity attacker, float bounce, entity ignore) T_RadiusBo
        head.flags = head.flags - 512;
      }
      else {
+#ifdef TG
+      if ((head != inflictor.owner || gren_effect != 2) && gren_effect) {
+#endif
       te = find(world, classname, "timer");
       while ((te.owner != head || te.think != ConcussionGrenadeTimer || te.think != OldConcussionGrenadeTimer) && te != world) 
        te = find(te, classname, "timer");
@@ -582,6 +591,9 @@ void (entity inflictor, entity attacker, float bounce, entity ignore) T_RadiusBo
         te.health = 800;
        }
       }
+#ifdef TG
+     }
+#endif         
      }
     }
    }

@@ -20,7 +20,11 @@ void () TeamFortress_MOTD =
   if (!self.got_aliases) 
   sprint(self, 2, "\n\n\n");
   sprint(self, 2, "Type help for more info.\n");
+#ifdef TG
+  sprint(self, 2, "Ñõáëå×ïòìä ÔåáíÆïòôòåóó ”’’• Training Version\n");
+#else
   sprint(self, 2, "Ñõáëå×ïòìä ÔåáíÆïòôòåóó ”’’•\n");
+#endif
   sprint(self, 2, "http://íôæì®óä®òõ\n");
 
   self.menu_displaytime = 0;
@@ -116,8 +120,12 @@ void () TeamFortress_MOTD =
   TeamFortress_Alias("-det50", 169, 0);
   return;
  }
- if (self.motd == 85) 
+ if (self.motd == 85) {
+#ifdef TG
+  TeamFortress_Alias("mod_menu", #TG_MAINMENU_IMPULSE, 0);
+#endif
   return;
+ }
  if (self.motd == 95) {
   TeamFortress_Alias("disguise", 177, 0);
   TeamFortress_Alias("feign", 178, 0);

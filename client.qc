@@ -437,7 +437,16 @@ void () DecodeLevelParms =
      sgppl=rint(stof(st));
      if(sgppl<0)sgppl=0;
     }
-    st = infokey(world, "dg");
+#ifdef TG
+  sg_allow_fire=1;
+  sg_allow_find=#TG_SG_FIND_IGNORE_TEAM;
+  sg_fire_type=#TG_SG_FIRE_NORMAL;
+  gren_time=10;
+  gren_effect=2;
+  detpack_disarm=1;
+  detpack_drop=0;
+#endif
+  st = infokey(world, "dg");
   if (st == string_null) 
       st = infokey(world, "disable_grens");
   disable_grens=stof(st);
@@ -1132,8 +1141,10 @@ void () PutClientInServer =
   self.tfstate = 0;
  if (iszoom == 1) 
   self.tfstate = self.tfstate | 4096;
+#ifndef TG
  if (self.playerclass != 9) 
   Engineer_RemoveBuildings(self);
+#endif
  self.takedamage = 2;
  TeamFortress_PrintClassName(self, self.playerclass, self.tfstate & 8);
  TeamFortress_SetEquipment();
@@ -1961,7 +1972,11 @@ void () ClientDisconnect =
  Engineer_RemoveBuildings(self);
  te = find(world, classname, "detpack");
  while (te) {
+#ifndef TG
   if (te.owner == self) {
+#else
+  if (te.real_owner == self) {
+#endif
    if (te.weaponmode == 1) {
     TeamFortress_SetSpeed(te.enemy);
     dremove(te.oldenemy);

@@ -255,6 +255,9 @@ void () W_FireSpanner =
         trace_ent.armorvalue = trace_ent.armorvalue + healam * 4;
         if (trace_ent.armorvalue > trace_ent.maxarmor) 
          trace_ent.armorvalue = trace_ent.maxarmor;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
         self.ammo_cells = self.ammo_cells - healam;
         sound(trace_ent, 1, "items/r_item1.wav", 1, 1);
         WriteByte(4, 23);
@@ -689,19 +692,6 @@ void (float shotcount, vector dir, vector spread) FireBullets =
  puff_org = trace_endpos - normalize(dir) * 4;
 #endif
 
-#ifdef CHEATBUILD
- WriteByte(4, 23);
- WriteByte(4, 6);
- WriteEntity(4, self);
- WriteCoord(4, src_x);
- WriteCoord(4, src_y);
- WriteCoord(4, src_z);
- WriteCoord(4, trace_endpos_x);
- WriteCoord(4, trace_endpos_y);
- WriteCoord(4, trace_endpos_z);
- multicast(src, 1);
-#endif
-
  while (shotcount > 0) {
   direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
   traceline(src, src + direction * 2048, 0, self);
@@ -729,7 +719,13 @@ void () W_FireShotgun =
 
  sound(self, 1, "weapons/guncock.wav", 1, 1);
  KickPlayer(-2, self);
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_shells = self.ammo_shells - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_shells - 1;
  dir = aim(self, 100000);
  deathmsg = 1;
@@ -746,7 +742,13 @@ void () W_FireSuperShotgun =
  }
  sound(self, 1, "weapons/shotgn2.wav", 1, 1);
  KickPlayer(-4, self);
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_shells = self.ammo_shells - 2;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_shells - 2;
  dir = aim(self, 100000);
  deathmsg = 2;
@@ -802,7 +804,13 @@ void () W_FireSniperRifle =
 
  sound(self, 1, "weapons/sniper.wav", 1, 1);
  KickPlayer(-2, self);
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_shells = self.ammo_shells - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_shells - 1;
  makevectors(self.v_angle);
  if(snip_range_fix)
@@ -887,7 +895,13 @@ void () W_FireAutoRifle =
 
  sound(self, 1, "weapons/sniper.wav", 1, 1);
  KickPlayer(-1, self);
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_shells = self.ammo_shells - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_shells - 1;
  makevectors(self.v_angle);
  dir = v_forward;
@@ -911,7 +925,13 @@ void () W_FireAssaultCannon =
 
  if(self.ScanRange <10)
  {
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
    self.ammo_shells = self.ammo_shells - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
    self.currentammo = self.ammo_shells - 1;
    self.ScanRange= self.ScanRange + 1;
  }else
@@ -988,7 +1008,13 @@ void () T_MissileTouch =
 
 void () W_FireRocket =
 {
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_rockets = self.ammo_rockets - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_rockets - 1;
  sound(self, 1, "weapons/sgun1.wav", 1, 1);
  KickPlayer(-2, self);
@@ -1079,7 +1105,13 @@ void () W_FireLightning =
   self.t_width = time + 0.6;
  }
  KickPlayer(-2, self);
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_cells = self.ammo_cells - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_cells - 1;
  org = self.origin + '0 0 16';
  traceline(org, org + v_forward * 600, 1, self);
@@ -1394,7 +1426,13 @@ void () W_FireSuperSpikes =
  local entity old;
 
  sound(self, 1, "weapons/spike2.wav", 1, 1);
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_nails = self.ammo_nails - 4;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_nails - 4;
  dir = aim(self, 1000);
  launch_spike(self.origin + '0 0 16', dir);
@@ -1425,11 +1463,23 @@ void (float ox) W_FireSpikes =
  }
  sound(self, 1, "weapons/rocket1i.wav", 1, 1);
  if (self.ammo_nails == 1) {
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
   self.ammo_nails = self.ammo_nails - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
   self.currentammo = self.ammo_nails - 1;
  }
  else {
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
   self.ammo_nails = self.ammo_nails - 2;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
   self.currentammo = self.ammo_nails - 2;
  }
  dir = aim(self, 1000);
@@ -2710,6 +2760,13 @@ void () ImpulseCommands =
  }
  if (self.impulse == 171) 
   UseSpecialSkill();
+#ifdef TG
+ if(self.impulse == #TG_MAINMENU_IMPULSE)
+ {
+   self.current_menu = #TG_MENU_MAIN;
+   self.impulse = 0;
+ }
+#endif
  if (!self.is_building && !self.is_detpacking && !self.is_feigning) {
   if ((self.impulse >= 1 && self.impulse < 8) || self.impulse == 176) 
    W_ChangeWeapon();
@@ -2807,7 +2864,11 @@ void () ImpulseCommands =
        if (self.impulse == #TF_SPY_SFEIGN_IMPULSE  && self.playerclass == 8) 
         TeamFortress_SpyFeignDeath(1);
        else {
-       if (self.impulse == 179 && self.playerclass == 9) 
+       if (self.impulse == 179 
+#ifndef TG
+       && self.playerclass == 9
+#endif
+       ) 
         TeamFortress_EngineerBuild();
        else {
        if (self.impulse == #AUTOSCAN_IMPULSE && self.playerclass == #PC_SCOUT) 

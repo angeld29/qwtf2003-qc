@@ -165,6 +165,10 @@ void () Sentry_Rotate =
 float (entity Target) CheckTarget=
 {
     local float r;
+#ifdef TG
+    if(sg_allow_find == #TG_SG_FIND_IGNORE_ALL)
+     return 0;
+#endif
     if (!Target) 
      return 0;
     if (Target == self) 
@@ -172,14 +176,6 @@ float (entity Target) CheckTarget=
     if (Target.has_disconnected == 1) 
      return 0;
     if (!Target.takedamage) 
-     return 0;
-    if (teamplay) {
-     if (Target.team_no == self.team_no && self.team_no) 
-      return 0;
-     if (Target.undercover_team == self.team_no && self.team_no) 
-            return 0;
-    }
-    if (Target == self.real_owner) 
      return 0;
     if (Target.is_feigning) 
      return 0;
@@ -196,6 +192,33 @@ float (entity Target) CheckTarget=
      if (r == 2 && !infront(Target)) 
       return 0;
     }
+
+#ifdef TG
+    if(sg_allow_find == #TG_SG_FIND_IGNORE_OFF)
+     return 1;
+#endif
+
+    if (teamplay) {
+     if (Target.team_no == self.team_no && self.team_no) {
+#ifdef TG
+     if(sg_allow_find == #TG_SG_FIND_IGNORE_TEAM)
+#endif
+       return 0;
+      }
+     if (Target.undercover_team == self.team_no && self.team_no) {
+#ifdef TG
+     if(sg_allow_find == #TG_SG_FIND_IGNORE_TEAM)
+#endif
+            return 0;
+       }
+    }
+    if (Target == self.real_owner){
+#ifdef TG
+     if(sg_allow_find == #TG_SG_FIND_IGNORE_OWNER)
+#endif
+      return 0;
+     }
+
 
  return 1;
 };
@@ -249,8 +272,8 @@ float () Sentry_FindTarget =
  gotone = 0;
  while (loopc < 6 && !gotone) {
   client = checkclient();
-  gotone = 1;
-  if (!client) 
+  gotone = CheckTarget(client);
+/*  if (!client) 
    gotone = 0;
   if (client == self) 
    gotone = 0;
@@ -280,7 +303,7 @@ float () Sentry_FindTarget =
   else {
    if (r == 2 && !infront(client)) 
     gotone = 0;
-  }
+  }*/
   loopc = loopc + 1;
  }
  if (!gotone) 
@@ -376,18 +399,6 @@ void (float shotcount, entity targ, vector spread) FireSentryBullets =
 
  ClearMultiDamage();
  traceline(src, src + dir * 2048, 0, self);
-#ifdef CHEATBUILD
- WriteByte(4, 23);
- WriteByte(4, 6);
- WriteEntity(4, self);
- WriteCoord(4, src_x);
- WriteCoord(4, src_y);
- WriteCoord(4, src_z);
- WriteCoord(4, trace_endpos_x);
- WriteCoord(4, trace_endpos_y);
- WriteCoord(4, trace_endpos_z);
- multicast(src, 1);
-#endif
 
  puff_org = trace_endpos - dir * 4;
  while (shotcount > 0) {
@@ -402,13 +413,80 @@ void (float shotcount, entity targ, vector spread) FireSentryBullets =
  ApplyMultiDamage();
  Multi_Finish();
 };
+//////////////////////////////////////////////////////////////////////////////
+#ifdef TG
+void FireSentryLighting(entity targ)=
+{
+ local vector src;
+ local vector dst;
+ local vector dir;
+ local float rs;
+ makevectors(self.v_angle);
+ if(sentry_type == 2 || sentry_type == 3)
+ {
+  self.v_angle = self.angles;
+  src = self.origin + self.view_ofs;
+  dst = targ.origin + targ.view_ofs;
+  dir=dst-src;
+  normalize(dir);
+ }else{
+  if(sentry_type==1)
+  {
+   self.v_angle = self.angles;
+  }
+  src = self.origin + v_forward * 10;
+  src_z = self.absmin_z + self.size_z * 0.7;
+  dir=targ.origin - self.origin;
+ }
+ traceline(src, src + dir * 2048, 0, self);
 
-
+ WriteByte(4, 23);
+ WriteByte(4, 5);
+ WriteEntity(4, self);
+ WriteCoord(4, src_x);
+ WriteCoord(4, src_y);
+ WriteCoord(4, src_z);
+ WriteCoord(4, trace_endpos_x);
+ WriteCoord(4, trace_endpos_y);
+ WriteCoord(4, trace_endpos_z);
+ multicast(src, 1);
+ if (trace_ent) {
+  if (trace_ent.classname == "player") {
+   rs = rint(random() * 5 + 1);
+   trace_ent.noise = "";
+   if (rs == 1) 
+    trace_ent.noise = "player/pain1.wav";
+   else {
+    if (rs == 2) 
+     trace_ent.noise = "player/pain2.wav";
+    else {
+     if (rs == 3) 
+      trace_ent.noise = "player/pain3.wav";
+     else {
+      if (rs == 4) 
+       trace_ent.noise = "player/pain4.wav";
+      else {
+       if (rs == 5) 
+        trace_ent.noise = "player/pain5.wav";
+       else 
+        trace_ent.noise = "player/pain6.wav";
+      }
+     }
+    }
+   }
+   sound(trace_ent, 2, trace_ent.noise, 1, 1);
+  }
+ }
+};
+#endif
+//////////////////////////////////////////////////////////////////////////////
 float () Sentry_Fire =
 {
  local vector dir;
-#ifdef CHEATBUILD
- local string st;
+
+#ifdef TG
+  if (!sg_allow_fire) 
+   return 0;
 #endif
  self.effects = self.effects - (self.effects & 8);
  dir = self.enemy.origin - self.origin;
@@ -416,7 +494,11 @@ float () Sentry_Fire =
   return 0;
  if (self.enemy.is_feigning == 1) 
   return 0;
- if (self.weapon == 3 && self.ammo_rockets > 0 && self.super_damage_finished < time) {
+ if (self.weapon == 3 && self.ammo_rockets > 0 && self.super_damage_finished < time
+#ifdef TG
+ && (sg_fire_type == #TG_SG_FIRE_NORMAL)
+#endif
+ ) {
   Sentry_MuzzleFlash();
   sound(self, 1, "weapons/rocket1i.wav", 1, 1);
   newmis = spawn();
@@ -437,6 +519,9 @@ float () Sentry_Fire =
   if (self.ammo_rockets == 10) 
    sprint(self.real_owner, 2, "Sentry Gun is low on rockets.\n");
  }
+#ifdef TG
+ if(sg_fire_type != #TG_SG_FIRE_LIGHTING){
+#endif
 #ifndef CHEATBUILD
  self.ammo_shells = self.ammo_shells - 1;
 #endif
@@ -446,25 +531,15 @@ float () Sentry_Fire =
  }
  Sentry_MuzzleFlash();
  sound(self, 1, "weapons/sniper.wav", 1, 1);
+#ifdef TG
+}
+#endif
  deathmsg = 27;
-// FireBullets(4, dir, '0.1 0.1 0');
-#ifdef CHEATBUILD
-     st = infokey(world, "sg");
-    if (st == "old") {
-            sentry_type = 0;
-    } else { 
-        if (st == "fix") sentry_type = 2;
-            else {
-            if (st == "new") 
-                   sentry_type = 3;
-                  else
-                    sentry_type = 1;}
-    }
-    st = infokey(world, "sgppl");
-    if(st == string_null)
-     sgppl=12; else {
-     sgppl=rint(stof(st));
-     if(sgppl<0)sgppl=0; }
+#ifdef TG
+    if(sg_fire_type == #TG_SG_FIRE_LIGHTING)
+    {
+     FireSentryLighting(self.enemy);
+    }else{
 #endif
     if (sentry_type == 1 ) {//mtfl sentry
                 self.v_angle = self.angles;
@@ -473,14 +548,14 @@ float () Sentry_Fire =
         else {
                 if (sentry_type == 2 || sentry_type == 3) {
                         self.v_angle = self.angles;
-//                        dir = normalize(dir);
-//                        FireBullets(4, dir, '0.1 0.1 0');
                           FireSentryBullets(4,self.enemy, '0.1 0.1 0');
-/*                        FireBullets(5, dir, '0.08 0.08 0');*/
                 }
                 else 
                         FireBullets(4, dir, '0.1 0.1 0');
         }
+#ifdef TG
+     } 
+#endif
 //////
  if (!self.ammo_shells && random() < 0.1) 
   sprint(self.real_owner, 2, "Sentry Gun is out of shells.\n");

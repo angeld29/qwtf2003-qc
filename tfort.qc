@@ -588,8 +588,14 @@ void () TeamFortress_PrimeGrenade =
     }
    }
   }
+#ifndef TG
   if (self.no_grenades_1 > 0) {
    self.no_grenades_1 = self.no_grenades_1 - 1;
+#else
+  if (self.no_grenades_1 > 0 || unlimit_grens) {
+  if(!unlimit_grens)
+   self.no_grenades_1 = self.no_grenades_1 - 1;
+#endif
    if (gtype == 6) {
     newmis = spawn();
     newmis.owner = self;
@@ -677,8 +683,14 @@ void () TeamFortress_PrimeGrenade =
     }
    }
   }
+#ifndef TG
   if (self.no_grenades_2 > 0) {
    self.no_grenades_2 = self.no_grenades_2 - 1;
+#else
+  if (self.no_grenades_2 > 0 || unlimit_grens) {
+  if(!unlimit_grens)
+   self.no_grenades_2 = self.no_grenades_2 - 1;
+#endif
    if (gtype == 6) {
     newmis = spawn();
     newmis.owner = self;

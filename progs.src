@@ -1,5 +1,6 @@
-./qwprogs.dat
+./tg/qwprogs.dat
 
+tg.pqc
 options.pqc
 defs.pqc
 qw.pqc
@@ -42,4 +43,5 @@ hook.pqc
 ctf.pqc
 coop.pqc
 actions.pqc
+menu_tg.pqc
 

@@ -131,6 +131,10 @@ void (entity targ, entity inflictor, entity attacker, float damage) T_Damage =
   if ((rj > 1) & (attacker.classname == "player") & (targ.classname == "player") & (attacker.netname == targ.netname)) 
    targ.velocity = targ.velocity + dir * damage * rj;
  }
+#ifdef TG
+ if (targ.classname == "player" && godmode) 
+  return;
+#endif 
  if (targ.flags & 64) 
   return;
  if (targ.invincible_finished >= time) {
@@ -289,6 +293,10 @@ void (entity targ, entity inflictor, entity attacker, float damage, float T_flag
     targ.velocity = targ.velocity + dir * moment * rj;
   }
  }
+#ifdef TG
+ if (targ.classname == "player" && godmode) 
+  return;
+#endif 
  if (targ.flags & 64) 
   return;
  if (targ.invincible_finished >= time) {
@@ -325,9 +333,7 @@ void (entity targ, entity inflictor, entity attacker, float damage, float T_flag
  if (take < 1) 
   take = 1;
  take = rint(take);
-#ifdef CHEATBUILD
- if(targ.classname == "player") take = 0;
-#endif
+
  if (!no_damage) {
   targ.health = targ.health - take;
  }

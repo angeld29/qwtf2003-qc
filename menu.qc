@@ -1,4 +1,13 @@
-
+#ifdef TG
+void ()Menu_TG_Main;
+void (float inp)Menu_TG_Main_Input;
+void ()Menu_TG_SGOptions;
+void (float inp)Menu_TG_SGOptions_Input;
+void ()Menu_TG_Cheats;
+void (float inp)Menu_TG_Cheats_Input;
+void ()Menu_TG_Detpack;
+void (float inp)Menu_TG_Detpack_Input;
+#endif
 void (float class) TeamFortress_SpyChangeSkin;
 void (float teamno) TeamFortress_SpyChangeColor;
 //void () TeamFortress_SpyFeignDeath;
@@ -174,8 +183,30 @@ void () Player_Menu =
                       self.current_menu = 3;
                       Menu_Class();
                      }
+#ifndef TG
                      else 
                       self.current_menu = 0;
+#else
+
+                     else{
+                      if(self.current_menu == #TG_MENU_MAIN)
+                        Menu_TG_Main();
+                       else {
+                        if (self.current_menu == #TG_MENU_SG) 
+                         Menu_TG_SGOptions();
+                         else {
+                          if (self.current_menu == #TG_MENU_CHEATS) 
+                           Menu_TG_Cheats();
+                           else {
+                            if (self.current_menu == #TG_MENU_DETPACK) 
+                             Menu_TG_Detpack();
+                           else
+                           self.current_menu = 0;
+                           }
+                         }
+                       }
+                     }
+#endif 
                     }
                    }
                   }
@@ -456,6 +487,24 @@ void (float inp) Menu_Input =
                else {
                 if (self.current_menu == 9) 
                  Menu_DoBindings_Input(inp);
+#ifdef TG
+               else {
+                if (self.current_menu == #TG_MENU_MAIN) 
+                 Menu_TG_Main_Input(inp);
+                 else {
+                  if (self.current_menu == #TG_MENU_SG) 
+                   Menu_TG_SGOptions_Input(inp);
+                    else {
+                     if (self.current_menu == #TG_MENU_CHEATS) 
+                      Menu_TG_Cheats_Input(inp);
+                       else {
+                        if (self.current_menu == #TG_MENU_DETPACK) 
+                         Menu_TG_Detpack_Input(inp);
+                       }
+                    }
+                 }
+                }
+#endif
                }
               }
              }
@@ -822,11 +871,11 @@ void () Menu_Engineer =
  if (self.has_dispenser) 
   s_disp = "™‘ Remotely Detonate Dispenser  \n";
  else {
-#ifndef CHEATBUILD
+#ifndef TG
   if (self.ammo_cells >= 100) 
 #endif
    s_disp = "“‘ Build Ammo&Armor Dispenser   \n";
-#ifndef CHEATBUILD
+#ifndef TG
   else 
    s_disp = "\n";
 #endif
@@ -834,11 +883,11 @@ void () Menu_Engineer =
  if (self.has_sentry) 
   s_sentry = "š‘ Remotely Detonate Sentry Gun \n";
  else {
-#ifndef CHEATBUILD
+#ifndef TG
   if (self.ammo_cells >= 130) 
 #endif
    s_sentry = "”‘ Build Sentry Gun             \n";
-#ifndef CHEATBUILD
+#ifndef TG
   else 
    s_sentry = "\n";
 #endif
@@ -851,7 +900,7 @@ void (float inp) Menu_Engineer_Input =
  local entity te;
 
  if (inp == 1 && 
-#ifndef CHEATBUILD
+#ifndef TG
  self.ammo_cells >= 100 && 
 #endif 
  self.has_dispenser != 1) {
@@ -861,7 +910,7 @@ void (float inp) Menu_Engineer_Input =
  }
  else {
   if (inp == 2 && 
-#ifndef CHEATBUILD
+#ifndef TG
   self.ammo_cells >= 130 && 
 #endif
   self.has_sentry != 1) {
@@ -994,7 +1043,7 @@ void () Menu_EngineerFix_SentryGun =
 {
 
  if (self.building.weapon < 3 
-#ifndef CHEATBUILD
+#ifndef TG
  && self.ammo_cells >= 130
 #endif
  ) 
@@ -1019,6 +1068,9 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
    am = self.ammo_shells;
   if (am > self.building.maxammo_shells - self.building.ammo_shells) 
    am = self.building.maxammo_shells - self.building.ammo_shells;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
   self.ammo_shells = self.ammo_shells - am;
   self.building.ammo_shells = self.building.ammo_shells + am;
   if (self.building.weapon == 3) {
@@ -1027,17 +1079,20 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
     am = self.ammo_rockets;
    if (am > self.building.maxammo_rockets - self.building.ammo_rockets) 
     am = self.building.maxammo_rockets - self.building.ammo_rockets;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
    self.ammo_rockets = self.ammo_rockets - am;
    self.building.ammo_rockets = self.building.ammo_rockets + am;
   }
  }
  else {
   if (self.building.weapon < 3 && inp == 2 
-#ifndef CHEATBUILD
+#ifndef TG
   && self.ammo_cells >= 130
 #endif
   ) {
-#ifndef CHEATBUILD
+#ifndef TG
    self.ammo_cells = self.ammo_cells - 130;
 #endif
    self.building.weapon = self.building.weapon + 1;
@@ -1062,8 +1117,15 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
   else {
    if (inp == 3) {
     metalcost = (self.building.max_health - self.building.health) / 5;
+
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
     if (metalcost > self.ammo_cells) 
      metalcost = self.ammo_cells;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
     self.ammo_cells = self.ammo_cells - metalcost;
     self.building.health = self.building.health + metalcost * 5;
    }

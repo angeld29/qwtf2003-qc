@@ -578,7 +578,13 @@ void () W_FireFlame =
    sound(self, 1, "misc/water2.wav", 1, 1);
   return;
  }
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_cells = self.ammo_cells - 1;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_cells - 1;
  sound(self, 0, "weapons/flmfire2.wav", 1, 1);
  flame = spawn();
@@ -646,7 +652,13 @@ void () W_FireIncendiaryCannon =
 {
  if (self.ammo_rockets < 3) 
   return;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_rockets = self.ammo_rockets - 3;
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.currentammo = self.ammo_rockets - 3;
  sound(self, 1, "weapons/sgun1.wav", 1, 1);
  KickPlayer(-3, self);

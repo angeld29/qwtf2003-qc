@@ -244,7 +244,7 @@ void () TeamFortress_EngineerBuild =
   return;
  }
  if (!self.is_building) {
-#ifndef CHEATBUILD
+#ifndef TG
   if (self.ammo_cells < 100 && !self.has_dispenser && !self.has_sentry) {
    CenterPrint(self, "You don't have enough metal to \nbuild anything.\n\n");
    return;
@@ -344,7 +344,11 @@ void (float objtobuild) TeamFortress_Build =
   tmp2 = '16 16 48';
   newmis.mdl = "progs/disp.mdl";
   newmis.netname = "dispenser";
+#ifdef TG
+  btime = time ;
+#else
   btime = time + #BUILD_TIME_DISPENSER;
+#endif
  }
  else {
   if (objtobuild == #BUILD_SENTRYGUN) {
@@ -356,7 +360,11 @@ void (float objtobuild) TeamFortress_Build =
    tmp2 = '16 16 48';
    newmis.mdl = "progs/turrbase.mdl";
    newmis.netname = "sentrygun";
+#ifdef TG
+  btime = time ;
+#else
    btime = time + #BUILD_TIME_SENTRYGUN;
+#endif
   }
  }
  if (!CheckArea(newmis, self)) {
@@ -457,7 +465,7 @@ void () TeamFortress_FinishedBuilding =
   sprint(self, 2, "You finish building the dispenser.\n");
   teamsprint(self.team_no, self, self.netname);
   teamsprint(self.team_no, self, " has built a Dispenser.\n");
-#ifndef CHEATBUILD
+#ifndef TG
   self.ammo_cells = self.ammo_cells - 100;
 #endif
   oldself.classname = "building_dispenser";
@@ -505,7 +513,7 @@ void () TeamFortress_FinishedBuilding =
    oldself.takedamage = 0;
    oldself.th_die = Sentry_Die;
    oldself.team_no = self.team_no;
-#ifndef CHEATBUILD
+#ifndef TG
    self.ammo_cells = self.ammo_cells - 130;
 #endif
    setsize(oldself, '-16 -16 0', '16 16 4');

@@ -86,7 +86,33 @@ void (vector org, entity shooter) MirvGrenadeLaunch =
  setsize(newmis, '0 0 0', '0 0 0');
  setorigin(newmis, org);
 };
+#ifdef TG
+void () Detpack_SetClip =
+{
+ local entity te;
+ local entity pl;
 
+ detpack_clip = detpack_clip + 1;
+ if (detpack_clip > 2) 
+  detpack_clip = 0;
+ te = find(world, classname, "detpack");
+ while (te) {
+  if (detpack_clip == 2) {
+   te.solid = 2;
+   te.owner = world;
+  }
+  else {
+   if (detpack_clip == 0) 
+    te.solid = 0;
+   else {
+    te.solid = 2;
+    te.owner = te.real_owner;
+   }
+  }
+  te = find(te, classname, "detpack");
+ }
+};
+#endif
 void (float timer) TeamFortress_SetDetpack =
 {
  local string stimer;
@@ -95,12 +121,14 @@ void (float timer) TeamFortress_SetDetpack =
 
  self.impulse = 0;
  self.last_impulse = 0;
+#ifndef TG
  if (!(self.weapons_carried & #WEAP_DETPACK)) 
   return;
  if(disable_grens & #DG_TYPE_DETPACK)
       return;
  if (self.ammo_detpack <= 0) 
   return;
+#endif
  at_spot = findradius(self.origin, 65);
  while (at_spot != world) {
   if (at_spot.classname == "player" && self != at_spot) {
@@ -155,6 +183,7 @@ void (float timer) TeamFortress_SetDetpack =
   sprint(self, 2, "You can't set detpacks in the air!\n");
   return;
  }
+#ifndef TG
  te = find(world, classname, "detpack");
  while (te) {
   if (te.owner == self) {
@@ -163,6 +192,7 @@ void (float timer) TeamFortress_SetDetpack =
   }
   te = find(te, classname, "detpack");
  }
+#endif	
  if (timer < 5) {
   sprint(self, 2, "You can't set detpacks for less that 5 seconds.\n");
   return;
@@ -182,7 +212,13 @@ void (float timer) TeamFortress_SetDetpack =
  sprint(self, 2, stimer);
  sprint(self, 2, " seconds...\n");
  newmis = spawn();
+#ifndef TG
  newmis.owner = self;
+#else
+ newmis.owner = self;
+ newmis.real_owner = self;
+ newmis.origin=self.origin;
+#endif
  newmis.classname = "timer";
  newmis.netname = "detpack_timer";
  newmis.nextthink = time + #WEAP_DETPACK_SETTIME;
@@ -229,6 +265,9 @@ void () TeamFortress_DetpackSet =
  newmis = spawn();
  newmis.owner = self.owner;
  newmis.origin = self.owner.origin - '0 0 23';
+#ifdef TG
+ newmis.real_owner = self.real_owner;
+#endif
  newmis.movetype = #MOVETYPE_BOUNCE;
  newmis.solid = #SOLID_BBOX;
  newmis.classname = "detpack";
@@ -275,12 +314,24 @@ void () TeamFortress_DetpackExplode =
 
 // bprint(1, self.owner.netname," FIRE IN THE HOLE!\n");
  bprint(1, "FIRE IN THE HOLE!\n");
+#ifndef TG
  sprint(self.owner,2,"Your detpack exploded\n");
+#else
+ sprint(self.real_owner,2,"Your detpack exploded\n");
+#endif
  sound(self, 1, "weapons/detpack.wav", 1, 0);
  if (birthday == 1) 
+#ifndef TG
   bprint2(1, self.owner.netname, " spreads good cheer!\n");
+#else
+  bprint2(1, self.real_owner.netname, " spreads good cheer!\n");
+#endif
  pos = pointcontents(self.origin);
+#ifndef TG
  if (pos != -2 && pos != -6 && self.owner.has_disconnected != 1) {
+#else
+ if (pos != -2 && pos != -6 && self.real_owner.has_disconnected != 1) {
+#endif
   deathmsg = 12;
   head = findradius(self.origin, #WEAP_DETPACK_SIZE);
   while (head) {
@@ -288,13 +339,22 @@ void () TeamFortress_DetpackExplode =
     if ((head.goal_activation & 2) && !head.search_time) {
      traceline(self.origin, head.origin, 1, self);
      if (trace_fraction == 1) {
+#ifndef TG
       if (Activated(head, self.owner)) 
        DoResults(head, self.owner, 1);
+#else
+      if (Activated(head, self.real_owner)) 
+       DoResults(head, self.real_owner, 1);
+#endif
       else {
        if (head.else_goal) {
         te = Findgoal(head.else_goal);
         if (te) 
+#ifndef TG
          AttemptToActivate(te, self.owner, head);
+#else
+         AttemptToActivate(te, self.real_owner, head);
+#endif
        }
       }
      }
@@ -309,7 +369,11 @@ void () TeamFortress_DetpackExplode =
      points = 700 - points;
      if (points) {
       if (CanDamage(head, self)) 
+#ifndef TG
        TF_T_Damage(head, self, self.owner, points * 2, 2, 4);
+#else
+       TF_T_Damage(head, self, self.real_owner, points * 2, 2, 4);
+#endif
      }
     }
    }
@@ -323,7 +387,11 @@ void () TeamFortress_DetpackExplode =
   multicast(self.origin, 1);
  }
  else 
+#ifndef TG
   sprint(self.owner, 2, "Your detpack fizzled out.\n");
+#else
+  sprint(self.real_owner, 2, "Your detpack fizzled out.\n");
+#endif
  if (self.weaponmode == 1) {
   TeamFortress_SetSpeed(self.enemy);
   dremove(self.oldenemy);
@@ -338,8 +406,17 @@ void () TeamFortress_DetpackTouch =
  local vector source;
  local vector org;
  local vector def;
+#ifndef TG
 #ifndef FIXDETPACKDROP
  CheckBelowBuilding(self);
+#endif
+#else
+ if(detpack_drop)
+ CheckBelowBuilding(self);
+#endif
+#ifdef TG
+ if (!detpack_disarm) 
+  return;
 #endif
  if (other.classname != "player") 
   return;
@@ -349,8 +426,10 @@ void () TeamFortress_DetpackTouch =
   return;
  if (self.weaponmode == 1) 
   return;
+#ifndef TG
  if (other.team_no == self.owner.team_no && self.owner.team_no) 
   return;
+#endif
  makevectors(other.v_angle);
  source = other.origin + '0 0 16';
  traceline(source, source + v_forward * 64, 0, other);
@@ -380,11 +459,19 @@ void () TeamFortress_DetpackDisarm =
  if (birthday == 1) {
   bprint(1, self.owner.netname);
   bprint(1, " stole ");
+#ifndef TG
   bprint(1, self.enemy.owner.netname);
+#else
+  bprint(1, self.enemy.real_owner.netname);
+#endif
   bprint(1, "'s birthday present!\n");
  }
  else {
+#ifndef TG
   bprint(1, self.enemy.owner.netname);
+#else
+  bprint(1, self.enemy.real_owner.netname);
+#endif
   bprint(1, "'s detpack was defused by ");
   bprint(1, self.owner.netname);
   bprint(1, "\n");
@@ -402,9 +489,15 @@ void () TeamFortress_DetpackCountDown =
  local string cd;
 
  cd = ftos(self.health);
+#ifndef TG
 #ifndef FIXDETPACKDROP
- CheckBelowBuilding(self.enemy);
+ CheckBelowBuilding(self);
 #endif
+#else
+ if(detpack_drop)
+ CheckBelowBuilding(self);
+#endif
+
  self.nextthink = time + 1;
  self.health = self.health - 1;
  if (self.health < 10) {
