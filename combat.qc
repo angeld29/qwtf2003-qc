@@ -5,6 +5,9 @@ void (entity targ, entity attacker) ClientObituary;
 void (entity Goal, entity AP, float addb) DoResults;
 float (entity Goal, entity AP) Activated;
 float (entity targ, entity attacker, float damage) TeamEqualiseDamage;
+#ifdef BODYGIB
+void BodyQueDmg(float dmg);
+#endif
 
 void () monster_death_use =
 {
@@ -87,6 +90,20 @@ void (entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 
  if (!targ.takedamage) 
   return;
+#ifdef BODYGIB
+ if (targ.classname == "bodyque") 
+ {
+  oldself=self;
+  self=targ;
+ if (attacker.classname == "player") {
+  if (attacker.super_damage_finished > time) 
+   damage = damage * 4;
+  }
+  BodyQueDmg(damage);
+  self=oldself;
+  return;
+ }
+#endif
  if (attacker.classname == "player") 
   damage = damage * 0.9;
  if (attacker.classname == "player") {
@@ -103,6 +120,7 @@ void (entity targ, entity inflictor, entity attacker, float damage) T_Damage =
    }
   }
  }
+
  damage_attacker = attacker;
  if (teamplay & (64 | 32)) 
   damage = TeamEqualiseDamage(targ, attacker, damage);
@@ -188,6 +206,20 @@ void (entity targ, entity inflictor, entity attacker, float damage, float T_flag
 
  if (!targ.takedamage) 
   return;
+#ifdef BODYGIB
+ if (targ.classname == "bodyque") 
+ {
+  oldself=self;
+  self=targ;
+  if (attacker.classname == "player") {
+   if (attacker.super_damage_finished > time) 
+   damage = damage * 4;
+  }
+  BodyQueDmg(damage);
+  self=oldself;
+  return;
+ }
+#endif
  if (T_AttackType & 256) {
   targ.health = damage;
   return;

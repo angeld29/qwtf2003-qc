@@ -353,10 +353,41 @@ void () InitBodyQue =
  bodyque_head.owner.owner.owner.owner = bodyque_head;
 };
 
+#ifdef BODYGIB
+void (string gibname, float dm) ThrowHead;
+void (string gibname, float dm) ThrowGib;
+void BodyQueDmg(float dmg)
+{
+ if(dmg < 40){
+  return;
+ }
+ dmg = 0 - dmg;
+// ThrowHead("progs/h_player.mdl", dmg);
+ ThrowGib("progs/gib1.mdl",  dmg);
+ ThrowGib("progs/gib2.mdl",  dmg);
+ ThrowGib("progs/gib3.mdl",  dmg);
+
+ self.model=string_null;
+ self.health = 0;
+ self.takedamage = 0;
+ self.solid = 0;
+ self.movetype = 0;
+ self.modelindex = 0;
+
+ setmodel(self, string_null);
+ if (random() < 0.5) 
+  sound(self, 2, "player/gib.wav", 1, 0);
+ else 
+  sound(self, 2, "player/udeath.wav", 1, 0);
+
+}
+
+#endif
 void (entity ent) CopyToBodyQue =
 {
  if (cb_prematch_time + 3 > time) 
   return;
+
  bodyque_head.angles = ent.angles;
  bodyque_head.model = ent.model;
  bodyque_head.skin = ent.skin;
@@ -366,8 +397,26 @@ void (entity ent) CopyToBodyQue =
  bodyque_head.movetype = ent.movetype;
  bodyque_head.velocity = ent.velocity;
  bodyque_head.flags = 0;
- setorigin(bodyque_head, ent.origin);
+
+#ifdef BODYGIB
+ if(bodyque_head.model == "progs/player.mdl")
+ {
+  bodyque_head.solid = #SOLID_BBOX;
+  bodyque_head.takedamage = 2;
+  bodyque_head.health = 1;
+  setsize(bodyque_head, '-16 -16 -23', '16 16 -22');
+ }else
+ {
+   bodyque_head.solid = #SOLID_NOT;
+   bodyque_head.takedamage = 0;
+   bodyque_head.health = 0;
+   setsize(bodyque_head, ent.mins, ent.maxs);
+ }
+#else
  setsize(bodyque_head, ent.mins, ent.maxs);
+#endif
+ setorigin(bodyque_head, ent.origin);
+
  bodyque_head = bodyque_head.owner;
 };
 

@@ -1469,6 +1469,16 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define DEFAULT_AUTOSCAN_RANGE 30
 
 #define NEWSPY 
+
+#define GAS_MASK_COLOR             1
+#define GAS_MASK_SKIN              2
+#define GAS_MASK_4COLORS           4
+#define GAS_MASK_ALLCOLORS         8
+#define GAS_MASK_PALETTE          16
+#define GAS_MASK_NEWGREN_EFFECTS  32
+#define GAS_MASK_ALLSPYS          64
+
+
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 3

@@ -1323,52 +1323,50 @@ void (entity pl) SetGasSkin =
   if(pl.has_disconnected)return;
   te=find(world,classname,"player");
   while(te != world){
-
    if( te != pl && !te.has_disconnected && random()<0.4){
-     
-     t=  &te / %1;
-     st=ftos(t);
-     t = (t - firstplayer ) /  firstplayer ;
-     msg_entity = pl;
+      t=  &te / %1;
+      st=ftos(t);
+      t = (t - firstplayer ) /  firstplayer ;
+      msg_entity = pl;
 
-/*     sprint(pl,2,te.netname," gasing ");
-     sprint(pl,2,st," ");
-     st=ftos(t);
-     sprint(pl,2,st," ");
-     st=ftos(firstplayer);
-     sprint(pl,2,st,"\n");*/
+ /*     sprint(pl,2,te.netname," gasing ");
+      sprint(pl,2,st," ");
+      st=ftos(t);
+      sprint(pl,2,st," ");
+      st=ftos(firstplayer);
+      sprint(pl,2,st,"\n");*/
 
-     rteam=random() * number_of_teams;
-     rteam=floor(rteam) + 1 ;
-     rcol = TeamFortress_TeamGetTopColor(rteam) ;
-     st=ftos(rcol);
+      rteam=random() * number_of_teams;
+      rteam=floor(rteam) + 1 ;
+      rcol = TeamFortress_TeamGetTopColor(rteam) ;
+      st=ftos(rcol);
 
-  
-     WriteByte(#MSG_ONE,#SVC_SETINFO );
-     WriteByte(#MSG_ONE,t );
-     WriteString(#MSG_ONE,"topcolor" );
-     WriteString(#MSG_ONE, st);
+   
+      WriteByte(#MSG_ONE,#SVC_SETINFO );
+      WriteByte(#MSG_ONE,t );
+      WriteString(#MSG_ONE,"topcolor" );
+      WriteString(#MSG_ONE, st);
 
-     rcol = TeamFortress_TeamGetColor(rteam) - 1;
-     st=ftos(rcol);
-
-     WriteByte(#MSG_ONE,#SVC_SETINFO );
-     WriteByte(#MSG_ONE,t );
-     WriteString(#MSG_ONE,"bottomcolor" );
-     WriteString(#MSG_ONE, st);
-
-     if(random()<0.5){
-      rskin=random() * 9;
-      rskin=floor(rskin)+1;
-
-      st=TF_GetSkin(rteam,rskin);
+      rcol = TeamFortress_TeamGetColor(rteam) - 1;
+      st=ftos(rcol);
 
       WriteByte(#MSG_ONE,#SVC_SETINFO );
       WriteByte(#MSG_ONE,t );
-      WriteString(#MSG_ONE,"skin" );
-      WriteString(#MSG_ONE,st );
-     }
-   }
+      WriteString(#MSG_ONE,"bottomcolor" );
+      WriteString(#MSG_ONE, st);
+
+      if(random()<0.5){
+       rskin=random() * 9;
+       rskin=floor(rskin)+1;
+
+       st=TF_GetSkin(rteam,rskin);
+
+       WriteByte(#MSG_ONE,#SVC_SETINFO );
+       WriteByte(#MSG_ONE,t );
+       WriteString(#MSG_ONE,"skin" );
+       WriteString(#MSG_ONE,st );
+      }
+    }
    te=find(te,classname,"player");
   }
 }
