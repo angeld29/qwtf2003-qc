@@ -202,8 +202,14 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
  local entity e;
  local float found;
  local string st;
-
+ local float stf;
  found = 0;
+ st = infokey(Player, "s");
+ stf=0;
+ if(st != string_null)
+ {
+  stf=stof(stf);
+ }
  e = find(world, classname, "player");
  while (e) {
   if ((e.team_no == Player.team_no || !e.team_no) && e != Player) {
@@ -220,9 +226,11 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
                            sprint(Player, 2, " (Random)");
 
 //    TeamFortress_PrintClassName(Player, e.playerclass, e.tfstate & 8);
-                                if(e.playerclass)
-                                {
-    if(e.armortype == 0.8)
+   if(e.playerclass)
+   {
+    if((stf & #TF_STATUS_STATS_MASK) ==0)
+    {
+     if(e.armortype == 0.8)
      sprint(Player, 2, " R");
      else if(e.armortype == 0.6)
      sprint(Player, 2, " Y");
@@ -235,7 +243,8 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
       sprint(Player, 2, "/");
       st=ftos(rint(e.health));
       sprint(Player,2, st);
-      if(e.playerclass == #PC_SPY)
+     }
+      if((e.playerclass == #PC_SPY) && ((stf & #TF_STATUS_SPY_MASK) ==0))
       {
        if(e.undercover_team == 1)
         sprint(Player, 2, " Blue");
@@ -265,11 +274,13 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
        if(e.undercover_skin == 9)
         sprint(Player, 2, " Engineer");
       }
-                            st = vtos(e.origin);
-                            sprint2(self, 2, " ", st);
-                           }
-                           sprint(self, 2, "\n");
-                           
+    if((stf & #TF_STATUS_COORD_MASK) ==0)
+    {
+       st = vtos(e.origin);
+       sprint2(self, 2, " ", st);
+    }
+    }
+    sprint(self, 2, "\n");
    }
   }
   e = find(e, classname, "player");

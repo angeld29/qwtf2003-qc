@@ -214,10 +214,8 @@ void () TeamFortress_ID =
  traceline(src, src + v_forward * 2048, 0, self);
  if (trace_ent != world && trace_ent.origin != world.origin) {
   if (trace_ent.classname == "player" && trace_ent.health > 0) {
-//angel fix
    if (trace_ent.is_feigning && self.team_no && self.team_no != trace_ent.team_no) 
     return;
-//////////
    self.StatusRefreshTime = time + 1.5;
    if (self.team_no && self.team_no == trace_ent.team_no) {
     cls = TeamFortress_GetClassName(trace_ent.playerclass);
@@ -313,7 +311,6 @@ void () TeamFortress_ID =
             }else te = trace_ent;
      self.StatusRefreshTime = time + 1.5;
      if (self == trace_ent.real_owner) {
-//angel fix         
                                                if( self.playerclass == 9)
                                                {
                                                 st = NumberToString1000(te.health);

@@ -343,7 +343,6 @@ void () DecodeLevelParms =
     invis_only = 0;
   }
 
-//angel fix
                 cheat_pause=1;
                 st=infokey(world, "cp");
                 if(st != string_null)

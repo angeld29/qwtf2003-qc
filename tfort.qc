@@ -919,6 +919,7 @@ void () TeamFortress_ThrowGrenade =
    	if (te.owner == self)
    		if (te.respawn_time <= time)
    			te.nextthink = time;
+//   		else te.nextthink=te.respawn_time;
    	te = find (te, classname, "primer");
    }
 

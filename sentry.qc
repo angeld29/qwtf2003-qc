@@ -373,7 +373,6 @@ void (float shotcount, entity targ, vector spread) FireSentryBullets =
 // src = self.origin + v_forward * 10;
 // src_z = self.absmin_z + self.size_z * 0.7;
  dir=dst-src;
-// makevectors(dir);
 
  ClearMultiDamage();
  traceline(src, src + dir * 2048, 0, self);

@@ -153,10 +153,6 @@ void () FlashTimerNew =
  st = ftos(te.FlashTime * 10);
  if(te.FlashTime < (24 - #NEW_FLASH_START_TIME))
  {
-/*
-//     stuffcmd(te, "v_cshift 255 255 255 255\n");
- }else
- {*/
   stuffcmd(te, "v_cshift ");
   stuffcmd(te, st);
   stuffcmd(te, " ");
@@ -207,20 +203,18 @@ void () FlashGrenadeExplode =
      }
      if (te == self.owner){
       te.FlashTime = 16;
-             stuffcmd(te, "v_cshift 160 160 160 160\n");
+       stuffcmd(te, "v_cshift 160 160 160 160\n");
 #ifdef ANTIANTIFLASH
-                                            disable_updates(te, -1); /* server-side flash */
+     disable_updates(te, -1); /* server-side flash */
 #endif // antiantiflash
      }else {
       te.FlashTime = 24;
-             stuffcmd(te, "v_cshift 255 255 255 255\n");
+      stuffcmd(te, "v_cshift 255 255 255 255\n");
 #ifdef ANTIANTIFLASH
-                                              disable_updates(te, #NEW_FLASH_START_TIME); /* server-side flash */
+      disable_updates(te, #NEW_FLASH_START_TIME); /* server-side flash */
 #endif // antiantiflash                 
      }
-            
-            }else
-            {
+     }else{
      if (!te.FlashTime) {
       newmis = spawn();
       newmis.classname = "timer";
@@ -500,7 +494,6 @@ void (float scanrange) TeamFortress_Scan =
    }
   }
   if (any_detected) {
-          sprint(self,#PRINT_HIGH,"Scanned ",list.netname,"\n");
    lightningvec = normalize(list.origin - self.origin);
    lightningvec = lightningvec * (vlen(list.origin - self.origin) / 5);
    lightningvec = lightningvec + self.origin;

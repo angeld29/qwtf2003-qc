@@ -374,8 +374,8 @@ void () W_FireMedikit =
       if (te.team_no != self.team_no) 
        TF_AddFrags(self, 1);
 #ifdef ANTIANTIFLASH
-                                       if(new_flash) 
-                                                disable_updates(trace_ent, -1); /* server-side flash */
+       if(new_flash) 
+                disable_updates(trace_ent, -1); /* server-side flash */
 #endif // antiantiflash
 //      dremove(te);
      }
@@ -666,7 +666,6 @@ void (float damage, vector dir) TraceAttack =
  }
  else 
  {
-
 //  puff_org = org;
   puff_count = puff_count + 1;
  }

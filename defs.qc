@@ -1330,6 +1330,9 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define TF_CLASS_HELP_MASK  4
 #define TF_AUTOID_MASK  8
 #define TF_MULTISCAN_MASK  16
+#define TF_STATUS_STATS_MASK  32
+#define TF_STATUS_COORD_MASK  64
+#define TF_STATUS_SPY_MASK  128
 
 
 #define DG_TYPE_NORMAL  2 
@@ -1360,4 +1363,4 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define DEFAULT_AUTOSCAN_RANGE 30
 
 #define ASSAULT_MIN_SHELLS 20
-#define ANGEL_VERSION "Compiled: 27.07.2003 r1\n"
+#define ANGEL_VERSION "Compiled: 28.07.2003 r1\n"
