@@ -1,5 +1,9 @@
 QuakeWorld TeamFortress 2.8.1
 Fixed & updated by [sd] angel
+/////////
+hwguy расход патронов в 2 раза меньше
+min asault shells - 20
+detpack exploded msg
 
 ////////////////////////////////////////////////////    
 Внесенные изменения (на 14.06.2003):
