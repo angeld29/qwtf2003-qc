@@ -5,7 +5,10 @@ void () TeamFortress_Discard =
 
 	newmis = spawn();
 	if (self.playerclass == 1) 
+	{
 		newmis.ammo_rockets = self.ammo_rockets;
+		newmis.ammo_cells = self.ammo_cells;
+	}	
 	else {
 		if (self.playerclass == 2) {
 			newmis.ammo_rockets = self.ammo_rockets;
@@ -36,7 +39,10 @@ void () TeamFortress_Discard =
 								newmis.ammo_nails = self.ammo_nails;
 							else {
 								if (self.playerclass == 8) 
+								{
 									newmis.ammo_rockets = self.ammo_rockets;
+			                                                newmis.ammo_cells = self.ammo_cells;
+								}
 								else {
 									if (self.playerclass == 9) 
 										newmis.ammo_rockets = self.ammo_rockets;

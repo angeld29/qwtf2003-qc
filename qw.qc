@@ -304,6 +304,7 @@ float flag_timer;
 float snip_fps;
 float snip_range_fix;
 float gren2box;
+float sgppl;
 float random_tf_spawn;
 
 void (float psize, entity p) KickPlayer =

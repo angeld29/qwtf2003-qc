@@ -3,6 +3,7 @@ void (entity bld) CheckBelowBuilding;
 void (entity gunhead) CheckSentry;
 void () Sentry_Rotate;
 float () Sentry_FindTarget;
+float () Sentry_FindTarget_Angel;
 void () Sentry_FoundTarget;
 void () Sentry_HuntTarget;
 void () Sentry_Pain;
@@ -128,8 +129,15 @@ void () Sentry_Rotate =
 
 	self.effects = self.effects - (self.effects & 8);
 	CheckSentry(self);
-	if (Sentry_FindTarget()) 
+	if(sentry_type == 2)
+	{
+	if (Sentry_FindTarget_Angel()) 
 		return;
+	}else
+	{
+	 if (Sentry_FindTarget()) 
+		return;
+	}
 	if (!self.heat) {
 		self.ideal_yaw = self.waitmin;
 		ChangeYaw();
@@ -153,7 +161,82 @@ void () Sentry_Rotate =
 		}
 	}
 };
+//////////////////////////////////////////////////////////////////////
+float (entity Target) CheckTarget=
+{
+    local float r;
+    if (!Target) 
+    	return 0;
+    if (Target == self) 
+    	return 0;
+    if (Target.has_disconnected == 1) 
+    	return 0;
+    if (!Target.takedamage) 
+    	return 0;
+    if (teamplay) {
+    	if (Target.team_no == self.team_no && self.team_no) 
+	    	return 0;
+    	if (Target.undercover_team == self.team_no && self.team_no) 
+    	       return 0;
+    }
+    if (Target == self.real_owner) 
+    	return 0;
+    if (Target.is_feigning) 
+    	return 0;
+    if (Target.flags & #FL_NOTARGET) 
+    	return 0;
+    if (Target.items & #IT_INVISIBILITY) 
+    	return 0;
+    if (!visible(Target)) 
+    	return 0;
+    r = range(Target);
+    if (r == 3) 
+    	return 0;
+    else {
+    	if (r == 2 && !infront(Target)) 
+    		return 0;
+    }
 
+ return 1;
+};
+//////////////////////////////////////////////////////////////////////
+float () Sentry_FindTarget_Angel =
+{
+ local entity client;
+
+ if(self.enemy != world)
+ {
+  if(CheckTarget(self.enemy))
+  {
+   if( time > self.height )
+   {
+     Sentry_FoundTarget();
+     return 1;
+   }else
+    return 0;
+  }
+ }
+ client=find(world,classname,"player");
+ while(client!=world)
+ {
+  if(CheckTarget(client))
+  {
+     self.enemy = client;
+     self.height = time + 0.1 * rint(random() * sgppl);
+//     self.height = time + 0.1 * rint(sgppl);
+     if(self.height == time)
+     {
+      Sentry_FoundTarget();
+      return 1;
+     }
+     return 0;
+  }
+  client=find(client,classname,"player");
+ }
+ self.enemy = world;
+ return 0;
+};
+//////////////////////////////////////////////////////////////////////
 float () Sentry_FindTarget =
 {
 	local entity client;
@@ -317,17 +400,17 @@ float () Sentry_Fire =
 	deathmsg = 27;
 //	FireBullets(4, dir, '0.1 0.1 0');
 //angel fix
-        if (sentry_type == 1) {
+        if (sentry_type == 1 || sentry_type == 2) {
                 self.v_angle = self.angles;
                 FireBullets(4, dir, '0.1 0.1 0');
         }
         else {
-                if (sentry_type == 2) {
+/*                if (sentry_type == 2) {
                         self.v_angle = self.angles;
                         dir = normalize(dir);
                         FireBullets(5, dir, '0.08 0.08 0');
                 }
-                else 
+                else */
                         FireBullets(4, dir, '0.1 0.1 0');
         }
 //////

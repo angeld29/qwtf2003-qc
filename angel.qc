@@ -1,3 +1,6 @@
+string (float pc) TeamFortress_GetClassName;
+
+/////////////////////////////////////////////////////////////
 float (entity Goal, entity AP) Activated;
 
 float (entity spot)CheckTelefragSpot=
@@ -11,6 +14,7 @@ float (entity spot)CheckTelefragSpot=
   }
  return 1;
 };
+
 
 entity (float team_num) FindRandomTeamSpawnPoint =
 {
@@ -40,21 +44,23 @@ entity (float team_num) FindRandomTeamSpawnPoint =
        	 	 spot = find(spot, team_str_home, teststr);
        		}
        		if(numspots == 0) return world;
-       		numspots = rint((random() * numspots));
+       		numspots = rint(random() * (numspots - 1));
 
        		spot = find(world, team_str_home, teststr);
-		while(numspots > 0)
+		while(1 && spot != world)
 		{
                  if( CheckTelefragSpot(spot) && Activated(spot, self))
+                 {
+		  if(!numspots)return spot;
 		  numspots = numspots - 1;
+		 }
 		 spot = find(spot, team_str_home, teststr);
 		}
 		return spot;
-	
 };
 
 
-
+/////////////////////////////////////////////////////////////
 void (entity pl) Angel_PrintRules =
 {
 	local string st;
@@ -83,12 +89,13 @@ void (entity pl) Angel_PrintRules =
 
 	if (sentry_type == 1) 
 		sprint(pl, 2, "Sentry: 2.8.1 fixed\n");
-	else {
-	 if (!sentry_type) 
+	 if (sentry_type == 0) 
 		sprint(pl, 2, "Sentry: 2.8.1\n");
-	  else 
-	        sprint(pl, 2, "Sentry: NEW\n");
-	}
+	if (sentry_type == 2) 
+	  {
+	    st=ftos(sgppl);
+	    sprint3(pl, 2, "Sentry: NEW ",st," ppl\n");
+	  }
 
 	if(new_flash)
        		sprint(pl, 2, "New Flash: он\n");
@@ -181,5 +188,88 @@ void (entity pl) Angel_PrintRules =
 	}else
 	 sprint(pl, 2, "All Grenades Enabled\n"); 
 
+	sprint(pl, 2, "Compiled: 12.06.2003\n"); 
+
 };
 
+/////////////////////////////////////////////////////////////
+void (entity Player) TeamFortress_TeamShowMemberClasses_New =
+{
+	local entity e;
+	local float found;
+	local string st;
+
+	found = 0;
+	e = find(world, classname, "player");
+	while (e) {
+		if ((e.team_no == Player.team_no || !e.team_no) && e != Player) {
+			if (e.model != string_null) {
+				if (!found) {
+					found = 1;
+					sprint(self, 2, "The other members of your team are:\n");
+				}
+				sprint(Player, 2, e.netname);
+				sprint(Player, 2, " : ");
+                         	st = TeamFortress_GetClassName(e.playerclass);
+                         	sprint(Player, 2, st);
+                         	if ( e.tfstate & 8) 
+                         		sprint(Player, 2, " (Random)");
+
+//				TeamFortress_PrintClassName(Player, e.playerclass, e.tfstate & 8);
+                                if(e.playerclass)
+                                {
+				if(e.armortype == 0.8)
+				 sprint(Player, 2, " R");
+				 else if(e.armortype == 0.6)
+				 sprint(Player, 2, " Y");
+				 else if(e.armortype == 0.3)
+				 sprint(Player, 2, " G");
+				 else 
+				  sprint(Player, 2, "  ");
+				  st=ftos(rint(e.armorvalue));
+				  sprint(Player,2, st);
+				  sprint(Player, 2, "/");
+				  st=ftos(rint(e.health));
+				  sprint(Player,2, st);
+				  if(e.playerclass == #PC_SPY)
+				  {
+				   if(e.undercover_team == 1)
+				    sprint(Player, 2, " Blue");
+				   if(e.undercover_team == 2)
+				    sprint(Player, 2, " Red");
+				   if(e.undercover_team == 3)
+				    sprint(Player, 2, " Yellow");
+				   if(e.undercover_team == 4)
+				    sprint(Player, 2, " Green");
+
+				   if(e.undercover_skin == 1)
+				    sprint(Player, 2, " Scout");
+				   if(e.undercover_skin == 2)
+				    sprint(Player, 2, " Sniper");
+				   if(e.undercover_skin == 3)
+				    sprint(Player, 2, " Soldier");
+				   if(e.undercover_skin == 4)
+				    sprint(Player, 2, " Demoman");
+				   if(e.undercover_skin == 5)
+				    sprint(Player, 2, " Medic");
+				   if(e.undercover_skin == 6)
+				    sprint(Player, 2, " Hwguy");
+				   if(e.undercover_skin == 7)
+				    sprint(Player, 2, " Pyro");
+				   if(e.undercover_skin == 8)
+				    sprint(Player, 2, " Spy");
+				   if(e.undercover_skin == 9)
+				    sprint(Player, 2, " Engineer");
+				  }
+	                           st = vtos(e.origin);
+	                           sprint2(self, 2, " ", st);
+	                          }
+	                          sprint(self, 2, "\n");
+	                          
+			}
+		}
+		e = find(e, classname, "player");
+	}
+	if (!found) 
+		sprint(Player, 2, "There are no other players on your team.\n");
+};

@@ -42,6 +42,7 @@ void (float scanrange) TeamFortress_Scan;
 void (float timer) TeamFortress_SetDetpack;
 void (float all) TeamFortress_TeamShowScores;
 void (entity Player) TeamFortress_TeamShowMemberClasses;
+void (entity Player) TeamFortress_TeamShowMemberClasses_New;
 void () Admin_CountPlayers;
 void () Admin_CycleKick;
 void () Admin_DoKick;
@@ -2874,7 +2875,7 @@ void () DeadImpulses =
 								TeamFortress_TeamShowScores(0);
 							else {
 								if (self.impulse == 144) 
-									TeamFortress_TeamShowMemberClasses(self);
+									TeamFortress_TeamShowMemberClasses_New(self);
 								else {
 									if (self.impulse == 182) {
 										self.StatusRefreshTime = time + 0.2;

@@ -360,6 +360,10 @@ void () DecodeLevelParms =
                         else 
                                 sentry_type = 1;
                 }
+                st = infokey(world, "sgppl");
+		sgppl=rint(stof(st));
+		if(sgppl<0)sgppl=0;
+
                 st = infokey(world, "dg");
 		if (st == string_null) 
 		    st = infokey(world, "disable_grens");
