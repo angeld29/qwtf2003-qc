@@ -1,6 +1,5 @@
-./tg/qwprogs.dat
+./qwprogs.dat
 
-tg.pqc
 options.pqc
 defs.pqc
 qw.pqc
@@ -15,7 +14,6 @@ weapons.pqc
 world.pqc
 status.pqc
 client.pqc
-client_tg.pqc
 player.pqc
 doors.pqc
 buttons.pqc
@@ -44,5 +42,4 @@ hook.pqc
 ctf.pqc
 coop.pqc
 actions.pqc
-menu_tg.pqc
 

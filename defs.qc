@@ -1285,6 +1285,7 @@ float (vector v) vectoyaw = #13;
 entity () spawn = #14;
 void (entity e) remove = #15;
 void (vector v1, vector v2, float nomonsters, entity forent) traceline = #16;
+void (vector v1, vector v2, float nomonsters, entity forent,vector mins, vector maxs) traceline_full = #16;
 entity () checkclient = #17;
 entity (entity start, .string fld, string match) find = #18;
 string (string s) precache_sound = #19;
@@ -1356,7 +1357,7 @@ void (vector where, float set) multicast = #82;
 #ifdef ANTIANTIFLASH
 void(entity whom, float time) disable_updates = #83; /* server-side flash */ 
 #endif // antiantiflash
-
+float api_version;
 //TG defines
 #ifdef TG
 #define TG_CONC_IMPULSE 205
@@ -1496,5 +1497,5 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 3
-#define ANGEL_VERSION "Compiled: 27.02.2004 r1\n"
+#define ANGEL_VERSION "Compiled: 01.03.2004 r1\nOfficial MTFL version\n"
 

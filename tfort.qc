@@ -1577,6 +1577,7 @@ void () TeamFortress_SetEquipment =
          te.classname = "timer";
          }
 //         self.ScannerOn = 0;
+  self.allow_snip_time = 0;
 ////////
  if (self.playerclass == 1) {
   self.weapons_carried = self.weapons_carried | #PC_SCOUT_WEAPONS;

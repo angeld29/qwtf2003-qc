@@ -331,8 +331,9 @@ void () DecodeLevelParms =
    st = infokey(world, "old_grenades");
   if (st == string_null) 
    st = infokey(world, "old_grens");
-  if (st == "on") 
-   old_grens = 1;
+  if (st == "off") 
+   old_grens = 0;
+   else old_grens = 1;
 
 
   st = infokey(world, "spy");
@@ -413,16 +414,16 @@ void () DecodeLevelParms =
    allow_drop_goal=1;
    else  allow_drop_goal=0;
   st = infokey(world, "add_pipe");
-  if (st == "on") 
-  add_pipe = 1;
-  else add_pipe =0;
+  if (st == "off") 
+  add_pipe = 0;
+  else add_pipe =1;
 
   st = infokey(world, "nf");
   if (st == string_null) 
    st = infokey(world, "new_flash");
-  if (st == "on") 
-   new_flash = 1;
-   else new_flash = 0;
+  if (st == "off") 
+   new_flash = 0;
+   else new_flash = 1;
 
   st = infokey(world, "new_gas");
 /*  if (st == "off") 
@@ -441,6 +442,13 @@ void () DecodeLevelParms =
      else { if (st == "mtflf") sentry_type = #SENTRY_MTFL_NEWFIND;
       else { if (st == "oldf")  sentry_type = #SENTRY_OLD_NEWFIND;
        else { sentry_type = #SENTRY_MTFL; }}}}}
+
+  if (st == "old") {sentry_type = #SENTRY_OLD; }
+  else {if (st == "fix")  sentry_type = #SENTRY_FIX;
+    else { if (st == "oldmtfl")  sentry_type = #SENTRY_MTFL;
+     else { if (st == "mtflf") sentry_type = #SENTRY_MTFL_NEWFIND;
+      else { if (st == "oldf")  sentry_type = #SENTRY_OLD_NEWFIND;
+       else { sentry_type = #SENTRY_NEW; }}}}}
 
   st = infokey(world, "sgppl");
   if(st == string_null)  sgppl=12;
@@ -467,22 +475,23 @@ void () DecodeLevelParms =
   st = infokey(world, "ft");
   if (st == string_null) 
       st = infokey(world, "flag_timer");
-  if(st == "on")
-   flag_timer=1;
+  if(st == "off")
+   flag_timer=0;
+   else  flag_timer=1;
 
   st = infokey(world, "sf");
   if (st == string_null) 
       st = infokey(world, "snip_fps");
+
   snip_fps=stof(st);
 
-  if(snip_fps<0)snip_fps=0;
+  if(snip_fps<=0)snip_fps=72;
 
   st = infokey(world, "srf");
   if (st == string_null) 
       st = infokey(world, "snip_range_fix");
   if(st == "on")
-  
-  snip_range_fix=1;
+  	snip_range_fix=1;
 
   st = infokey(world, "snip_ammo");
   snip_ammo=stof(st);
@@ -497,11 +506,12 @@ void () DecodeLevelParms =
   if(gren2box<0)gren2box=0;
 
 
-                st = infokey(world, "rts");
+  st = infokey(world, "rts");
   if (st == string_null) 
       st = infokey(world, "random_team_spawn");
-  if(st == "on")
-   random_tf_spawn = 1;
+  if(st == "off")
+   random_tf_spawn = 0;
+   else  random_tf_spawn = 1;
 #ifdef TG
 //  if(!defaults_loaded)
   TG_LoadSettings();

@@ -2,12 +2,17 @@ float (entity targ) visible =
 {
  local vector spot1;
  local vector spot2;
+ local string st;
 
  spot1 = self.origin + self.view_ofs;
  spot2 = targ.origin + targ.view_ofs;
  traceline(spot1, spot2, 1, self);
- if (trace_inopen && trace_inwater) 
-  return 0;
+ st = infokey(world,"watervis");
+ if(stof(st) == 0)
+ {
+  if (trace_inopen && trace_inwater) 
+   return 0;
+ }
  if (trace_fraction == 1) 
   return 1;
  return 0;

@@ -941,21 +941,19 @@ void () W_FireAssaultCannon =
 #endif  
  KickPlayer(-4, self);
 
- if(self.ScanRange <10)
- {
+/* if(self.ScanRange <10)
+ {*/
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
    self.ammo_shells = self.ammo_shells - 1;
-#ifdef TG
-  if (!unlimit_ammo) 
-#endif
+
    self.currentammo = self.ammo_shells ;
-   self.ScanRange= self.ScanRange + 1;
+/*   self.ScanRange= self.ScanRange + 1;
  }else
  {
   self.ScanRange=0;
- }
+ }*/
 
  dir = aim(self, 100000);
  deathmsg = 20;
@@ -2192,8 +2190,9 @@ void () W_Attack =
   if ((self.flags & #FL_ONGROUND) || self.hook_out) {
    player_shot1();
    W_FireSniperRifle();
-//   Attack_Finished(1.5);
-   Attack_Finished(snip_time);
+   Attack_Finished(1.5);
+   self.allow_snip_time = time + snip_time;
+//   Attack_Finished(snip_time);
   }
  }
  else {
@@ -3218,18 +3217,21 @@ void () W_WeaponFrame =
      }
     }
     else {
-     tv = self.velocity;
-     tv_z = 0;
-     if (vlen(tv) <= #WEAP_SNIPER_RIFLE_MAX_MOVE) {
-      SniperSight_Create();
-      if(snip_fps)
-       self.heat = time;
-      else
-       self.heat = 50;
+     if(time > self.allow_snip_time)
+     {
+      tv = self.velocity;
+      tv_z = 0;
+      if (vlen(tv) <= #WEAP_SNIPER_RIFLE_MAX_MOVE) {
+       SniperSight_Create();
+       if(snip_fps)
+        self.heat = time;
+       else
+        self.heat = 50;
 
-      self.height = 90;
-      self.tfstate = self.tfstate | #TFSTATE_AIMING;
-      TeamFortress_SetSpeed(self);
+       self.height = 90;
+       self.tfstate = self.tfstate | #TFSTATE_AIMING;
+       TeamFortress_SetSpeed(self);
+      }
      }
     }
    }

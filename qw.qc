@@ -349,6 +349,9 @@ float tg_sbar;
 .float imp3;
 .float imp4;
 
+.float allow_snip_time;
+.float assault_min_shells;
+
 float firstplayer;
 float sv262;
 
