@@ -265,9 +265,19 @@ void (entity targ, entity inflictor, entity attacker, float damage, float T_flag
    dir = targ.origin - (inflictor.absmin + inflictor.absmax) * 0.5;
    dir = normalize(dir);
    if (targ.playerclass == 6) {
+#ifdef NEWHWGUY
+    if(targ != attacker)
+    {
+#endif
     moment = damage / 3;
     if (damage <= 50) 
      moment = 0;
+#ifdef NEWHWGUY
+    }else
+    {
+     moment = damage;
+    }
+#endif
    }
    else 
     moment = damage;

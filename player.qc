@@ -582,6 +582,7 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
    self.weaponframe = 2;
   SuperDamageSound();
   W_FireAssaultCannon();
+#ifndef NEWHWGUY
   stuffcmd(self, "v_idlescale ");
   if (self.heat < 5) 
    st = ftos(self.heat * 4);
@@ -589,6 +590,7 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
    st = "20";
   stuffcmd(self, st);
   stuffcmd(self, "\n");
+#endif
  }
  else {
   sound(self, 1, "weapons/asscan4.wav", 1, 1);
@@ -596,14 +598,14 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
    self.weaponframe = 0;
   else 
    self.weaponframe = 2;
+#ifndef NEWHWGUY
   stuffcmd(self, "v_idlescale 5\n");
-/*  st=ftos(vlen(self.velocity));
-  stuffcmd(self,"echo ");
-  stuffcmd(self,st);
-  stuffcmd(self,"\n");*/
+#endif
  }
  if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
+#ifndef  NEWHWGUY
   stuffcmd(self, "v_idlescale 0\n");
+#endif
   self.tfstate = self.tfstate - (self.tfstate & 2048);
   TeamFortress_SetSpeed(self);
   self.weaponframe = 0;
@@ -620,7 +622,9 @@ void () player_assaultcannon2 = [104, player_assaultcannon1]
  local vector v;
  v=self.velocity;
  v_z=0;
+#ifndef NEWHWGUY
  stuffcmd(self, "v_idlescale 0\n");
+#endif
 // if (vlen(self.velocity) < 50 && (self.flags & #FL_ONGROUND)) {
  if (vlen(v) < 20 && (self.flags & #FL_ONGROUND)) {
   if (self.weaponframe == 2) 
@@ -639,7 +643,9 @@ void () player_assaultcannon2 = [104, player_assaultcannon1]
    self.weaponframe = 2;
  }
  if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
+#ifndef NEWHWGUY
   stuffcmd(self, "v_idlescale 0\n");
+#endif
   self.tfstate = self.tfstate - (self.tfstate & 2048);
   TeamFortress_SetSpeed(self);
   self.weaponframe = 0;

@@ -680,8 +680,15 @@ void (float shotcount, vector dir, vector spread) FireBullets =
  src = self.origin + v_forward * 10;
  src_z = self.absmin_z + self.size_z * 0.7;
  ClearMultiDamage();
+#ifndef NEWHWGUY
  traceline(src, src + dir * 2048, 0, self);
  puff_org = trace_endpos - dir * 4;
+#else 
+ direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
+ traceline(src, src + direction * 2048, 0, self);
+ puff_org = trace_endpos - normalize(dir) * 4;
+#endif
+
 #ifdef CHEATBUILD
  WriteByte(4, 23);
  WriteByte(4, 6);
@@ -699,7 +706,11 @@ void (float shotcount, vector dir, vector spread) FireBullets =
   direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
   traceline(src, src + direction * 2048, 0, self);
   if (trace_fraction != 1) {
-   if (self.weapon != 32768) 
+#ifndef NEWHWGUY
+   if (self.weapon != #WEAP_ASSAULT_CANNON ) 
+#else
+   if (self.current_weapon != #WEAP_ASSAULT_CANNON ) 
+#endif 
     TraceAttack(4, direction);
    else 
     TraceAttack(12, direction);
@@ -887,14 +898,22 @@ void () W_FireAutoRifle =
 void () W_FireAssaultCannon =
 {
  local vector dir;
-
+#ifdef 	NEWHWGUY
+ local vector spread;
+ spread='0.04 0.04 0';
+ if(self.heat<( (#ASSAULT_SPREAD_TIME / 0.2) *0.1))
+ {
+  spread=spread*(1+(self.heat/((#ASSAULT_SPREAD_TIME/0.2)*0.1))*( #ASSAULT_SPREAD_MULTIPLY - 1));
+ }else  
+ spread = spread * #ASSAULT_SPREAD_MULTIPLY;
+#endif  
  KickPlayer(-4, self);
 
  if(self.ScanRange <10)
  {
    self.ammo_shells = self.ammo_shells - 1;
-  self.currentammo = self.ammo_shells - 1;
-         self.ScanRange= self.ScanRange + 1;
+   self.currentammo = self.ammo_shells - 1;
+   self.ScanRange= self.ScanRange + 1;
  }else
  {
   self.ScanRange=0;
@@ -902,7 +921,11 @@ void () W_FireAssaultCannon =
 
  dir = aim(self, 100000);
  deathmsg = 20;
+#ifndef NEWHWGUY
  FireBullets(5, dir, '0.04 0.04 0');
+#else
+ FireBullets(5, dir, spread);
+#endif 
 };
 
 void () s_explode1 = [0, s_explode2]

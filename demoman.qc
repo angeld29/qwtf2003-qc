@@ -338,8 +338,9 @@ void () TeamFortress_DetpackTouch =
  local vector source;
  local vector org;
  local vector def;
-
+#ifndef FIXDETPACKDROP
  CheckBelowBuilding(self);
+#endif
  if (other.classname != "player") 
   return;
  if (other.playerclass != #PC_SCOUT) 
@@ -401,7 +402,9 @@ void () TeamFortress_DetpackCountDown =
  local string cd;
 
  cd = ftos(self.health);
+#ifndef FIXDETPACKDROP
  CheckBelowBuilding(self.enemy);
+#endif
  self.nextthink = time + 1;
  self.health = self.health - 1;
  if (self.health < 10) {
