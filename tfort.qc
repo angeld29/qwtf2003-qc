@@ -517,6 +517,7 @@ void () TeamFortress_ShowTF =
 		sprint(self, 2, "Full TeamScore On.\n");
 	else 
 		sprint(self, 2, "Full TeamScore Off.\n");
+        Angel_PrintRules(self);
 };
 
 
@@ -751,6 +752,7 @@ void () TeamFortress_GrenadePrimed =
 	user.tfstate = user.tfstate - (user.tfstate & 1);
 	user.tfstate = user.tfstate - (user.tfstate & 1024);
 	sound(user, 1, "weapons/grenade.wav", 1, 1);
+//	sound(user, 1, "weapons/ax1.wav", 1, 1);
 	KickPlayer(-1, user);
 	newmis = spawn();
 	newmis.owner = user;

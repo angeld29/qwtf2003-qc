@@ -328,12 +328,6 @@ void () DecodeLevelParms =
 		if (st == "on") 
 			old_grens = 1;
 
-		st = infokey(world, "nf");
-		if (st == string_null) 
-			st = infokey(world, "new_flash");
-		if (st == "on") 
-		 new_flash = 1;
-		 else new_flash = 0;
 
 		st = infokey(world, "spy");
 		if (st == "off") 
@@ -349,6 +343,13 @@ void () DecodeLevelParms =
 		}
 
 //angel fix
+		st = infokey(world, "nf");
+		if (st == string_null) 
+			st = infokey(world, "new_flash");
+		if (st == "on") 
+		 new_flash = 1;
+		 else new_flash = 0;
+
                 st = infokey(world, "sg");
                 if (st == "old") {
                         sentry_type = 0;
@@ -391,6 +392,14 @@ void () DecodeLevelParms =
                 st = infokey(world, "g2b");
 		gren2box=stof(st);
 		if(gren2box<0)gren2box=0;
+
+		random_tf_spawn = 1;
+                st = infokey(world, "rts");
+		if (st == string_null) 
+		    st = infokey(world, "random_team_spawn");
+		if(st == "off")
+		 random_tf_spawn = 0;
+		else 
 
 //////////////
 
@@ -921,6 +930,9 @@ entity () SelectSpawnPoint =
 	local float attempts;
 
 	if (self.team_no) {
+	        if(random_tf_spawn)
+		spot = FindRandomTeamSpawnPoint(self.team_no);
+		else 
 		spot = FindTeamSpawnPoint(self.team_no);
 		if (spot != world) 
 			return spot;

@@ -1361,3 +1361,6 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define SR_INITDAMAGE 50
 #define SR_INCDAMAGE 216 // by second
 #define SR_MAXDAMAGE 398
+
+#define NEW_FLASH_START_TIME 2
+

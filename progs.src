@@ -5,6 +5,7 @@ defs.pqc
 qw.pqc
 debug.pqc
 omi.pqc
+angel.pqc
 menu.pqc
 subs.pqc
 combat.pqc

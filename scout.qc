@@ -137,6 +137,38 @@ void () FlashTimer =
 	self.nextthink = time + 0.6;
 };
 
+void () FlashTimerNew =
+{
+	local entity te;
+	local string st;
+
+	te = self.owner;
+	te.FlashTime = te.FlashTime - 0.6;
+	if (te.FlashTime < 5) {
+		te.FlashTime = 0;
+		stuffcmd(te, "v_cshift; wait; bf\n");
+		remove(self);
+		return;
+	}
+	st = ftos(te.FlashTime * 10);
+	if(te.FlashTime > (24 - #NEW_FLASH_START_TIME))
+	{
+         stuffcmd(te, "v_cshift 255 255 255 255\n");
+	}else
+	{
+	stuffcmd(te, "v_cshift ");
+	stuffcmd(te, st);
+	stuffcmd(te, " ");
+	stuffcmd(te, st);
+	stuffcmd(te, " ");
+	stuffcmd(te, st);
+	stuffcmd(te, " ");
+	stuffcmd(te, st);
+	stuffcmd(te, "\n");
+	}
+	self.nextthink = time + 0.6;
+};
+
 void () FlashGrenadeExplode =
 {
 	local float expsize;
@@ -161,6 +193,33 @@ void () FlashGrenadeExplode =
 					TF_T_Damage(te, self, self.owner, 60, 2, 16 | 4);
 				}
 				if (te.health > 0) {
+				        if(new_flash)
+				        {
+					 if (!te.FlashTime) {
+						newmis = spawn();
+						newmis.classname = "timer";
+						newmis.netname = "flashtimer";
+						newmis.team_no = self.owner.team_no;
+						newmis.owner = te;
+						newmis.think = FlashTimerNew;
+						newmis.nextthink = time + 1;
+					}
+					if (te == self.owner){
+						te.FlashTime = 16;
+					        stuffcmd(te, "v_cshift 160 160 160 160\n");
+#ifdef ANTIANTIFLASH
+                                            disable_updates(te, -1); /* server-side flash */
+#endif // antiantiflash
+					}else {
+						te.FlashTime = 24;
+					        stuffcmd(te, "v_cshift 255 255 255 255\n");
+#ifdef ANTIANTIFLASH
+                                              disable_updates(te, #NEW_FLASH_START_TIME); /* server-side flash */
+#endif // antiantiflash                 
+					}
+				        
+				        }else
+				        {
 					if (!te.FlashTime) {
 						newmis = spawn();
 						newmis.classname = "timer";
@@ -172,16 +231,8 @@ void () FlashGrenadeExplode =
 					}
 					if (te == self.owner){
 						te.FlashTime = 16;
-#ifdef ANTIANTIFLASH
-					if(new_flash)	
-                                            disable_updates(te, -1); /* server-side flash */
-#endif // antiantiflash
 					}else {
 						te.FlashTime = 24;
-#ifdef ANTIANTIFLASH
-					if(new_flash)	
-                                            disable_updates(te, 1.8); /* server-side flash */
-#endif // antiantiflash                 
 					}
 					st = ftos(te.FlashTime * 10);
 					stuffcmd(te, "v_cshift ");
@@ -193,6 +244,7 @@ void () FlashGrenadeExplode =
 					stuffcmd(te, " ");
 					stuffcmd(te, st);
 					stuffcmd(te, "\n");
+					}
 				}
 			}
 		}

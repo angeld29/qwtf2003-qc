@@ -9,6 +9,7 @@ qw.qc
 debug.qc
 
 omi.qc
+angel.qc
 
 menu.qc
 subs.qc
