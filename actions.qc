@@ -54,7 +54,7 @@ void () TeamFortress_Discard =
 			}
 		}
 	}
-	st = infokey(self,"disc_s");
+	st = infokey(self,"mxs");
 	if(st == string_null)
 	{
 	  st = infokey(self,"1");
@@ -69,7 +69,7 @@ void () TeamFortress_Discard =
   	   newmis.ammo_shells = 0;
  	  }
 	}
-	st = infokey(self,"disc_n");
+	st = infokey(self,"mxn");
 	if(st == string_null)
 	{
 	  st = infokey(self,"2");
@@ -84,7 +84,7 @@ void () TeamFortress_Discard =
 	  else newmis.ammo_nails = 0;
 	  }
 	}
-	st = infokey(self,"disc_r");
+	st = infokey(self,"mxr");
 	if(st == string_null)
 	{
 	  st = infokey(self,"3");
@@ -99,7 +99,7 @@ void () TeamFortress_Discard =
 	  else newmis.ammo_rockets = 0;
 	  }
 	}
-	st = infokey(self,"disc_c");
+	st = infokey(self,"mxc");
 	if(st == string_null)
 	{
 	  st = infokey(self,"4");

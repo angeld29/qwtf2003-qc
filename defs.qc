@@ -803,9 +803,9 @@
 #define PC_SPY_MAXHEALTH		90 
 #define PC_SPY_MAXSPEED			300 
 #define PC_SPY_MAXSTRAFESPEED	300 
-#define PC_SPY_MAXARMOR			100 
+#define PC_SPY_MAXARMOR			75 //100 
 #define PC_SPY_INITARMOR		25 
-#define PC_SPY_MAXARMORTYPE		0.3 
+#define PC_SPY_MAXARMORTYPE		0.6 //0.3 
 #define PC_SPY_INITARMORTYPE	0.3 
 #define PC_SPY_ARMORCLASSES		27 		// ALL except EXPLOSION
 #define PC_SPY_INITARMORCLASS	0  
@@ -1357,4 +1357,4 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define NEW_FLASH_START_TIME 2
 
 #define ASSAULT_MIN_SHELLS 20
-#define ANGEL_VERSION "Compiled: 16.06.2003 r2\n"
+#define ANGEL_VERSION "Compiled: 19.06.2003 r1\n"

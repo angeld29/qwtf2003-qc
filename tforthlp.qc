@@ -53,6 +53,7 @@ void () TeamFortress_MOTD =
 		TeamFortress_Alias("reload", 173, 0);
 		TeamFortress_Alias("scan10", 162, 0);
 		TeamFortress_Alias("scan30", 163, 0);
+		TeamFortress_Alias("scan50", 164, 0);
 		TeamFortress_Alias("scan100", 164, 0);
 		TeamFortress_Alias("scanf", 161, 0);
 		TeamFortress_Alias("scane", 160, 0);

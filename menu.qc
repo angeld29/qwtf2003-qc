@@ -491,143 +491,143 @@ void () Menu_Intro =
 void () Menu_ClassHelp =
 {
 	if (self.menu_displaytime < 5) {
-		if (self.playerclass == 1) 
-			CenterPrint(self, "ÓÃÏÕÔ Details:               \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n–‘ Nailgun                  \n\nPress š for alias help\n");
-		else {
-			if (self.playerclass == 2) 
-				CenterPrint(self, "ÓÎÉÐÅÒ Details:              \n\n×ÅÁÐÏÎÓ:                     \n”‘ Sniper Rifle/Auto Rifle  \n–‘ Nailgun                  \n\nPress š for alias help\n");
-			else {
-				if (self.playerclass == 3) 
-					CenterPrint(self, "ÓÏÌÄÉÅÒ Details:             \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n•‘ Super Shotgun            \n™‘ Rocket Launcher          \n\nPress š for alias help\n");
-				else {
-					if (self.playerclass == 4) 
-						CenterPrint(self, "ÄÅÍÏÌÉÔÉÏÎÓ ÍÁÎ Details:     \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n˜‘ Grenade/Pipebomb Launcher\n                             \n\nPress š for alias help\n");
-					else {
-						if (self.playerclass == 5) 
-							CenterPrint(self, "ÍÅÄÉÃ Details:               \n\n×ÅÁÐÏÎÓ:                     \n“‘ Medikit/BioWeapon        \n”‘ Shotgun                  \n•‘ Super Shotgun            \n—‘ Super Nailgun            \n\nPress š for alias help\n");
-						else {
-							if (self.playerclass == 6) 
-								CenterPrint(self, "ÈÅÁÖÙ ×ÅÁÐÏÎÓ ÇÕÙ Details:   \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n•‘ Super Shotgun            \n™‘ Assault Cannon           \n\nPress š for alias help\n");
-							else {
-								if (self.playerclass == 7) 
-									CenterPrint(self, "ÐÙÒÏ Details:                \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n˜‘ Flamethrower             \n™‘ Incendiary Cannon        \n\nPress š for alias help\n");
-								else {
-									if (self.playerclass == 8) 
-										CenterPrint(self, "ÓÐÙ Details:                 \n\n×ÅÁÐÏÎÓ:                     \n”‘ Tranquiliser Gun         \n•‘ Super Shotgun            \n–‘ Nailgun                  \n\nPress š for alias help\n");
-									else {
-										if (self.playerclass == 9) 
-											CenterPrint(self, "ÅÎÇÉÎÅÅÒ Details:            \n\n×ÅÁÐÏÎÓ:                     \n“‘ Spanner                  \n”‘ RailGun                  \n•‘ Super Shotgun            \n\nPress š for alias help\n");
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	else {
-		if (self.playerclass == 1) 
-			CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nFlash Grenade       \nConcussion Grenade  \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nScanner: scan10,scan50,scan250\n\n\nPress š for alias help\n");
-		else {
-			if (self.playerclass == 2) 
-				CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nFlare               \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nautozoom : Toggle Rifle Autozooming\n\n\nPress š for alias help\n");
-			else {
-				if (self.playerclass == 3) 
-					CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nNail Grenade        \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
-				else {
-					if (self.playerclass == 4) 
-						CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nMirv Grenade        \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nThe Detpack : det5,det20,det50\nDetonate Pipebombs : detpipe  \n\n\nPress š for alias help\n");
-					else {
-						if (self.playerclass == 5) 
-							CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nConcussion Grenade  \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
-						else {
-							if (self.playerclass == 6) 
-								CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nMirv Grenade        \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
-							else {
-								if (self.playerclass == 7) 
-									CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nNapalm Grenade      \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
-								else {
-									if (self.playerclass == 8) {
-										CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nHallucinogen Grenade\n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nGo Undercover : disguise\nFeign Death : feign, sfeign\n\n\nPress š for alias help\n");
-									}
-									else {
-										if (self.playerclass == 9) 
-											CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nEMP Grenade         \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nStart Building : build  \n\n\nPress š for alias help\n");
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  if (self.playerclass == 1) 
+   CenterPrint(self, "ÓÃÏÕÔ Details:               \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n–‘ Nailgun                  \n\nPress š for alias help\n");
+  else {
+   if (self.playerclass == 2) 
+    CenterPrint(self, "ÓÎÉÐÅÒ Details:              \n\n×ÅÁÐÏÎÓ:                     \n”‘ Sniper Rifle             \n•‘ Auto Rifle               \n–‘ Nailgun                  \n\nPress š for alias help\n");
+   else {
+    if (self.playerclass == 3) 
+     CenterPrint(self, "ÓÏÌÄÉÅÒ Details:             \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n•‘ Super Shotgun            \n™‘ Rocket Launcher          \n\nPress š for alias help\n");
+    else {
+     if (self.playerclass == 4) 
+      CenterPrint(self, "ÄÅÍÏÌÉÔÉÏÎÓ ÍÁÎ Details:     \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n˜‘ Grenade Launcher         \n™‘ Pipebomb Launcher        \n                             \n\nPress š for alias help\n");
+     else {
+      if (self.playerclass == 5) 
+       CenterPrint(self, "ÍÅÄÉÃ Details:               \n\n×ÅÁÐÏÎÓ:                     \n“‘ Medikit/BioWeapon        \n”‘ Shotgun                  \n•‘ Super Shotgun            \n—‘ Super Nailgun            \n\nPress š for alias help\n");
+      else {
+       if (self.playerclass == 6) 
+        CenterPrint(self, "ÈÅÁÖÙ ×ÅÁÐÏÎÓ ÇÕÙ Details:   \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n•‘ Super Shotgun            \n™‘ Assault Cannon           \n\nPress š for alias help\n");
+       else {
+        if (self.playerclass == 7) 
+         CenterPrint(self, "ÐÙÒÏ Details:                \n\n×ÅÁÐÏÎÓ:                     \n”‘ Shotgun                  \n˜‘ Flamethrower             \n™‘ Incendiary Cannon        \n\nPress š for alias help\n");
+        else {
+         if (self.playerclass == 8) 
+          CenterPrint(self, "ÓÐÙ Details:                 \n\n×ÅÁÐÏÎÓ:                     \n“‘ Knife                    \n”‘ Tranquiliser Gun         \n•‘ Super Shotgun            \n–‘ Nailgun                  \n\nPress š for alias help\n");
+         else {
+          if (self.playerclass == 9) 
+           CenterPrint(self, "ÅÎÇÉÎÅÅÒ Details:            \n\n×ÅÁÐÏÎÓ:                     \n“‘ Spanner                  \n”‘ RailGun                  \n•‘ Super Shotgun            \n\nPress š for alias help\n");
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ else {
+  if (self.playerclass == 1) 
+   CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nFlash Grenade       \nConcussion Grenade  \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nScanner : scan10,scan30,scan50\nScanner mode : scane,scanf    \n\nPress š for alias help\n");
+  else {                                                                                                                                        
+   if (self.playerclass == 2) 
+    CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nFlare               \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nautozoom : Toggle Rifle Autozooming\n\n\nPress š for alias help\n");
+   else {
+    if (self.playerclass == 3) 
+     CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nNail Grenade        \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
+    else {
+     if (self.playerclass == 4) 
+      CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nMirv Grenade        \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nThe Detpack : +det5,+det20,+det50\nDetonate Pipebombs : detpipe  \n\n\nPress š for alias help\n");
+     else {
+      if (self.playerclass == 5) 
+       CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nConcussion Grenade  \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
+      else {
+       if (self.playerclass == 6) 
+        CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nMirv Grenade        \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
+       else {
+        if (self.playerclass == 7) 
+         CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nNapalm Grenade      \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nNone\n\n\nPress š for alias help\n");
+        else {
+         if (self.playerclass == 8) {
+          CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nHallucinogen Grenade\n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nGo Undercover : disguise\nFeign Death : feign, sfeign\n\n\nPress š for alias help\n");
+         }
+         else {
+          if (self.playerclass == 9) 
+           CenterPrint(self, "ÇÒÅÎÁÄÅÓ:            \nHand Grenade        \nEMP Grenade         \n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:   \nStart Building : build   \nDestroy : detdispenser, detsentry\n\nPress š for alias help\n");
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
 };
 
 void () Menu_StuffClassHelp =
 {
-	if (self.playerclass == 1) {
-		sprint(self, 2, "ÓÃÏÕÔ Details:\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   –‘ Nailgun\n");
-		sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Concussion Grenade\n   Flare\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n");
-		sprint(self, 2, "Scanner: scan10,scan30,scan100\n\n\n");
-	}
-	else {
-		if (self.playerclass == 2) {
-			sprint(self, 2, "ÓÎÉÐÅÒ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Sniper Rifle/Auto Rifle\n");
-			sprint(self, 2, "–‘ Nailgun\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n\n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n");
-			sprint(self, 2, "  autozoom : Toggle Rifle Autozooming\n\n\n");
-		}
-		else {
-			if (self.playerclass == 3) {
-				sprint(self, 2, "ÓÏÌÄÉÅÒ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   •‘ Super Shotgun\n");
-				sprint(self, 2, "   ™‘ Rocket Launcher\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Nail Grenade\n");
-				sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
-			}
-			else {
-				if (self.playerclass == 4) {
-					sprint(self, 2, "ÄÅÍÏÌÉÔÉÏÎÓ ÍÁÎ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   ˜‘ Grenade/Pipebomb Launcher\n");
-					sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Mirv Grenade\n");
-					sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   The Detpack : det5,det20,det50\n   Detonate Pipebombs : detpipe\n\n\n");
-				}
-				else {
-					if (self.playerclass == 5) {
-						sprint(self, 2, "ÍÅÄÉÃ Details:\n\n×ÅÁÐÏÎÓ:\n   “‘ Medikit/BioWeapon\n   ”‘ Shotgun\n   •‘ Super Shotgun\n");
-						sprint(self, 2, "   —‘ Super Nailgun\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Concussion Grenade\n");
-						sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
-					}
-					else {
-						if (self.playerclass == 6) {
-							sprint(self, 2, "ÈÅÁÖÙ ×ÅÁÐÏÎÓ ÇÕÙ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   •‘ Super Shotgun\n");
-							sprint(self, 2, "   ™‘ Assault Cannon\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n");
-							sprint(self, 2, "   Mirv Grenade\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
-						}
-						else {
-							if (self.playerclass == 7) {
-								sprint(self, 2, "ÐÙÒÏ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   ˜‘ Flamethrower\n   ™‘ Incendiary Cannon\n");
-								sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Napalm Grenade\n");
-								sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
-							}
-							else {
-								if (self.playerclass == 8) {
-									sprint(self, 2, "ÓÐÙ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Tranquiliser Gun\n   •‘ Super Shotgun\n   –‘ Nailgun\n");
-									sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Hallucinogenic Grenade\n");
-									sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   Go Undercover : disguise\n\n\n");
-								}
-								else {
-									if (self.playerclass == 9) {
-										sprint(self, 2, "ÅÎÇÉÎÅÅÒ Details:\n\n×ÅÁÐÏÎÓ:\n   “‘ Spanner\n   ”‘ RailGun\n   •‘ Super Shotgun\n");
-										sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   EMP Grenade\n");
-										sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   Start Building : build\n\n\n");
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+ if (self.playerclass == 1) {
+  sprint(self, 2, "ÓÃÏÕÔ Details:\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   –‘ Nailgun\n");
+  sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Flash\n   Concussion Grenade\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n");
+  sprint(self, 2, "Scanner : scan10,scan30,scan50\nScanner mode : scane,scanf\n\n");
+ }
+ else {
+  if (self.playerclass == 2) {
+   sprint(self, 2, "ÓÎÉÐÅÒ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Sniper Rifle           \n   ”‘ Auto Rifle             \n");
+   sprint(self, 2, "–‘ Nailgun\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Flare\n\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n");
+   sprint(self, 2, "  autozoom : Toggle Rifle Autozooming\n\n\n");
+  }
+  else {
+   if (self.playerclass == 3) {
+    sprint(self, 2, "ÓÏÌÄÉÅÒ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   •‘ Super Shotgun\n");
+    sprint(self, 2, "   ™‘ Rocket Launcher\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Nail Grenade\n");
+    sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
+   }
+   else {
+    if (self.playerclass == 4) {
+     sprint(self, 2, "ÄÅÍÏÌÉÔÉÏÎÓ ÍÁÎ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   ˜‘ Grenade Launcher         \n   ™‘ Pipebomb Launcher        \n");
+     sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Mirv Grenade\n");
+     sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   The Detpack : +det5,+det20,+det50\n   Detonate Pipebombs : detpipe\n\n\n");
+    }
+    else {
+     if (self.playerclass == 5) {
+      sprint(self, 2, "ÍÅÄÉÃ Details:\n\n×ÅÁÐÏÎÓ:\n   “‘ Medikit/BioWeapon\n   ”‘ Shotgun\n   •‘ Super Shotgun\n");
+      sprint(self, 2, "   —‘ Super Nailgun\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Concussion Grenade\n");
+      sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
+     }
+     else {
+      if (self.playerclass == 6) {
+       sprint(self, 2, "ÈÅÁÖÙ ×ÅÁÐÏÎÓ ÇÕÙ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   •‘ Super Shotgun\n");
+       sprint(self, 2, "   ™‘ Assault Cannon\nÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n");
+       sprint(self, 2, "   Mirv Grenade\nÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
+      }
+      else {
+       if (self.playerclass == 7) {
+        sprint(self, 2, "ÐÙÒÏ Details:\n\n×ÅÁÐÏÎÓ:\n   ”‘ Shotgun\n   ˜‘ Flamethrower\n   ™‘ Incendiary Cannon\n");
+        sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Napalm Grenade\n");
+        sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   None\n\n\n");
+       }
+       else {
+        if (self.playerclass == 8) {
+         sprint(self, 2, "ÓÐÙ Details:\n\n×ÅÁÐÏÎÓ:\n   “‘ Knife           \n   ”‘ Tranquiliser Gun\n   •‘ Super Shotgun\n   –‘ Nailgun\n");
+         sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   Hallucinogenic Grenade\n");
+         sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   Go Undercover : disguise\n   Feign Death: feign, sfeign\n\n");
+        }
+        else {
+         if (self.playerclass == 9) {
+          sprint(self, 2, "ÅÎÇÉÎÅÅÒ Details:\n\n×ÅÁÐÏÎÓ:\n   “‘ Spanner\n   ”‘ RailGun\n   •‘ Super Shotgun\n");
+          sprint(self, 2, "ÇÒÅÎÁÄÅÓ:\n   Hand Grenade\n   EMP Grenade\n");
+          sprint(self, 2, "ÓÐÅÃÉÁÌ ÃÏÍÍÁÎÄÓ:\n   Start Building : build\n   Destroy : detdispenser, detsentry\n\n");
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
 };
 
 void () Menu_ClassHelp2 =

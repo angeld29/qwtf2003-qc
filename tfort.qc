@@ -28,7 +28,13 @@ void () UseSpecialSkill =
 			self.impulse = 174;
 		else {
 			if (self.playerclass == 3) 
-				self.impulse = 173;
+			{
+       			if (self.current_weapon != #WEAP_ROCKET_LAUNCHER && self.ammo_rockets > 0) 
+       				self.impulse = 7;
+       			else 
+       				self.impulse = 3;
+//				self.impulse = 173;
+			}
 			else {
 				if (self.playerclass == 4) 
 					self.impulse = 170;
