@@ -481,6 +481,7 @@ void (float issilent) TeamFortress_SpyFeignDeath =
 	local entity at_spot;
 	local entity te;
 
+	self.StatusRefreshTime = time + 0.1;
 	if (self.is_feigning) {
 		at_spot = findradius(self.origin, 64);
 		i = 1;
@@ -552,10 +553,10 @@ void (float issilent) TeamFortress_SpyFeignDeath =
 			sprint(self, 2, "You can't feign with the hook out.\n");
 			return;
 		}
-         	if (self.is_unabletospy == 1) {
+/*         	if (self.is_unabletospy == 1) {
          		sprint(self, 2, "You can't go undercover right now.\n");
          		return;
-         	}
+         	}*/
 
 //		if (!(self.flags & 512) && !self.waterlevel) {
 //			sprint(self, 2, "You can't feign in the air.\n");

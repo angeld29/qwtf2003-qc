@@ -315,7 +315,7 @@ void () TeamFortress_AutoScan =
  self=oldself.owner;
  TeamFortress_Scan(self.ScanRange);
  self=oldself;
- self.nextthink = time + 1;
+ self.nextthink = time + 0.5;
 };
 
 void () ScannerSwitch =
@@ -324,7 +324,7 @@ void () ScannerSwitch =
 
 	if (self.ScannerOn != 1) {
 		te = spawn();
-		te.nextthink = time + 1;
+		te.nextthink = time + 0.5;
 		te.think = TeamFortress_AutoScan;
 		te.owner = self;
 		te.classname = "timer";
@@ -342,6 +342,7 @@ void () ScannerSwitch =
 		sprint(self, 2, "Scanner Off.\n");
 		self.ScannerOn = 0;
 	}
+       self.StatusRefreshTime = time + 0.1;
 };
 
 

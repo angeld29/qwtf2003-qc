@@ -151,7 +151,11 @@ void (entity pl) RefreshStatusBar =
 	else {
 		if (pl.playerclass == 8) {
 			s2 = DisguiseToString(pl);
-			centerprint(pl, s1, s2, s3, s4, s5);
+			if(pl.is_feigning)
+			     s6="feigned  ";
+			else s6="         ";
+			centerprint(pl, s1,s6, s2, s3, s4, s5);
+			return;
 		}
 		else {
 			if (pl.playerclass == 9) {
@@ -188,7 +192,12 @@ void (entity pl) RefreshStatusBar =
 			}
 		}
 	}
-	centerprint(pl, s1, s2, s3, s4, s5, s6, s7);
+      	if (pl.playerclass == 1) {
+      	     if(pl.ScannerOn)
+      		s2 = "Scanner On                         \n";
+      	    else s2 = "Scanner Off                         \n";
+      	}	
+ 	centerprint(pl, s1, s2, s3, s4, s5, s6, s7);
 };
 
 string (entity pl) GetStatusSize =
@@ -5064,7 +5073,7 @@ string (entity pl) ClipSizeToString100 =
 string (entity pl) DisguiseToString =
 {
 	if (!pl.is_undercover) 
-		return "\n";
+		return "                                      \n";
 	if (pl.is_undercover == 2) 
 		return "going undercover                       \n";
 	if (invis_only) 

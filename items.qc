@@ -353,7 +353,7 @@ void () armor_touch =
 		else {
 			if (self.classname == "item_armorInv") {
 				type = 0.8;
-				value = 200;
+				value = 300;
 				bit = 32768;
 			}
 		}
