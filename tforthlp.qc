@@ -31,7 +31,7 @@ void () TeamFortress_MOTD =
   sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•(QWLAN TF)\n");
 #else
   sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•\n");
-  sprint(self, 2, "Official ΝΤΖΜ version\n");
+//  sprint(self, 2, "Official ΝΤΖΜ version\n");
 #endif
 #endif
   sprint(self, 2, "by sd‘ angel for ΝΤΖΜ\n");

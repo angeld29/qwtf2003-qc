@@ -203,10 +203,10 @@ void (entity pl) Angel_PrintRules =
      sprint3(pl, 2, "Sentry: 2.8.1 new find ",st," ppl\n");
    }
 
-/* if(new_gas)//FIXME
-         sprint(pl, 2, "New Spy Gas: œŒ\n");
+ if(new_build_check)
+         sprint(pl, 2, "New Build Check: œŒ\n");
         else 
-         sprint(pl, 2, "New Spy Gas: œ∆∆\n");*/
+         sprint(pl, 2, "New Build Check: œ∆∆\n");
  if(new_gas){
    sprint(pl, 2, "New Gas Options:\n");
    if((new_gas & #GAS_MASK_COLOR) && !(new_gas & #GAS_MASK_ALLSPYS))
@@ -374,6 +374,8 @@ void (entity pl) Angel_PrintRules =
 //   sprint(pl, 2, "\n"); 
  }else
   sprint(pl, 2, "All Grenades Enabled\n"); 
+ if(mtfl)
+  sprint(pl, 2, "MTFL Settings ON\n"); 
 #ifdef TG
 #ifdef LAN_SERVER
  sprint(pl, 2, "TF2003(QWLAN TF) Training Ground by êsdë angel for Õ‘∆Ã\n"); 
@@ -412,7 +414,7 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
    if (e.model != string_null) {
     if (!found) {
      found = 1;
-     sprint(self, 2, "The other members of your team are:\n");
+     sprint(Player, 2, "The other members of your team are:\n");
     }
 //    sprint(Player, 2, "\"");
     sprint(Player, 2, e.netname);
@@ -477,10 +479,10 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
      te = find(world, classname, "detpack");
       while (te) {
       if (te.owner == e) {
-             st=ftos(rint(te.nextthink - time));
-             sprint2(self, 2, " DTP:", st);
+                           st=ftos(rint(te.nextthink - time));
+                           sprint2(Player, 2, " DTP:", st);
                           }
-       te = find(te, classname, "detpack");
+                  te = find(te, classname, "detpack");
                  }
     }
     if((e.playerclass == #PC_ENGINEER) && ((stf & #TF_STATUS_SENTRY_MASK) !=0))
@@ -491,21 +493,21 @@ void (entity Player) TeamFortress_TeamShowMemberClasses_New =
        while (te) {
        if (te.real_owner == e) {
              st=ftos(te.weapon);
-             sprint2(self, 2, " SENTRY:", st);
+             sprint2(Player, 2, " SENTRY:", st);
                                 }
        te = find(te, classname, "building_sentrygun");
                  }
      }else{
-      sprint(self, 2, " NOSENTRY");
+      sprint(Player, 2, " NOSENTRY");
      }
     }
     if((stf & #TF_STATUS_COORD_MASK) !=0)
     {
        st = vtos(e.origin);
-       sprint2(self, 2, " ", st);
+       sprint2(Player, 2, " ", st);
     }
    }
-    sprint(self, 2, "\n");
+    sprint(Player, 2, "\n");
    }
   }
   e = find(e, classname, "player");

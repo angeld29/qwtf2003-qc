@@ -277,7 +277,7 @@ void () TeamFortress_EngineerBuild =
 float (entity obj, entity builder) CheckAreaNew = 
 {
  local entity te;
-  traceline(builder.origin, obj.origin, 1, builder, builder.mins,builder.maxs);
+ traceline(builder.origin, obj.origin, 1, builder, '-16 -16 0','16 16 48');
  if (trace_fraction != 1) 
   return 0;
 
@@ -294,10 +294,15 @@ float (entity obj, entity builder) CheckArea =
  local float pos;
  local entity te;
 
-//new traceline
-  traceline(builder.origin, obj.origin, 1, builder, builder.mins,builder.maxs);
+
+  if(new_build_check)
+  {
+   return CheckAreaNew(obj,builder);
+  }
+/*  traceline(builder.origin, obj.origin, 1, builder, '-16 -16 0','16 16 48');
+
   if (trace_fraction != 1) 
-   return 0;
+   return 0;*/
 
  pos = pointcontents(obj.origin);
  if (pos == -2 || pos == -6) 
@@ -348,6 +353,9 @@ void (float objtobuild) TeamFortress_Build =
 {
  local float btime;
  local entity te;
+#ifdef TG
+ local entity saveself;
+#endif
  local vector tmp1;
  local vector tmp2;
 
@@ -368,7 +376,7 @@ void (float objtobuild) TeamFortress_Build =
   newmis.mdl = "progs/disp.mdl";
   newmis.netname = "dispenser";
 #ifdef TG
-  btime = time ;
+  btime = time +0.1;
 #else
   btime = time + #BUILD_TIME_DISPENSER;
 #endif
@@ -386,7 +394,7 @@ void (float objtobuild) TeamFortress_Build =
    newmis.mdl = "progs/turrbase.mdl";
    newmis.netname = "sentrygun";
 #ifdef TG
-  btime = time ;
+  btime = time +0.1;
 #else
    btime = time + #BUILD_TIME_SENTRYGUN;
 #endif
@@ -424,6 +432,15 @@ void (float objtobuild) TeamFortress_Build =
  setmodel(newmis, newmis.mdl);
  setsize(newmis, tmp1, tmp2);
  setorigin(newmis, newmis.origin);
+#ifdef TG
+/* if (objtobuild == #BUILD_SENTRYGUN)
+ {
+  saveself=self;
+  self=newmis;
+  droptofloor();
+  self=saveself;
+ }*/
+#endif
  newmis.flags = newmis.flags - (newmis.flags & 512);
 };
 

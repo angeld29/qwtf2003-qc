@@ -354,8 +354,9 @@ float disable_reload;
 .float assault_min_shells;
 
 float firstplayer;
+float new_build_check;
 float sv262;
-
+float mtfl;
 
 void (float psize, entity p) KickPlayer =
 {

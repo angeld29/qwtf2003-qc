@@ -349,63 +349,63 @@ void () DecodeLevelParms =
     invis_only = 0;
   }
 
-                cheat_pause=1;
-                st=infokey(world, "cp");
-                if(st != string_null)
-                {
-                 cheat_pause=stof(st);
-                 cheat_pause=ceil(cheat_pause);
-                 if(cheat_pause<=0)cheat_pause=1;
-                }
-                topcolor_check=0;
-                tc1 = TeamFortress_TeamGetColor(1) - 1;
-                st=infokey(world, "tc1");
-                if(st != string_null)
-                {
-                  ti=stof(st);
-                  ti=ceil(ti);
-                  if(ti>=0 && ti<=15 )
-                  {
-                   tc1=ti;
-                   topcolor_check=1;
-                  }
-                }
-                tc2 = TeamFortress_TeamGetColor(2) - 1;
-                st=infokey(world, "tc2");
-                if(st != string_null)
-                {
-                  ti=stof(st);
-                  ti=ceil(ti);
-                  if(ti>=0 && ti<=15 )
-                  {
-                   tc2=ti;
-                   topcolor_check=1;
-                  }
-                }
-                tc3 = TeamFortress_TeamGetColor(3) - 1;
-                st=infokey(world, "tc3");
-                if(st != string_null)
-                {
-                  ti=stof(st);
-                  ti=ceil(ti);
-                  if(ti>=0 && ti<=15 )
-                  {
-                   tc3=ti;
-                   topcolor_check=1;
-                  }
-                }
-                tc4 = TeamFortress_TeamGetColor(4) - 1;
-                st=infokey(world, "tc4");
-                if(st != string_null)
-                {
-                  ti=stof(st);
-                  ti=ceil(ti);
-                  if(ti>=0 && ti<=15 )
-                  {
-                   tc4=ti;
-                   topcolor_check=1;
-                  }
-                }
+  cheat_pause=1;
+  st=infokey(world, "cp");
+  if(st != string_null)
+  {
+   cheat_pause=stof(st);
+   cheat_pause=ceil(cheat_pause);
+   if(cheat_pause<=0)cheat_pause=1;
+  }
+  topcolor_check=0;
+  tc1 = TeamFortress_TeamGetColor(1) - 1;
+  st=infokey(world, "tc1");
+  if(st != string_null)
+  {
+    ti=stof(st);
+    ti=ceil(ti);
+    if(ti>=0 && ti<=15 )
+    {
+     tc1=ti;
+     topcolor_check=1;
+    }
+  }
+  tc2 = TeamFortress_TeamGetColor(2) - 1;
+  st=infokey(world, "tc2");
+  if(st != string_null)
+  {
+    ti=stof(st);
+    ti=ceil(ti);
+    if(ti>=0 && ti<=15 )
+    {
+     tc2=ti;
+     topcolor_check=1;
+    }
+  }
+  tc3 = TeamFortress_TeamGetColor(3) - 1;
+  st=infokey(world, "tc3");
+  if(st != string_null)
+  {
+    ti=stof(st);
+    ti=ceil(ti);
+    if(ti>=0 && ti<=15 )
+    {
+     tc3=ti;
+     topcolor_check=1;
+    }
+  }
+  tc4 = TeamFortress_TeamGetColor(4) - 1;
+  st=infokey(world, "tc4");
+  if(st != string_null)
+  {
+    ti=stof(st);
+    ti=ceil(ti);
+    if(ti>=0 && ti<=15 )
+    {
+     tc4=ti;
+     topcolor_check=1;
+    }
+  }
 
   st = infokey(world, "adg");
   if (st == string_null) 
@@ -456,6 +456,13 @@ void () DecodeLevelParms =
    sgppl=rint(stof(st));
    if(sgppl<0)sgppl=0;
   }
+
+  st = infokey(world, "nbc");
+  if (st == string_null) 
+      st = infokey(world, "new_build_check");
+  if (st == "off") 
+   new_build_check = 0;
+   else new_build_check = 1;
 
   st = infokey(world, "dg");
   if (st == string_null) 
@@ -535,6 +542,38 @@ void () DecodeLevelParms =
    ent.nextthink = time + autoteam_time;
    ent.think = autoteam_think;
   }
+  st = infokey(world, "mtfl");
+  if(st  == "on")
+  {
+   mtfl = 1;
+   allow_hook = 0;
+   old_grens = 1;
+   invis_only = 0;
+   cheat_pause=1;
+   topcolor_check=1;
+//   tc1 = 13;
+//   tc2 = 4;
+   allow_drop_goal=0;
+   add_pipe =1;
+   new_flash = 1;
+   new_gas = #GAS_DEFAULT;
+
+   sentry_type = #SENTRY_NEW;
+   sgppl=12;
+   disable_grens=0;
+   
+   detpack_block=1;
+   disable_powerups=0;
+   flag_timer=1;
+   snip_fps = 72;
+   snip_range_fix=0;	
+   snip_ammo=1;
+   snip_time = 1.5;
+   gren2box=0;
+   random_tf_spawn = 1;
+
+  }else
+   mtfl = 0;
  }
  if (parm11) 
   self.tfstate = parm11;

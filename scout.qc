@@ -201,6 +201,7 @@ void () FlashGrenadeExplode =
     if ((te != self.owner || gren_effect != 2) && gren_effect) {
 #endif
     if (te.health > 0) {
+      sprint(te,2,"You are flashed\n");
       if(new_flash)
       {
       if (!te.FlashTime) {
@@ -588,6 +589,7 @@ void (entity inflictor, entity attacker, float bounce, entity ignore) T_RadiusBo
 #ifdef TG
       if ((head != inflictor.owner || gren_effect != 2) && gren_effect) {
 #endif
+      sprint(head,2,"You are conced\n");
       te = find(world, classname, "timer");
       while ((te.owner != head || te.think != ConcussionGrenadeTimer || te.think != OldConcussionGrenadeTimer) && te != world) 
        te = find(te, classname, "timer");

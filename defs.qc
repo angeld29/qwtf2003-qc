@@ -1506,5 +1506,6 @@ float api_version;
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 3
-#define ANGEL_VERSION "Compiled: 10.03.2004 r1\nOfficial Õ‘∆Ã version\n"
+#define ANGEL_VERSION "Compiled: 27.03.2004 r1\n" 
+//Official Õ‘∆Ã version\n"
 
