@@ -12,6 +12,7 @@ void () TeamFortress_Regenerate;
 void () TeamFortress_CheckforCheats;
 void () TeamFortress_RegenerateCells;
 void () TeamFortress_AutoID;
+void () ScannerSwitch;
 float TF_AUTOIDTIME = 1.0;
 
 void () UseSpecialSkill =
@@ -20,7 +21,8 @@ void () UseSpecialSkill =
 
 	self.impulse = 0;
 	if (self.playerclass == 1) 
-		self.impulse = 163;
+//		self.impulse = 163;
+                ScannerSwitch();
 	else {
 		if (self.playerclass == 2) 
 			self.impulse = 174;
@@ -1499,6 +1501,8 @@ void () TeamFortress_SetEquipment =
 			self.tp_grenades_1 = 10;
 		self.tp_grenades_2 = 2;
 		self.tf_items = 1;
+                self.ScannerOn = 0;
+                self.ScanRange = 50;
 		self.tf_items_flags = self.tf_items_flags | 1;
 		self.armorclass = self.armorclass | 0;
 		self.armortype = 0.3;

@@ -3,6 +3,8 @@ entity otemp;
 entity s;
 entity old;
 
+void () TeamFortress_DetpackExplode;
+
 void () trigger_reactivate =
 {
 	self.solid = 1;
@@ -261,6 +263,15 @@ void () tdeath_touch =
 	}
 	if (other.health) 
 		T_Damage(other, self, self, 5000);
+	if (other.think == TeamFortress_DetpackExplode) {
+		other.solid = 0;
+		other.nextthink = time + 1 + random() * 2;
+		dremove(other.oldenemy);
+		bprint(1, other.owner.netname);
+		bprint(1, "'s detpack was telefragged by ");
+		bprint(1, self.owner.netname);
+		bprint(1, "\n");
+	}
 };
 
 void (vector org, entity death_owner) spawn_tdeath =

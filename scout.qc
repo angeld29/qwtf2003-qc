@@ -308,6 +308,43 @@ void () ConcussionGrenadeTimer =
 	}
 };
 
+void () TeamFortress_AutoScan =
+{
+ local entity oldself;
+ oldself=self;
+ self=oldself.owner;
+ TeamFortress_Scan(self.ScanRange);
+ self=oldself;
+ self.nextthink = time + 1;
+};
+
+void () ScannerSwitch =
+{
+	local entity te;
+
+	if (self.ScannerOn != 1) {
+		te = spawn();
+		te.nextthink = time + 1;
+		te.think = TeamFortress_AutoScan;
+		te.owner = self;
+		te.classname = "timer";
+		te.netname = "scanner";
+		sprint(self, 2, "Scanner On.\n");
+		self.ScannerOn = 1;
+	}
+	else {
+		te = find(world, netname, "scanner");
+		while (te) {
+			if (te.owner == self) 
+				dremove(te);
+			te = find(te, netname, "scanner");
+		}
+		sprint(self, 2, "Scanner Off.\n");
+		self.ScannerOn = 0;
+	}
+};
+
+
 void (float scanrange) TeamFortress_Scan =
 {
 	local string power;
@@ -354,6 +391,7 @@ void (float scanrange) TeamFortress_Scan =
 		}
 		if (scanrange > 50) 
 			scanrange = 50;
+		self.ScanRange=scanrange;
 		scen = 0;
 		scfr = 0;
 		if (self.tf_items_flags & 1) 
@@ -364,7 +402,7 @@ void (float scanrange) TeamFortress_Scan =
 			sprint(self, 2, "All scanner functions are disabled.\n");
 			return;
 		}
-		sprint(self, 2, "Scanning...\n");
+//		sprint(self, 2, "Scanning...\n");
 		scanrange = scanrange * 25;
 		list = T_RadiusScan(self, scanrange, scen, scfr);
 	}
@@ -415,7 +453,7 @@ void (float scanrange) TeamFortress_Scan =
 		list = list.linked_list;
 	}
 	if (!scen && !scfr) {
-		sprint(self, 2, "No blips.\n");
+//		sprint(self, 2, "No blips.\n");
 		return;
 	}
 	W_SetCurrentAmmo();

@@ -261,6 +261,8 @@ float already_chosen_map;
 .float StatusRefreshTime;
 .float StatusBarSize;
 .float StatusBarRes;
+.float ScannerOn;
+.float ScanRange;
 
 float clanbattle;
 float clan_scores_dumped;
