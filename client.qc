@@ -1652,17 +1652,20 @@ void () PlayerPostThink =
 		if (!self.cheat_check) 
 			self.cheat_check = time + 5;
 		else {
-			if (time > self.StatusRefreshTime && self.StatusBarSize) 
+		        if(time > self.StatusRefreshTime)
+		        {
+			if (self.StatusBarSize) 
 				RefreshStatusBar(self);
+                         st = infokey(self, "autoid");
+                         if (st == "on")
+                           TeamFortress_AutoID();
+			}
 		}
 	}
 	if (self.cheat_check <= time) {
 		TeamFortress_CheckTeamCheats();
 		self.cheat_check = time + 3;
 	}
-          st = infokey(self, "autoid");
-        if (st == "on")
-          TeamFortress_AutoID();
 };
 
 void () ClientConnect =
