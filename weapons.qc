@@ -874,9 +874,11 @@ void () W_FireAssaultCannon =
 	{
  	 self.ammo_shells = self.ammo_shells - 1;
 	 self.currentammo = self.ammo_shells - 1;
-	 self.ScanRange=0;
+         self.ScanRange= self.ScanRange + 1;
 	}else
-	  self.ScanRange= self.ScanRange + 1;
+	{
+	 self.ScanRange=0;
+	}
 
 	dir = aim(self, 100000);
 	deathmsg = 20;

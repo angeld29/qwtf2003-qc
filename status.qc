@@ -193,9 +193,34 @@ void (entity pl) RefreshStatusBar =
 		}
 	}
       	if (pl.playerclass == 1) {
+      	    s7=ftos(self.ScanRange);
+      	    if(self.ScanRange<10)
+      	    {
       	     if(pl.ScannerOn)
-      		s2 = "Scanner On                         \n";
-      	    else s2 = "Scanner Off                         \n";
+  	            s2 = "Scanner On    ";
+  	       else s2 = "Scanner Off   ";
+      	    }else {
+      	    if(self.ScanRange<100)
+      	    {
+      	     if(pl.ScannerOn)
+  	            s2 = "Scanner On   ";
+  	       else s2 = "Scanner Off  ";
+      	    }else
+      	    {
+      	     if(pl.ScannerOn)
+  	            s2 = "Scanner On  ";
+  	       else s2 = "Scanner Off ";
+      	    }}
+      	    if((self.tf_items_flags&3)==0)
+      		 s6 = "                         \n";
+      	    if((self.tf_items_flags&3)==3)
+      		 s6 = " EnFr                    \n";
+      	    if((self.tf_items_flags&3)==1)
+      		 s6 = " En                      \n";
+      	    if((self.tf_items_flags&3)==2)
+      		 s6 = "   Fr                    \n";
+      	 centerprint(pl, s1, s2, s7,s6,s3, s4, s5);
+      	 return;
       	}	
  	centerprint(pl, s1, s2, s3, s4, s5, s6, s7);
 };

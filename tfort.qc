@@ -1082,6 +1082,7 @@ void (entity p) TeamFortress_SetSpeed =
 		if (p.maxstrafespeed > 80) 
 			p.maxstrafespeed = 80;
 	}
+
 	sp = ftos(p.maxfbspeed);
 	stuffcmd(p, "cl_backspeed ");
 	stuffcmd(p, sp);
@@ -1490,7 +1491,8 @@ void () TeamFortress_SetEquipment =
 	self.current_weapon = 0;
 	self.weapons_carried = 0;
 	self.tf_items = 0;
-	self.tf_items_flags = 0;
+	if(self.playerclass != 1)
+	 self.tf_items_flags = 0;
 	self.armorclass = 0;
 	self.impulse = 0;
 	self.undercover_skin = 0;
@@ -1561,7 +1563,8 @@ void () TeamFortress_SetEquipment =
 		self.tf_items = #PC_SCOUT_TF_ITEMS;
                 self.ScannerOn = 0;
                 self.ScanRange = 50;
-		self.tf_items_flags = self.tf_items_flags | #NIT_SCANNER_ENEMY;
+                if(self.tf_items_flags <= 0)
+		 self.tf_items_flags = self.tf_items_flags | #NIT_SCANNER_ENEMY;
 		self.armorclass = self.armorclass | #PC_SCOUT_INITARMORCLASS;
 		self.armortype = #PC_SCOUT_INITARMORTYPE;
 		self.armorvalue = #PC_SCOUT_INITARMOR;

@@ -1261,7 +1261,11 @@ void (entity spy) Spy_RemoveDisguise =
 			spy.is_undercover = 0;
 			spy.modelindex = modelindex_player;
 			if (spy.items & 524288) 
+			    {
+			        spy.invisible_finished = 0;
+			        spy.invisible_time = 0;
 				spy.items = spy.items - 524288;
+			    }	
 			self.StatusRefreshTime = time + 0.1;
 		}
 	}
