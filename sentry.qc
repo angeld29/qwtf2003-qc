@@ -399,7 +399,6 @@ float () Sentry_Fire =
  sound(self, 1, "weapons/sniper.wav", 1, 1);
  deathmsg = 27;
 // FireBullets(4, dir, '0.1 0.1 0');
-//angel fix
         if (sentry_type == 1 || sentry_type == 2) {
                 self.v_angle = self.angles;
                 FireBullets(4, dir, '0.1 0.1 0');

@@ -49,8 +49,8 @@ entity (float team_num) FindRandomTeamSpawnPoint =
          spot = find(world, team_str_home, teststr);
   while(1 && spot != world)
   {
-                 if( CheckTelefragSpot(spot) && Activated(spot, self))
-                 {
+   if( CheckTelefragSpot(spot) && Activated(spot, self))
+   {
     if(!numspots)return spot;
     numspots = numspots - 1;
    }

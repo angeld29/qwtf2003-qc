@@ -153,18 +153,18 @@ void () FlashTimerNew =
  st = ftos(te.FlashTime * 10);
  if(te.FlashTime > (24 - #NEW_FLASH_START_TIME))
  {
-         stuffcmd(te, "v_cshift 255 255 255 255\n");
+//     stuffcmd(te, "v_cshift 255 255 255 255\n");
  }else
  {
- stuffcmd(te, "v_cshift ");
- stuffcmd(te, st);
- stuffcmd(te, " ");
- stuffcmd(te, st);
- stuffcmd(te, " ");
- stuffcmd(te, st);
- stuffcmd(te, " ");
- stuffcmd(te, st);
- stuffcmd(te, "\n");
+  stuffcmd(te, "v_cshift ");
+  stuffcmd(te, st);
+  stuffcmd(te, " ");
+  stuffcmd(te, st);
+  stuffcmd(te, " ");
+  stuffcmd(te, st);
+  stuffcmd(te, " ");
+  stuffcmd(te, st);
+  stuffcmd(te, "\n");
  }
  self.nextthink = time + 0.6;
 };
@@ -668,25 +668,33 @@ void (float scanrange) TeamFortress_Scan_Angel =
          if (self.tf_items_flags & 1) {
           sprint(self, 2, "Enemy Scanning disabled.\n");
           self.tf_items_flags = self.tf_items_flags - 1;
+          self.StatusRefreshTime = time + 0.1;
           return;
          }
          sprint(self, #PRINT_HIGH, "Enemy Scanning enabled.\n");
          self.tf_items_flags = self.tf_items_flags | 1;
+         self.StatusRefreshTime = time + 0.1;
          return;
         }
         if (scanrange == 161) {
          if (self.tf_items_flags & 2) {
           sprint(self, #PRINT_HIGH, "Friendly Scanning disabled.\n");
           self.tf_items_flags = self.tf_items_flags - 2;
+          self.StatusRefreshTime = time + 0.1;
           return;
          }
          sprint(self, #PRINT_HIGH, "Friendly Scanning enabled.\n");
          self.tf_items_flags = self.tf_items_flags | 2;
+         self.StatusRefreshTime = time + 0.1;
          return;
         }
         if (scanrange > 50) 
          scanrange = 50;
-        self.ScanRange=scanrange;
+        if(self.ScanRange != scanrange)
+        {
+         self.ScanRange=scanrange;
+         self.StatusRefreshTime = time + 0.1;
+        }
         scen = 0;
         scfr = 0;
         if (self.tf_items_flags & 1) 
@@ -703,9 +711,9 @@ void (float scanrange) TeamFortress_Scan_Angel =
         list = findradius(self.origin, scanrange + 40);
         while(list)
         {
-  enemy_detected=0;
-  friend_detected=0;
-  any_detected=0;
+         enemy_detected=0;
+         friend_detected=0;
+         any_detected=0;
          if(list != self)
          {
           if(list.takedamage && list.health>0 && list.classname=="player")
@@ -730,31 +738,44 @@ void (float scanrange) TeamFortress_Scan_Angel =
           }
          if(any_detected)
          {
-           len=vlen(list.origin - self.origin);
+           /*len=vlen(list.origin - self.origin);
            if(!saveent || (len < minlen))
            {
             saveent=list;
             minlen=len;
-           }
+           }*/
+           lightningvec = normalize(list.origin - self.origin);
+           lightningvec = lightningvec * (vlen(list.origin - self.origin) / 5);
+           lightningvec = lightningvec + self.origin;
+           msg_entity = self;
+           WriteByte(#MSG_ONE, #SVC_TEMPENTITY);
+           WriteByte(#MSG_ONE, #TE_LIGHTNING1);
+           WriteEntity(#MSG_ONE, list);
+           WriteCoord(#MSG_ONE, self.origin_x);
+           WriteCoord(#MSG_ONE, self.origin_y);
+           WriteCoord(#MSG_ONE, self.origin_z + 8);
+           WriteCoord(#MSG_ONE, lightningvec_x);
+           WriteCoord(#MSG_ONE, lightningvec_y);
+           WriteCoord(#MSG_ONE, lightningvec_z + 8);
          }
          list=list.chain;
         }
-        if(saveent)
+/*        if(saveent)
         {
-     lightningvec = normalize(saveent.origin - self.origin);
-      lightningvec = lightningvec * (vlen(saveent.origin - self.origin) / 5);
-      lightningvec = lightningvec + self.origin;
-      msg_entity = self;
-      WriteByte(#MSG_ONE, #SVC_TEMPENTITY);
-      WriteByte(#MSG_ONE, #TE_LIGHTNING1);
-      WriteEntity(#MSG_ONE, self);
-      WriteCoord(#MSG_ONE, self.origin_x);
-      WriteCoord(#MSG_ONE, self.origin_y);
-      WriteCoord(#MSG_ONE, self.origin_z + 8);
-      WriteCoord(#MSG_ONE, lightningvec_x);
-      WriteCoord(#MSG_ONE, lightningvec_y);
-      WriteCoord(#MSG_ONE, lightningvec_z + 8);
-        }
+         lightningvec = normalize(saveent.origin - self.origin);
+         lightningvec = lightningvec * (vlen(saveent.origin - self.origin) / 5);
+         lightningvec = lightningvec + self.origin;
+         msg_entity = self;
+         WriteByte(#MSG_ONE, #SVC_TEMPENTITY);
+         WriteByte(#MSG_ONE, #TE_LIGHTNING1);
+         WriteEntity(#MSG_ONE, self);
+         WriteCoord(#MSG_ONE, self.origin_x);
+         WriteCoord(#MSG_ONE, self.origin_y);
+         WriteCoord(#MSG_ONE, self.origin_z + 8);
+         WriteCoord(#MSG_ONE, lightningvec_x);
+         WriteCoord(#MSG_ONE, lightningvec_y);
+         WriteCoord(#MSG_ONE, lightningvec_z + 8);
+        }*/
  W_SetCurrentAmmo();
  return;
 };

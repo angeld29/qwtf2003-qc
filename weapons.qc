@@ -765,7 +765,7 @@ void () W_FireSniperRifle =
    self.heat = (time - self.heat) * snip_fps * 3 + #SR_INITDAMAGE;
 
   if (self.heat > #SR_MAXDAMAGE)
-  self.heat = #SR_MAXDAMAGE;
+   self.heat = #SR_MAXDAMAGE;
  }
 
  sound(self, 1, "weapons/sniper.wav", 1, 1);
@@ -838,14 +838,13 @@ void () W_FireSniperRifle =
  }
  ClearMultiDamage();
  if (trace_fraction != 1) {
-  TraceAttack(self.heat * dam_mult, dir);
-  WriteByte (#MSG_BROADCAST, #SVC_TEMPENTITY);
-  WriteByte (#MSG_BROADCAST, #TE_SPIKE);
-  WriteCoord (#MSG_BROADCAST, trace_endpos_x);
-  WriteCoord (#MSG_BROADCAST, trace_endpos_y);
-  WriteCoord (#MSG_BROADCAST, trace_endpos_z);
-  multicast (trace_endpos, #MULTICAST_PHS);
-
+    TraceAttack(self.heat * dam_mult, dir);
+    WriteByte (#MSG_BROADCAST, #SVC_TEMPENTITY);
+    WriteByte (#MSG_BROADCAST, #TE_SPIKE);
+    WriteCoord (#MSG_BROADCAST, trace_endpos_x);
+    WriteCoord (#MSG_BROADCAST, trace_endpos_y);
+    WriteCoord (#MSG_BROADCAST, trace_endpos_z);
+    multicast (trace_endpos, #MULTICAST_PHS);
   }
  ApplyMultiDamage();
 };
