@@ -33,7 +33,7 @@ Cкаут.
 файр (tf 2.9).
 
 Общее.
-[+] Autoid включается "setinfo autoid on"
+[+] Autoid,включается "setinfo autoid on"
 [+] Убран баг пропадания последней гранаты, при взятии goal_item.
 [+]	- Health boxes will now heal leg damage even if the player's health is
 		>= his class's max health.(tf 2.9).

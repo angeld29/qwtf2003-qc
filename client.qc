@@ -1658,7 +1658,7 @@ void () PlayerPostThink =
 				RefreshStatusBar(self);
                          st = infokey(self, "autoid");
                          if (st == "on")
-                           TeamFortress_AutoID();
+                           TeamFortress_ID();
 			}
 		}
 	}

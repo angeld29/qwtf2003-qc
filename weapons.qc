@@ -16,7 +16,6 @@ void () TeamFortress_DisplayLegalClasses;
 void () TeamFortress_Inventory;
 void () TeamFortress_SaveMe;
 void () TeamFortress_ID;
-void () TeamFortress_AutoID;
 void () TeamFortress_ShowIDs;
 void () TeamFortress_ShowTF;
 void () TeamFortress_SniperWeapon;
