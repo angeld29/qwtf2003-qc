@@ -167,7 +167,7 @@ void () EMPGrenadeExplode =
 					te.nextthink = time + 0.1;
 				else {
 					if (te.classname == "building_dispenser" || te.classname == "building_sentrygun"){
-				          if (!((teamplay & 16) && te.team_no > 0 && te.team_no == self.owner.team_no)) 					 
+				          if (!((teamplay & #TEAMPLAY_NOEXPLOSIVE) && te.team_no > 0 && te.team_no == self.owner.team_no)) 					 
 						TF_T_Damage(te, self, self.owner, 200, 0, 4);
 					}	
 					else {

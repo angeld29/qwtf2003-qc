@@ -522,7 +522,7 @@ void (float issilent) TeamFortress_SpyFeignDeath =
 			self.is_feigning = 0;
 			self.current_weapon = self.weapon;
 			W_SetCurrentAmmo();
-			self.tfstate = self.tfstate - (self.tfstate & 65536);
+			self.tfstate = self.tfstate - (self.tfstate & #TFSTATE_CANT_MOVE);
 			TeamFortress_SetSpeed(self);
 			if (self.weapon <= 16) {
 				spy_upaxe1();
@@ -571,7 +571,7 @@ void (float issilent) TeamFortress_SpyFeignDeath =
 			at_spot = at_spot.chain;
 		}
 		self.immune_to_check = time + 5;
-		self.tfstate = self.tfstate | 65536;
+		self.tfstate = self.tfstate | #TFSTATE_CANT_MOVE;
 		TeamFortress_SetSpeed(self);
 		self.is_feigning = 1;
 		Attack_Finished(0.8);
@@ -595,7 +595,7 @@ void (float issilent) TeamFortress_SpyFeignDeath =
 		te = find(world, classname, "item_tfgoal");
 		while (te) {
 			if (te.owner == self) {
-				if (!(te.goal_activation & 256) || self.has_disconnected == 1) 
+				if (!(te.goal_activation & #TFGI_KEEP) || self.has_disconnected == 1) 
 					tfgoalitem_RemoveFromPlayer(te, self, 0);
 				if (CTF_Map == 1 && te.goal_no == 1) {
 					bprint(2, self.netname);
@@ -646,7 +646,7 @@ void () TeamFortress_SpyGoUndercover =
 		if (self.is_undercover == 1) {
 			self.is_undercover = 0;
 			self.modelindex = modelindex_player;
-			self.items = self.items - (self.items & 524288);
+			self.items = self.items - (self.items & #IT_INVISIBILITY);
 		}
 		else {
 			if (self.is_undercover == 2) {
@@ -717,7 +717,7 @@ void () TeamFortress_SpyUndercoverThink =
 		return;
 	if (self.owner.is_undercover == 2) {
 		if (invis_only == 1) {
-			self.owner.items = self.owner.items | 524288;
+			self.owner.items = self.owner.items | #IT_INVISIBILITY;
 			self.owner.frame = 0;
 			self.owner.modelindex = modelindex_eyes;
 			self.owner.is_undercover = 1;

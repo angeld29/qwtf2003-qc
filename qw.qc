@@ -279,6 +279,7 @@ float last_id;
 
 float spy_off;
 float old_grens;
+float new_flash;
 float invis_only;
 float allow_hook;
 float flagem_checked;

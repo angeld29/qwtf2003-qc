@@ -328,7 +328,7 @@ void (float inp) Menu_Class_Input =
                         if (st == string_null) 
                         {
                          st = infokey(self, "s");
-                         if ((st != string_null) && ((stof(st)&4)==0)) 
+                         if ((st != string_null) && ((stof(st) & #TF_CLASS_HELP_MASK)==0)) 
                          {
                            st="off";
                          }

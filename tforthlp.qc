@@ -33,16 +33,16 @@ void () TeamFortress_MOTD =
 		TeamFortress_Alias("showtf", 136, 0);
 		TeamFortress_Alias("autozoom", 174, 0);
 		TeamFortress_Alias("changeclass", 99, 0);
-		TeamFortress_Alias("scout", 100 + 1, 0);
-		TeamFortress_Alias("sniper", 100 + 2, 0);
-		TeamFortress_Alias("soldier", 100 + 3, 0);
-		TeamFortress_Alias("demoman", 100 + 4, 0);
-		TeamFortress_Alias("medic", 100 + 5, 0);
-		TeamFortress_Alias("hwguy", 100 + 6, 0);
-		TeamFortress_Alias("pyro", 100 + 7, 0);
-		TeamFortress_Alias("spy", 100 + 8, 0);
-		TeamFortress_Alias("engineer", 100 + 9, 0);
-		TeamFortress_Alias("randompc", 100 + 10, 0);
+		TeamFortress_Alias("scout",    #TF_CHANGEPC + #PC_SCOUT	, 0);
+		TeamFortress_Alias("sniper",   #TF_CHANGEPC + #PC_SNIPER	, 0);
+		TeamFortress_Alias("soldier",  #TF_CHANGEPC + #PC_SOLDIER	, 0);
+		TeamFortress_Alias("demoman",  #TF_CHANGEPC + #PC_DEMOMAN	, 0);
+		TeamFortress_Alias("medic",    #TF_CHANGEPC + #PC_MEDIC	, 0);
+		TeamFortress_Alias("hwguy",    #TF_CHANGEPC + #PC_HVYWEAP	, 0);
+		TeamFortress_Alias("pyro",     #TF_CHANGEPC + #PC_PYRO		, 0);
+		TeamFortress_Alias("spy",      #TF_CHANGEPC + #PC_SPY		, 0);
+		TeamFortress_Alias("engineer", #TF_CHANGEPC + #PC_ENGINEER	, 0);
+		TeamFortress_Alias("randompc", #TF_CHANGEPC + #PC_RANDOM, 0);
 		TeamFortress_Alias("is_aliased", 13, 0);
 		return;
 	}
@@ -118,7 +118,7 @@ void () TeamFortress_MOTD =
 	if (self.motd == 95) {
 		TeamFortress_Alias("disguise", 177, 0);
 		TeamFortress_Alias("feign", 178, 0);
-		TeamFortress_Alias("sfeign", 199, 0);
+		TeamFortress_Alias("sfeign", #TF_SPY_SFEIGN_IMPULSE , 0);
 		TeamFortress_Alias("build", 179, 0);
 		TeamFortress_Alias("detsentry", 188, 0);
 		TeamFortress_Alias("detdispenser", 187, 0);

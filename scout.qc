@@ -170,10 +170,19 @@ void () FlashGrenadeExplode =
 						newmis.think = FlashTimer;
 						newmis.nextthink = time + 1;
 					}
-					if (te == self.owner) 
+					if (te == self.owner){
 						te.FlashTime = 16;
-					else 
+#ifdef ANTIANTIFLASH
+					if(new_flash)	
+                                            disable_updates(te, -1); /* server-side flash */
+#endif // antiantiflash
+					}else {
 						te.FlashTime = 24;
+#ifdef ANTIANTIFLASH
+					if(new_flash)	
+                                            disable_updates(te, 1.8); /* server-side flash */
+#endif // antiantiflash                 
+					}
 					st = ftos(te.FlashTime * 10);
 					stuffcmd(te, "v_cshift ");
 					stuffcmd(te, st);
@@ -315,7 +324,7 @@ void () TeamFortress_AutoScan =
  self=oldself.owner;
  TeamFortress_Scan(self.ScanRange);
  self=oldself;
- self.nextthink = time + 0.5;
+ self.nextthink = time + #TF_AUTOSCAN_TIME;
 };
 
 void () ScannerSwitch =
@@ -324,12 +333,12 @@ void () ScannerSwitch =
 
 	if (self.ScannerOn != 1) {
 		te = spawn();
-		te.nextthink = time + 0.5;
+		te.nextthink = time + #TF_AUTOSCAN_TIME;
 		te.think = TeamFortress_AutoScan;
 		te.owner = self;
 		te.classname = "timer";
 		te.netname = "scanner";
-		sprint(self, 2, "Scanner On.\n");
+		sprint(self, #PRINT_HIGH, "Scanner On.\n");
 		self.ScannerOn = 1;
 	}
 	else {
@@ -339,7 +348,7 @@ void () ScannerSwitch =
 				dremove(te);
 			te = find(te, netname, "scanner");
 		}
-		sprint(self, 2, "Scanner Off.\n");
+		sprint(self, #PRINT_HIGH, "Scanner Off.\n");
 		self.ScannerOn = 0;
 	}
        self.StatusRefreshTime = time + 0.1;
@@ -368,7 +377,7 @@ void (float scanrange) TeamFortress_Scan =
 	self.impulse = 0;
 	self.last_impulse = 0;
 	if (self.classname == "player") {
-		if (!(self.tf_items & 1)) 
+		if (!(self.tf_items & #NIT_SCANNER)) 
 			return;
 		if (scanrange == 160) {
 			if (self.tf_items_flags & 1) {
@@ -376,17 +385,17 @@ void (float scanrange) TeamFortress_Scan =
 				self.tf_items_flags = self.tf_items_flags - 1;
 				return;
 			}
-			sprint(self, 2, "Enemy Scanning enabled.\n");
+			sprint(self, #PRINT_HIGH, "Enemy Scanning enabled.\n");
 			self.tf_items_flags = self.tf_items_flags | 1;
 			return;
 		}
 		if (scanrange == 161) {
 			if (self.tf_items_flags & 2) {
-				sprint(self, 2, "Friendly Scanning disabled.\n");
+				sprint(self, #PRINT_HIGH, "Friendly Scanning disabled.\n");
 				self.tf_items_flags = self.tf_items_flags - 2;
 				return;
 			}
-			sprint(self, 2, "Friendly Scanning enabled.\n");
+			sprint(self, #PRINT_HIGH, "Friendly Scanning enabled.\n");
 			self.tf_items_flags = self.tf_items_flags | 2;
 			return;
 		}
@@ -400,10 +409,10 @@ void (float scanrange) TeamFortress_Scan =
 		if (self.tf_items_flags & 2) 
 			scfr = 1;
 		if (!scen && !scfr) {
-			sprint(self, 2, "All scanner functions are disabled.\n");
+			sprint(self, #PRINT_HIGH, "All scanner functions are disabled.\n");
 			return;
 		}
-//		sprint(self, 2, "Scanning...\n");
+//		sprint(self, #PRINT_HIGH, "Scanning...\n");
 		scanrange = scanrange * 25;
 		list = T_RadiusScan(self, scanrange, scen, scfr);
 	}
@@ -454,7 +463,7 @@ void (float scanrange) TeamFortress_Scan =
 		list = list.linked_list;
 	}
 	if (!scen && !scfr) {
-//		sprint(self, 2, "No blips.\n");
+//		sprint(self, #PRINT_HIGH, "No blips.\n");
 		return;
 	}
 	W_SetCurrentAmmo();

@@ -95,7 +95,7 @@ void (float timer) TeamFortress_SetDetpack =
 
 	self.impulse = 0;
 	self.last_impulse = 0;
-	if (!(self.weapons_carried & 131072)) 
+	if (!(self.weapons_carried & #WEAP_DETPACK)) 
 		return;
 	if (self.ammo_detpack <= 0) 
 		return;
@@ -146,7 +146,7 @@ void (float timer) TeamFortress_SetDetpack =
 	 }
 	 at_spot = at_spot.chain;
 	}
-	if (!(self.flags & 512)) {
+	if (!(self.flags & #FL_ONGROUND)) {
 		sprint(self, 2, "You can't set detpacks in the air!\n");
 		return;
 	}
@@ -165,13 +165,13 @@ void (float timer) TeamFortress_SetDetpack =
 	self.is_detpacking = 1;
 	self.ammo_detpack = self.ammo_detpack - 1;
 	self.immune_to_check = time + 10;
-	self.tfstate = self.tfstate | 65536;
+	self.tfstate = self.tfstate | #TFSTATE_CANT_MOVE;
 	self.weapon = self.current_weapon;
 	self.current_weapon = 0;
 	self.weaponmodel = "";
 	self.weaponframe = 0;
 	TeamFortress_SetSpeed(self);
-	self.pausetime = time + 3;
+	self.pausetime = time + #WEAP_DETPACK_SETTIME;
 	stimer = ftos(timer);
 	sprint(self, 2, "Setting detpack for ");
 	sprint(self, 2, stimer);
@@ -180,7 +180,7 @@ void (float timer) TeamFortress_SetDetpack =
 	newmis.owner = self;
 	newmis.classname = "timer";
 	newmis.netname = "detpack_timer";
-	newmis.nextthink = time + 3;
+	newmis.nextthink = time + #WEAP_DETPACK_SETTIME;
 	newmis.think = TeamFortress_DetpackSet;
 	newmis.health = timer;
 };
@@ -197,7 +197,7 @@ void () TeamFortress_DetpackStop =
 	sprint(self, 2, "Detpack retrieved.\n");
 	self.ammo_detpack = self.ammo_detpack + 1;
 	dremove(detpack_timer);
-	self.tfstate = self.tfstate - (self.tfstate & 65536);
+	self.tfstate = self.tfstate - (self.tfstate & #TFSTATE_CANT_MOVE);
 	self.is_detpacking = 0;
 	self.current_weapon = self.weapon;
 	W_SetCurrentAmmo();
@@ -212,7 +212,7 @@ void () TeamFortress_DetpackSet =
 	local float skinno;
 
 	self.is_detpacking = 0;
-	self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & 65536);
+	self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & #TFSTATE_CANT_MOVE);
 	TeamFortress_SetSpeed(self.owner);
 	sound(self.owner, 2, "doors/medtry.wav", 1, 1);
 	oldself = self;
@@ -275,7 +275,7 @@ void () TeamFortress_DetpackExplode =
 	pos = pointcontents(self.origin);
 	if (pos != -2 && pos != -6 && self.owner.has_disconnected != 1) {
 		deathmsg = 12;
-		head = findradius(self.origin, 1500);
+		head = findradius(self.origin, #WEAP_DETPACK_SIZE);
 		while (head) {
 			if (head.classname == "info_tfgoal") {
 				if ((head.goal_activation & 2) && !head.search_time) {
@@ -335,7 +335,7 @@ void () TeamFortress_DetpackTouch =
 	CheckBelowBuilding(self);
 	if (other.classname != "player") 
 		return;
-	if (other.playerclass != 1) 
+	if (other.playerclass != #PC_SCOUT) 
 		return;
 	if (other.deadflag) 
 		return;
@@ -349,14 +349,14 @@ void () TeamFortress_DetpackTouch =
 	if (trace_fraction == 1 || trace_ent != self) 
 		return;
 	other.immune_to_check = time + 5;
-	other.tfstate = other.tfstate | 65536;
+	other.tfstate = other.tfstate | #TFSTATE_CANT_MOVE;
 	sprint(other, 2, "Disarming detpack...\n");
 	TeamFortress_SetSpeed(other);
 	disarm = spawn();
 	disarm.owner = other;
 	disarm.enemy = self;
 	disarm.classname = "timer";
-	disarm.nextthink = time + 3;
+	disarm.nextthink = time + #WEAP_DETPACK_DISARMTIME;
 	disarm.think = TeamFortress_DetpackDisarm;
 	self.weaponmode = 1;
 	self.enemy = other;
@@ -381,7 +381,7 @@ void () TeamFortress_DetpackDisarm =
 		bprint(1, self.owner.netname);
 		bprint(1, "\n");
 	}
-	self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & 65536);
+	self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & #TFSTATE_CANT_MOVE);
 	TF_AddFrags(self.owner, 1);
 	TeamFortress_SetSpeed(self.owner);
 	dremove(self.enemy.oldenemy);

@@ -1508,7 +1508,7 @@ void () W_SetCurrentAmmo =
 								if (self.current_weapon == 2048) {
 									self.currentammo = self.ammo_rockets;
 									if (!(self.tfstate & 2)) {
-										if (self.weaponmode == 0) 
+										if (self.weaponmode == #GL_NORMAL) 
 							  			        self.weaponmodel = "progs/v_rock.mdl";
 										else 
 											self.weaponmodel = "progs/v_pipe.mdl";
@@ -1748,7 +1748,7 @@ void () W_Reload_grenade_launcher =
 {
 	self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & 2);
 //	self.owner.weaponmodel = "progs/v_rock.mdl";
-	if (self.owner.weaponmode == 0) 
+	if (self.owner.weaponmode == #GL_NORMAL) 
 	        self.owner.weaponmodel = "progs/v_rock.mdl";
 	else 
 		self.owner.weaponmodel = "progs/v_pipe.mdl";
@@ -2725,7 +2725,7 @@ void () ImpulseCommands =
 														if (self.impulse == 178 && self.playerclass == 8) 
 															TeamFortress_SpyFeignDeath(0);
                          											else {
-                 												if (self.impulse == 199 && self.playerclass == 8) 
+                 												if (self.impulse == #TF_SPY_SFEIGN_IMPULSE  && self.playerclass == 8) 
                  													TeamFortress_SpyFeignDeath(1);
 
 														else {

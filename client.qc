@@ -327,6 +327,14 @@ void () DecodeLevelParms =
 			st = infokey(world, "old_grens");
 		if (st == "on") 
 			old_grens = 1;
+
+		st = infokey(world, "nf");
+		if (st == string_null) 
+			st = infokey(world, "new_flash");
+		if (st == "on") 
+		 new_flash = 1;
+		 else new_flash = 0;
+
 		st = infokey(world, "spy");
 		if (st == "off") 
 			spy_off = 1;

@@ -13,7 +13,6 @@ void () TeamFortress_CheckforCheats;
 void () TeamFortress_RegenerateCells;
 void () TeamFortress_AutoID;
 void () ScannerSwitch;
-float TF_AUTOIDTIME = 1.0;
 
 void () UseSpecialSkill =
 {
@@ -1426,7 +1425,7 @@ void () TeamFortress_SetEquipment =
 
 	if (self.classname != "player") 
 		return;
-	kept_items = self.tf_items & (131072 | 262144);
+	kept_items = self.tf_items & (#IT_KEY1 | #IT_KEY2);
 	self.items = 0;
 	self.last_weaponmode = 0;
 	self.last_weapon = 0;
@@ -1460,7 +1459,7 @@ void () TeamFortress_SetEquipment =
 	self.weaponmode = 0;
 	self.respawn_time = 0;
 	self.heat = 0;
-	self.tfstate = self.tfstate - (self.tfstate & 2);
+	self.tfstate = self.tfstate - (self.tfstate & #TFSTATE_RELOADING);
 	if (!self.team_no) 
 		self.lives = -1;
 	self.items = self.items | kept_items;
@@ -1469,7 +1468,7 @@ void () TeamFortress_SetEquipment =
         if(st == string_null)
          {
            st = infokey(self, "s");
-           if (stof(st)&8) 
+           if (stof(st)& #TF_AUTOID_MASK) 
            {
              st="on";
            }
@@ -1477,15 +1476,15 @@ void () TeamFortress_SetEquipment =
         if (st == "on")
         {
         	te = spawn();
-        	te.nextthink = time + TF_AUTOIDTIME;
+        	te.nextthink = time + #TF_AUTOIDTIME;
         	te.think = TeamFortress_AutoID;
         	te.owner = self;
         	te.classname = "timer";
          }
 ////////
 	if (self.playerclass == 1) {
-		self.weapons_carried = self.weapons_carried | 16 | 128 | 512;
-		self.ammo_rockets = 0;
+		self.weapons_carried = self.weapons_carried | #PC_SCOUT_WEAPONS;
+		self.ammo_rockets = #PC_SCOUT_INITAMMO_ROCKET;
 		self.ammo_nails = 100;
 		self.ammo_shells = 25;
 		self.ammo_cells = 50;
@@ -1500,17 +1499,17 @@ void () TeamFortress_SetEquipment =
 		else 
 			self.tp_grenades_1 = 10;
 		self.tp_grenades_2 = 2;
-		self.tf_items = 1;
+		self.tf_items = #PC_SCOUT_TF_ITEMS;
                 self.ScannerOn = 0;
                 self.ScanRange = 50;
-		self.tf_items_flags = self.tf_items_flags | 1;
-		self.armorclass = self.armorclass | 0;
+		self.tf_items_flags = self.tf_items_flags | #NIT_SCANNER_ENEMY;
+		self.armorclass = self.armorclass | #PC_SCOUT_INITARMORCLASS;
 		self.armortype = 0.3;
 		self.armorvalue = 25;
 		self.armor_allowed = 0.3;
 		self.maxarmor = 50;
-		self.current_weapon = 512;
-		self.items_allowed = 16 | 128 | 512;
+		self.current_weapon = #WEAP_NAILGUN;
+		self.items_allowed = #PC_SCOUT_WEAPONS;
 		self.items = self.items | 1 | 4;
 	}
 	else {
@@ -1607,12 +1606,9 @@ void () TeamFortress_SetEquipment =
 						self.tp_grenades_2 = 2;
 						self.tf_items = 0;
 						self.armorclass = self.armorclass | 0;
-//angel fix
-//						self.armortype = 0.3;
-                                                self.armortype = 0.6;
-//////
+                                                self.armortype = #PC_MEDIC_INITARMORTYPE;
 						self.armorvalue = 50;
-						self.armor_allowed = 0.6;
+						self.armor_allowed = #PC_MEDIC_MAXARMORTYPE;
 						self.maxarmor = 100;
 						self.current_weapon = 1024;
 						self.ammo_medikit = 50;
@@ -1749,9 +1745,9 @@ void () TeamFortress_SetEquipment =
 											self.tp_grenades_2 = 8;
 											self.tf_items = 0;
 											self.armorclass = self.armorclass | 0;
-											self.armortype = 0.6;
+											self.armortype = #PC_ENGINEER_INITARMORTYPE;
 											self.armorvalue = 25;
-											self.armor_allowed = 0.6;
+											self.armor_allowed = #PC_ENGINEER_MAXARMORTYPE;
 											self.maxarmor = 50;
 											self.current_weapon = 524288;
 											self.items_allowed = 8 | 524288 | 256;
@@ -1999,6 +1995,10 @@ void () TeamFortress_RemoveTimers =
 		stuffcmd(self, "v_idlescale 0\n");
 		stuffcmd(self, "v_cshift; wait; bf\n");
 		self.FlashTime = 0;
+#ifdef ANTIANTIFLASH
+       	  if(new_flash)	
+                   disable_updates(te, -1); /* server-side flash */
+#endif // antiantiflash
 	}
 	self.item_list = 0;
 	CenterPrint(self, "\n");
@@ -2782,7 +2782,7 @@ void () TeamFortress_RegenerateCells =
 void () TeamFortress_AutoID =
 {
  local entity oldself;
- self.nextthink = time + TF_AUTOIDTIME;
+ self.nextthink = time + #TF_AUTOIDTIME;
   oldself = self;
   self=self.owner;
   TeamFortress_ID();
@@ -2923,7 +2923,7 @@ void (entity p) TeamFortress_ExecClassScript =
         if (st == string_null) 
         {
          st = infokey(p, "s");
-         if (stof(st)&2 ) 
+         if (stof(st)& #TF_EXEC_CLASS_MASK ) 
          {
            st="on";
          }
@@ -2976,7 +2976,7 @@ void (entity p) TeamFortress_ExecMapScript =
         if (st == string_null) 
         {
          st = infokey(p, "s");
-         if (stof(st)&1 ) 
+         if (stof(st)& #TF_EXEC_MAP_MASK ) 
          {
            st="on";
          }
