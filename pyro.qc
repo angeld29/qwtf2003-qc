@@ -585,7 +585,7 @@ void () W_FireFlame =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_cells - 1;
+ self.currentammo = self.ammo_cells ;
  sound(self, 0, "weapons/flmfire2.wav", 1, 1);
  flame = spawn();
  flame.owner = self;
@@ -659,7 +659,7 @@ void () W_FireIncendiaryCannon =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_rockets - 3;
+ self.currentammo = self.ammo_rockets ;
  sound(self, 1, "weapons/sgun1.wav", 1, 1);
  KickPlayer(-3, self);
  newmis = spawn();

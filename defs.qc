@@ -1437,4 +1437,4 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 5
-#define ANGEL_VERSION "Compiled: 11.12.2003 r1\n"
+#define ANGEL_VERSION "Compiled: 16.12.2003 r1\n"

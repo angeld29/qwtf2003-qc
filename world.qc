@@ -149,12 +149,20 @@ void () worldspawn =
   if (st != string_null) {
    localcmd("exec ");
    localcmd(st);
+   localcmd("/mapdefault.cfg\n");
+
+   localcmd("exec ");
+   localcmd(st);
    localcmd("/");
+   localcmd(mapname);
+   localcmd(".cfg\n");
   }
-  else 
-   localcmd("exec qwmcycle/");
+  else {
+  localcmd("exec qwmcycle/mapdefault.cfg\n");
+  localcmd("exec qwmcycle/");
   localcmd(mapname);
   localcmd(".cfg\n");
+}
  }
  W_Precache();
  precache_sound("demon/dland2.wav");

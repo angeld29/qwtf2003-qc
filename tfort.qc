@@ -2225,13 +2225,13 @@ void (float type) TeamFortress_DropAmmo =
   ammo = #DROP_SHELLS;
   if (self.ammo_shells < ammo) {
    if (self.playerclass == 9) {
-    if (self.ammo_cells / #AMMO_COST_SHELLS > ammo - self.ammo_shells) {
-     sprint(self, 2, "you make some shells.\n");
-     self.ammo_cells = self.ammo_cells - (ammo - self.ammo_shells) * #AMMO_COST_SHELLS;
-     self.ammo_shells = ammo;
-    }
-   }
-   if (self.ammo_shells < ammo) 
+     if (self.ammo_cells / #AMMO_COST_SHELLS > ammo - self.ammo_shells) {
+      sprint(self, 2, "you make some shells.\n");
+      self.ammo_cells = self.ammo_cells - (ammo - self.ammo_shells) * #AMMO_COST_SHELLS;
+      self.ammo_shells = ammo;
+     }
+   }else 
+//   if (self.ammo_shells < ammo) 
     return;
   }
   self.ammo_shells = self.ammo_shells - ammo;
@@ -2272,14 +2272,14 @@ void (float type) TeamFortress_DropAmmo =
     if (type == 4) {
      ammo = #DROP_CELLS;
      if (self.ammo_cells < ammo) {
-      if (self.playerclass == 9) {
+/*      if (self.playerclass == 9) {
        if (self.ammo_cells / #AMMO_COST_CELLS > ammo - self.ammo_cells) {
         sprint(self, 2, "you make some cells.\n");
         self.ammo_cells = self.ammo_cells - (ammo - self.ammo_cells) * #AMMO_COST_CELLS;
         self.ammo_cells = ammo;
        }
-      }
-      if (self.ammo_cells < ammo) 
+      }else*/
+//      if (self.ammo_cells < ammo) 
        return;
      }
      self.ammo_cells = self.ammo_cells - ammo;

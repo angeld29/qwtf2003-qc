@@ -405,7 +405,7 @@ void () Sentry_Die =
   setmodel(self.trigger_field, "");
   self.think = SG_Static;
   self.nextthink = time + 0.5;
-  self.effects = self.effects - (self.effects && 8);
+  self.effects = self.effects - (self.effects & 8);
   self.movetype = 0;
   self.solid = 0;
   self.trigger_field.movetype = 0;

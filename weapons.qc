@@ -732,7 +732,7 @@ void () W_FireShotgun =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_shells - 1;
+ self.currentammo = self.ammo_shells ;
  dir = aim(self, 100000);
  deathmsg = 1;
  FireBullets(6, dir, '0.04 0.04 0');
@@ -755,7 +755,7 @@ void () W_FireSuperShotgun =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_shells - 2;
+ self.currentammo = self.ammo_shells ;
  dir = aim(self, 100000);
  deathmsg = 2;
  FireBullets(14, dir, '0.14 0.08 0');
@@ -817,7 +817,7 @@ void () W_FireSniperRifle =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_shells - 1;
+ self.currentammo = self.ammo_shells;
  makevectors(self.v_angle);
  if(snip_range_fix)
   dir = v_forward;
@@ -908,7 +908,7 @@ void () W_FireAutoRifle =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_shells - 1;
+ self.currentammo = self.ammo_shells ;
  makevectors(self.v_angle);
  dir = v_forward;
  deathmsg = 19;
@@ -938,7 +938,7 @@ void () W_FireAssaultCannon =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
-   self.currentammo = self.ammo_shells - 1;
+   self.currentammo = self.ammo_shells ;
    self.ScanRange= self.ScanRange + 1;
  }else
  {
@@ -1021,7 +1021,7 @@ void () W_FireRocket =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_rockets - 1;
+ self.currentammo = self.ammo_rockets;
  sound(self, 1, "weapons/sgun1.wav", 1, 1);
  KickPlayer(-2, self);
  newmis = spawn();
@@ -1118,7 +1118,7 @@ void () W_FireLightning =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_cells - 1;
+ self.currentammo = self.ammo_cells;
  org = self.origin + '0 0 16';
  traceline(org, org + v_forward * 600, 1, self);
  WriteByte(4, 23);
@@ -1351,7 +1351,7 @@ void () GrenadeTouch =
 void () W_FireGrenade =
 {
  self.ammo_rockets = self.ammo_rockets - 1;
- self.currentammo = self.ammo_rockets - 1;
+ self.currentammo = self.ammo_rockets ;
  sound(self, 1, "weapons/grenade.wav", 1, 1);
  KickPlayer(-2, self);
  newmis = spawn();
@@ -1439,7 +1439,7 @@ void () W_FireSuperSpikes =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.currentammo = self.ammo_nails - 4;
+ self.currentammo = self.ammo_nails;
  dir = aim(self, 1000);
  launch_spike(self.origin + '0 0 16', dir);
  newmis.touch = superspike_touch;
@@ -1476,7 +1476,7 @@ void (float ox) W_FireSpikes =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
-  self.currentammo = self.ammo_nails - 1;
+  self.currentammo = self.ammo_nails;
  }
  else {
 #ifdef TG
@@ -1486,7 +1486,7 @@ void (float ox) W_FireSpikes =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
-  self.currentammo = self.ammo_nails - 2;
+  self.currentammo = self.ammo_nails ;
  }
  dir = aim(self, 1000);
  launch_spike(self.origin + '0 0 16' + v_right * ox, dir);
