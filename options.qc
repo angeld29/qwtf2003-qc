@@ -1,1 +1,2 @@
 #define ANTIANTIFLASH
+#define MULTISCAN

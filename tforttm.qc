@@ -181,7 +181,7 @@ float (float tno) TeamFortress_TeamSet =
   tc = TeamFortress_TeamGetTopColor(tno);
   st = ftos(tc);
   stuffcmd(self, st);
-                stuffcmd(self, " ");
+  stuffcmd(self, " ");
 
   tc = TeamFortress_TeamGetColor(tno) - 1;
   st = ftos(tc);

@@ -746,12 +746,14 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
          if(any_detected)
          {
            any_detected2=1;
-           /*len=vlen(list.origin - self.origin);
+#ifndef MULTISCAN
+           len=vlen(list.origin - self.origin);
            if(!saveent || (len < minlen))
            {
             saveent=list;
             minlen=len;
-           }*/
+           }
+#else
            lightningvec = normalize(list.origin - self.origin);
            lightningvec = lightningvec * (vlen(list.origin - self.origin) / 5);
            lightningvec = lightningvec + self.origin;
@@ -765,10 +767,12 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
            WriteCoord(#MSG_ONE, lightningvec_x);
            WriteCoord(#MSG_ONE, lightningvec_y);
            WriteCoord(#MSG_ONE, lightningvec_z + 8);
+#endif
          }
          list=list.chain;
         }
-/*        if(saveent)
+#ifndef MULTISCAN
+        if(saveent)
         {
          lightningvec = normalize(saveent.origin - self.origin);
          lightningvec = lightningvec * (vlen(saveent.origin - self.origin) / 5);
@@ -783,7 +787,8 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
          WriteCoord(#MSG_ONE, lightningvec_x);
          WriteCoord(#MSG_ONE, lightningvec_y);
          WriteCoord(#MSG_ONE, lightningvec_z + 8);
-        }*/
+        }
+#endif
    if(typescan == 0 && any_detected2==0)
     sprint(self, #PRINT_HIGH, "No blips.\n");
 

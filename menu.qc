@@ -529,7 +529,7 @@ void () Menu_ClassHelp =
  }
  else {
   if (self.playerclass == 1) 
-   CenterPrint(self, "гренадес:            \nFlash Grenade       \nConcussion Grenade  \n\nспециал цоммандс:   \nScanner : scan10,scan30,scan50\nScanner mode : scane,scanf    \n\nPress   for alias help\n");
+   CenterPrint(self, "гренадес:            \nFlash Grenade       \nConcussion Grenade  \n\nспециал цоммандс:   \nScanner : scan10,scan30,scan50, autoscan\nScanner mode : scane,scanf    \n\nPress   for alias help\n");
   else {                                                                                                                                        
    if (self.playerclass == 2) 
     CenterPrint(self, "гренадес:            \nHand Grenade        \nFlare               \n\nспециал цоммандс:   \nautozoom : Toggle Rifle Autozooming\n\n\nPress   for alias help\n");
@@ -571,7 +571,7 @@ void () Menu_StuffClassHelp =
  if (self.playerclass == 1) {
   sprint(self, 2, "сцоут Details:\nвеапонс:\n   ░■▒ Shotgun\n   ░√▒ Nailgun\n");
   sprint(self, 2, "гренадес:\n   Flash\n   Concussion Grenade\nспециал цоммандс:\n");
-  sprint(self, 2, "Scanner : scan10,scan30,scan50\nScanner mode : scane,scanf\n\n");
+  sprint(self, 2, "Scanner : scan10,scan30,scan50, autoscan\nScanner mode : scane,scanf\n\n");
  }
  else {
   if (self.playerclass == 2) {
