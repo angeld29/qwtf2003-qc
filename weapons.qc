@@ -825,7 +825,7 @@ void () W_FireSniperRifle =
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
- self.ammo_shells = self.ammo_shells - 1;
+ self.ammo_shells = self.ammo_shells - snip_ammo;
 #ifdef TG
   if (!unlimit_ammo) 
 #endif
@@ -1905,13 +1905,18 @@ float () W_CheckNoAmmo =
    if (self.current_weapon == 16 || self.current_weapon == 1 || self.current_weapon == 8) 
     return 1;
    else {
-    if (self.current_weapon == 16384) {
+    if (self.current_weapon == #WEAP_INCENDIARY) {
      if (self.currentammo >= 3) 
       return 1;
-    }
-    else {
-     if (self.currentammo > 0) 
-      return 1;
+    }else{
+      if (self.current_weapon == #WEAP_SNIPER_RIFLE) {
+        if (self.currentammo >= snip_ammo) 
+          return 1;
+      }
+        else {
+         if (self.currentammo > 0) 
+          return 1;
+      }
     }
    }
   }
@@ -2187,7 +2192,8 @@ void () W_Attack =
   if ((self.flags & #FL_ONGROUND) || self.hook_out) {
    player_shot1();
    W_FireSniperRifle();
-   Attack_Finished(1.5);
+//   Attack_Finished(1.5);
+   Attack_Finished(snip_time);
   }
  }
  else {
@@ -2426,7 +2432,7 @@ void () W_ChangeWeapon =
     if (self.impulse == 2) {
      if (it & 32) {
       fl = 32;
-      if (self.ammo_shells < 1) 
+      if (self.ammo_shells < snip_ammo) 
        am = 1;
      }
      else {
@@ -2552,9 +2558,12 @@ void () W_ChangeWeapon =
              
              if (it & self.last_weapon) 
               usable = 1;
+
              if (fl & (32 | 64 | 128 | 256 | 32768 | 262144) && self.ammo_shells < 1) {
               am = 1;
-             }
+             }else{
+             if (fl & (32 ) && self.ammo_shells < snip_ammo) 
+              am = 1;
              else {
               if (fl & (512 | 1024 | 524288) && self.ammo_nails < 1) 
                am = 1;
@@ -2574,7 +2583,7 @@ void () W_ChangeWeapon =
                 }
                }
               }
-             }
+             }}
              if (!am) 
               wm = self.last_weaponmode;
             }
@@ -2653,7 +2662,7 @@ void () CycleWeaponCommand =
      else {
       if (self.current_weapon == 262144) {
        self.current_weapon = 32;
-       if (self.ammo_shells < 1) 
+       if (self.ammo_shells < snip_ammo) 
         am = 1;
       }
       else {
@@ -3231,8 +3240,8 @@ void () W_WeaponFrame =
       W_Attack();
      }
      else {
-      sprint(self, 1, "You cannot fire the assault cannon without\nyour feet on the ground...\n");
-      self.fire_held_down=1;
+//      sprint(self, 1, "You cannot fire the assault cannon without\nyour feet on the ground...\n");
+//      self.fire_held_down=1;
       }
     }
     else {

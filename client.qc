@@ -353,7 +353,7 @@ void () DecodeLevelParms =
                 if(st != string_null)
                 {
                  cheat_pause=stof(st);
-                 cheat_pause=ceil(ti);
+                 cheat_pause=ceil(cheat_pause);
                  if(cheat_pause<=0)cheat_pause=1;
                 }
                 topcolor_check=0;
@@ -465,19 +465,29 @@ void () DecodeLevelParms =
   if(st == "on")
    flag_timer=1;
 
-                st = infokey(world, "sf");
+  st = infokey(world, "sf");
   if (st == string_null) 
       st = infokey(world, "snip_fps");
   snip_fps=stof(st);
+
   if(snip_fps<0)snip_fps=0;
 
-                st = infokey(world, "srf");
+  st = infokey(world, "srf");
   if (st == string_null) 
       st = infokey(world, "snip_range_fix");
   if(st == "on")
+  
   snip_range_fix=1;
 
-                st = infokey(world, "g2b");
+  st = infokey(world, "snip_ammo");
+  snip_ammo=stof(st);
+  if(snip_ammo <=0) snip_ammo = 1;
+  st = infokey(world, "snip_time");
+  snip_time=stof(st);
+  if(snip_time <=0) snip_time = 1.5;
+
+
+  st = infokey(world, "g2b");
   gren2box=stof(st);
   if(gren2box<0)gren2box=0;
 

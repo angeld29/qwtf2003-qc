@@ -1,6 +1,5 @@
-./hwguy/tg/qwprogs.dat
+./tg/qwprogs.dat
 
-newhwguy.pqc
 tg.pqc
 options.pqc
 defs.pqc

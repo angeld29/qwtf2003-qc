@@ -174,6 +174,15 @@ void (entity pl) Angel_PrintRules =
          sprint(pl, 2, "Sniper Range Fix: ÏÎ\n");
         else 
          sprint(pl, 2, "Sniper Range Fix: ÏÆÆ\n");
+  sprint(pl, 2, "Sniper ammo cost: ");
+  st=ftos(snip_ammo);
+  sprint(pl, 2, st);
+  sprint(pl, 2, "\n");
+
+  sprint(pl, 2, "Sniper Reload Time: ");
+  st=ftos(snip_time);
+  sprint(pl, 2, st);
+  sprint(pl, 2, "\n");
 
  if(random_tf_spawn)
          sprint(pl, 2, "Random Team Spawn: ÏÎ\n");

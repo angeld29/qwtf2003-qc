@@ -1,5 +1,5 @@
 #define ANTIANTIFLASH
-//#define NEWHWGUY
+#define NEWHWGUY
 //#define TEST
 //#define MULTISCAN
 //#define CHEATBUILD

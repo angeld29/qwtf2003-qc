@@ -645,7 +645,7 @@ void (entity Goal, entity Player, entity AP, float addb) Apply_Results =
    Player.ammo_detpack = Player.ammo_detpack + Goal.ammo_detpack;
    Player.no_grenades_1 = Player.no_grenades_1 + Goal.no_grenades_1;
    Player.no_grenades_2 = Player.no_grenades_2 + Goal.no_grenades_2;
-   if (Player.no_grenades_1 > 4) 
+/*   if (Player.no_grenades_1 > 4) 
     Player.no_grenades_1 = 4;
    if (Player.no_grenades_2 > 4) 
     Player.no_grenades_2 = 4;
@@ -654,7 +654,8 @@ void (entity Goal, entity Player, entity AP, float addb) Apply_Results =
    if (Player.tp_grenades_2 == 3 && Player.no_grenades_2 > 2) 
     Player.no_grenades_2 = 2;
    if (Player.ammo_detpack > Player.maxammo_detpack) 
-    Player.ammo_detpack = Player.maxammo_detpack;
+    Player.ammo_detpack = Player.maxammo_detpack;*/
+   bound_other_ammo(Player);
    if (Player.tfstate & 1) {
     te = find(world, classname, "primer");
     while (te) {
@@ -819,7 +820,8 @@ void (entity Goal, entity Player) RemoveResults =
  Player.ammo_detpack = Player.ammo_detpack - Goal.ammo_detpack;
  Player.no_grenades_1 = Player.no_grenades_1 - Goal.no_grenades_1;
  Player.no_grenades_2 = Player.no_grenades_2 - Goal.no_grenades_2;
- if (Player.no_grenades_1 > 4) 
+ bound_other_ammo(Player);
+/* if (Player.no_grenades_1 > 4) 
   Player.no_grenades_1 = 4;
  if (Player.no_grenades_2 > 4) 
   Player.no_grenades_2 = 4;
@@ -828,7 +830,7 @@ void (entity Goal, entity Player) RemoveResults =
  if (Player.tp_grenades_2 == 3 && Player.no_grenades_2 > 2) 
   Player.no_grenades_2 = 2;
  if (Player.ammo_detpack > Player.maxammo_detpack) 
-  Player.ammo_detpack = Player.maxammo_detpack;
+  Player.ammo_detpack = Player.maxammo_detpack;*/
  if (Player.tfstate & 1) {
   te = find(world, classname, "primer");
   while (te) {

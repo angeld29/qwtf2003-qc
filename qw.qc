@@ -303,6 +303,8 @@ float detpack_block;
 float flag_timer;
 float snip_fps;
 float snip_range_fix;
+float snip_ammo;
+float snip_time;
 float gren2box;
 float sgppl;
 float random_tf_spawn;
