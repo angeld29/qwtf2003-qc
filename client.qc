@@ -409,25 +409,30 @@ void () DecodeLevelParms =
    new_flash = 1;
    else new_flash = 0;
 
-                st = infokey(world, "sg");
-                if (st == "old") {
-                        sentry_type = 0;
-                }
-                else {
-                        if (st == "fix") 
-                                sentry_type = 2;
-                        else 
-                                sentry_type = 1;
-                }
-                st = infokey(world, "sgppl");
-                if(st == string_null)
-                 sgppl=12;
-                else
-                {
-    sgppl=rint(stof(st));
-   if(sgppl<0)sgppl=0;
-  }
-                st = infokey(world, "dg");
+    st = infokey(world, "sg");
+    if (st == "old") {
+            sentry_type = 0;
+    }
+    else {
+            if (st == "fix") 
+                    sentry_type = 2;
+            else 
+            {
+            if (st == "new") 
+                   sentry_type = 3;
+                  else
+                    sentry_type = 1;
+            }
+    }
+    st = infokey(world, "sgppl");
+    if(st == string_null)
+     sgppl=12;
+    else
+    {
+     sgppl=rint(stof(st));
+     if(sgppl<0)sgppl=0;
+    }
+    st = infokey(world, "dg");
   if (st == string_null) 
       st = infokey(world, "disable_grens");
   disable_grens=stof(st);

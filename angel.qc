@@ -90,10 +90,12 @@ void (entity pl) Angel_PrintRules =
   sprint(pl, 2, "нев grenades\n");
 
  if (sentry_type == 1) 
-  sprint(pl, 2, "Sentry: 2.8.1 fixed\n");
-  if (sentry_type == 0) 
+  sprint(pl, 2, "Sentry: 2.8.1 fixed(mtfl)\n");
+ if (sentry_type == 0) 
   sprint(pl, 2, "Sentry: 2.8.1\n");
  if (sentry_type == 2) 
+  sprint(pl, 2, "Sentry: 2.8.1 fixed new\n");
+ if (sentry_type == 3) 
    {
      st=ftos(sgppl);
      sprint3(pl, 2, "Sentry: NEW ",st," ppl\n");

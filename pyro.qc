@@ -591,6 +591,7 @@ void () W_FireFlame =
  flame.velocity = flame.velocity * 600;
  flame.touch = Flamer_stream_touch;
  flame.think = s_explode1;
+ flame.effects=8;
  flame.nextthink = time + 0.15;
  setmodel(flame, "progs/s_explod.spr");
  setsize(flame, '0 0 0', '0 0 0');

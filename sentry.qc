@@ -129,9 +129,9 @@ void () Sentry_Rotate =
 
  self.effects = self.effects - (self.effects & 8);
  CheckSentry(self);
- if(sentry_type == 2)
+ if(sentry_type == 3)
  {
- if (Sentry_FindTarget_Angel()) 
+  if (Sentry_FindTarget_Angel()) 
   return;
  }else
  {
@@ -399,17 +399,18 @@ float () Sentry_Fire =
  sound(self, 1, "weapons/sniper.wav", 1, 1);
  deathmsg = 27;
 // FireBullets(4, dir, '0.1 0.1 0');
-        if (sentry_type == 1 || sentry_type == 2) {
+    if (sentry_type == 1 ) {//mtfl sentry
                 self.v_angle = self.angles;
                 FireBullets(4, dir, '0.1 0.1 0');
         }
         else {
-/*                if (sentry_type == 2) {
+                if (sentry_type == 2 || sentry_type == 3) {
                         self.v_angle = self.angles;
                         dir = normalize(dir);
-                        FireBullets(5, dir, '0.08 0.08 0');
+                        FireBullets(4, dir, '0.1 0.1 0');
+/*                        FireBullets(5, dir, '0.08 0.08 0');*/
                 }
-                else */
+                else 
                         FireBullets(4, dir, '0.1 0.1 0');
         }
 //////
