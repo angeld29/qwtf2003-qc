@@ -1477,9 +1477,24 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define GAS_MASK_PALETTE          16
 #define GAS_MASK_NEWGREN_EFFECTS  32
 #define GAS_MASK_ALLSPYS          64
+#define GAS_MASK_DISABLE_ID      128
+#define GAS_MASK_NEWGREN_TIMES   256
+#define GAS_MASK_NEWGREN_DMG     512
 
+#define GAS_OLG_GREN #GAS_MASK_PALETTE 
+//16
+#define GAS_NEW_GREN (#GAS_MASK_NEWGREN_EFFECTS | #GAS_MASK_NEWGREN_TIMES | #GAS_MASK_NEWGREN_DMG)
+//800
+#define GAS_DEFAULT (#GAS_MASK_DISABLE_ID | #GAS_MASK_COLOR | #GAS_MASK_SKIN)
+//131
+
+#define SETGAS_IN_GAS_TIME 0.3
+#define SETGAS_TIMER_THINK 0.5
+#define SETGAS_SETCOLOR    0.4
+#define SETGAS_SETSKIN     0.2
 
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 3
-#define ANGEL_VERSION "Compiled: 14.02.2004 r1\n"
+#define ANGEL_VERSION "Compiled: 27.02.2004 r1\n"
+

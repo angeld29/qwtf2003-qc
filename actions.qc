@@ -210,7 +210,7 @@ void () TeamFortress_ID =
  local entity te;
 
  if(new_flash && (self.FlashTime >= (24 - #NEW_FLASH_START_TIME)))return;
- if((self.tfstate & 16384) && new_gas )return;
+ if((self.tfstate & 16384) && (new_gas & #GAS_MASK_DISABLE_ID) )return;
  makevectors(self.v_angle);
  src = self.origin + v_forward * 10;
  src_z = self.absmin_z + self.size_z * 0.7;

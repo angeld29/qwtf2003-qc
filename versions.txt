@@ -2,6 +2,26 @@ QuakeWorld TeamFortress 2003
 by [sd] angel for MTFL
 
 ////////////////////////////////////////////////////
+Внесенные изменения (на 27.02.2004 r1):
+настройка газа
+localinfo new_gas n
+
+ GAS_MASK_COLOR             1
+ GAS_MASK_SKIN              2
+ GAS_MASK_4COLORS           4
+ GAS_MASK_ALLCOLORS         8
+ GAS_MASK_PALETTE          16
+ GAS_MASK_NEWGREN_EFFECTS  32
+ GAS_MASK_ALLSPYS          64
+ GAS_MASK_DISABLE_ID      128
+ GAS_MASK_NEWGREN_TIMES   256
+ GAS_MASK_NEWGREN_DMG     512
+
+ old_gren на газ не влияет
+ old_gren on  ---- new_gas 16
+ old_gren off ---- new_gas 800
+ default new_gas 131
+////////////////////////////////////////////////////
 Внесенные изменения (на 14.02.2004 r1):
 localinfo snip_ammo n
 расход патронов для sniperrifle

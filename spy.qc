@@ -901,7 +901,8 @@ void () GasGrenadeMakeGas =
      timer = find(timer, classname, "timer");
     if (timer != world) {
      timer.health = timer.health + 25;
-     if (old_grens == 1) {
+//     if (old_grens == 1) {
+      if(!(new_gas & #GAS_MASK_NEWGREN_TIMES)){
       if (timer.health < 100) 
        timer.health = 100;
       timer.nextthink = time + 0.5;
@@ -912,13 +913,13 @@ void () GasGrenadeMakeGas =
       timer.nextthink = time + 0.3;
      }
 #ifdef NEWSPY
-    if(new_gas && random()<0.3)
+    if(!(new_gas & #GAS_MASK_ALLSPYS ) && (random() < #SETGAS_IN_GAS_TIME))
      SetGasSkin(te);
 #endif
     }
    }
    else {
-    if (old_grens == 1 && !new_gas) {
+    if (new_gas & #GAS_MASK_PALETTE) {
      stuffcmd(te, "v_cshift 50 25 50 -50\n");
      sprint(te, 2, "Far out man!\n");
     }
@@ -926,23 +927,25 @@ void () GasGrenadeMakeGas =
      sprint(te, 2, "Run for cover! They're everywhere!\n");
     te.tfstate = te.tfstate | 16384;
     timer = spawn();
-    if (old_grens == 1) 
-     timer.nextthink = time + 0.5;
-    else 
+    if(new_gas & #GAS_MASK_NEWGREN_TIMES)
      timer.nextthink = time + 0.3;
+    else 
+     timer.nextthink = time + 0.5;
+
     timer.think = HallucinationTimer;
 #ifdef NEWSPY
-    if(new_gas)
      SetGasSkin(te);
 #endif
     timer.classname = "timer";
     timer.owner = te;
-    if (old_grens == 1) 
-     timer.health = 100;
-    else 
-     timer.health = 150;
-    if(new_gas)
+
+    if(new_gas & #GAS_MASK_NEWGREN_TIMES)
+    {
+      timer.health = 150;
+    }else
+    {
       timer.health = 100;
+    }
     timer.team_no = self.team_no;
    }
   }
@@ -986,6 +989,9 @@ void (entity pl) ResetSkins =
 
   if(pl.has_disconnected)return;
 
+  if(!(new_gas & (#GAS_MASK_COLOR | #GAS_MASK_SKIN | #GAS_MASK_ALLSPYS)))
+   return;
+
   te=find(world,classname,"player");
   while(te != world){
    if(!te.has_disconnected /*te!=pl*/){
@@ -993,24 +999,30 @@ void (entity pl) ResetSkins =
     t = (t - firstplayer ) /  firstplayer ;
 
      msg_entity = pl;
-     st=infokey(te,"topcolor");
+     if(new_gas & (#GAS_MASK_COLOR|#GAS_MASK_ALLSPYS))
+     {
+      st=infokey(te,"topcolor");
 
-     WriteByte(#MSG_ONE,#SVC_SETINFO );
-     WriteByte(#MSG_ONE,t );
-     WriteString(#MSG_ONE,"topcolor" );
-     WriteString(#MSG_ONE, st);
+      WriteByte(#MSG_ONE,#SVC_SETINFO );
+      WriteByte(#MSG_ONE,t );
+      WriteString(#MSG_ONE,"topcolor" );
+      WriteString(#MSG_ONE, st);
 
-     st=infokey(te,"bottomcolor");
-     WriteByte(#MSG_ONE,#SVC_SETINFO );
-     WriteByte(#MSG_ONE,t );
-     WriteString(#MSG_ONE,"bottomcolor" );
-     WriteString(#MSG_ONE, st);
+      st=infokey(te,"bottomcolor");
+      WriteByte(#MSG_ONE,#SVC_SETINFO );
+      WriteByte(#MSG_ONE,t );
+      WriteString(#MSG_ONE,"bottomcolor" );
+      WriteString(#MSG_ONE, st);
+     }
 
-     st=infokey(te,"skin");
-     WriteByte(#MSG_ONE,#SVC_SETINFO );
-     WriteByte(#MSG_ONE,t );
-     WriteString(#MSG_ONE,"skin" );
-     WriteString(#MSG_ONE,st );
+     if(new_gas & (#GAS_MASK_SKIN|#GAS_MASK_ALLSPYS))
+     {
+       st=infokey(te,"skin");
+       WriteByte(#MSG_ONE,#SVC_SETINFO );
+       WriteByte(#MSG_ONE,t );
+       WriteString(#MSG_ONE,"skin" );
+       WriteString(#MSG_ONE,st );
+     }
    }
    te=find(te,classname,"player");
   }
@@ -1321,33 +1333,38 @@ void (entity pl) SetGasSkin =
   local string st;
   
   if(pl.has_disconnected)return;
+  if(!(new_gas & (#GAS_MASK_COLOR | #GAS_MASK_SKIN | #GAS_MASK_ALLSPYS)))
+   return;
   te=find(world,classname,"player");
   while(te != world){
-   if( te != pl && !te.has_disconnected && random()<0.4){
-      t=  &te / %1;
-      st=ftos(t);
-      t = (t - firstplayer ) /  firstplayer ;
-      msg_entity = pl;
+   if( te != pl && !te.has_disconnected)
+   {
+     t=  &te / %1;
+     st=ftos(t);
+     t = (t - firstplayer ) /  firstplayer ;
+     msg_entity = pl;
 
- /*     sprint(pl,2,te.netname," gasing ");
-      sprint(pl,2,st," ");
-      st=ftos(t);
-      sprint(pl,2,st," ");
-      st=ftos(firstplayer);
-      sprint(pl,2,st,"\n");*/
+     if(new_gas & #GAS_MASK_ALLSPYS)
+     {
+      if( pl.team_no  == 1)
+       rteam = 2;
+      if( pl.team_no  == 2)
+       rteam = 1;
 
-      rteam=random() * number_of_teams;
-      rteam=floor(rteam) + 1 ;
-      rcol = TeamFortress_TeamGetTopColor(rteam) ;
+      if( pl.team_no  == 3)
+       rteam = 1;
+
+      if( pl.team_no  == 4)
+       rteam = 2;
+
+      rcol = TeamFortress_TeamGetTopColor(rteam);
       st=ftos(rcol);
-
-   
       WriteByte(#MSG_ONE,#SVC_SETINFO );
       WriteByte(#MSG_ONE,t );
       WriteString(#MSG_ONE,"topcolor" );
       WriteString(#MSG_ONE, st);
 
-      rcol = TeamFortress_TeamGetColor(rteam) - 1;
+      rcol = TeamFortress_TeamGetColor(pl.team_no) - 1;
       st=ftos(rcol);
 
       WriteByte(#MSG_ONE,#SVC_SETINFO );
@@ -1355,7 +1372,54 @@ void (entity pl) SetGasSkin =
       WriteString(#MSG_ONE,"bottomcolor" );
       WriteString(#MSG_ONE, st);
 
-      if(random()<0.5){
+      st=TF_GetSkin(pl.team_no,8);
+      WriteByte(#MSG_ONE,#SVC_SETINFO );
+      WriteByte(#MSG_ONE,t );
+      WriteString(#MSG_ONE,"skin" );
+      WriteString(#MSG_ONE,st );
+     }else
+     {
+      if( (new_gas & #GAS_MASK_COLOR ) && random()<#SETGAS_SETCOLOR)
+      {
+
+        if(new_gas & #GAS_MASK_ALLCOLORS)
+        {
+         rcol = random() * 16;
+         rteam=floor(rteam);
+        }else
+        {
+         if(new_gas & #GAS_MASK_4COLORS)
+          	rteam=random() * 4;
+          else
+         	rteam=random() * number_of_teams;
+         rteam=floor(rteam) + 1 ;
+         rcol = TeamFortress_TeamGetTopColor(rteam) ;
+        }
+        st=ftos(rcol);
+
+     
+        WriteByte(#MSG_ONE,#SVC_SETINFO );
+        WriteByte(#MSG_ONE,t );
+        WriteString(#MSG_ONE,"topcolor" );
+        WriteString(#MSG_ONE, st);
+
+        if(new_gas & #GAS_MASK_ALLCOLORS)
+        {
+         rcol = random() * 16;
+         rteam=floor(rteam);
+        }else
+        {
+         rcol = TeamFortress_TeamGetColor(rteam) - 1;
+        }
+        st=ftos(rcol);
+
+        WriteByte(#MSG_ONE,#SVC_SETINFO );
+        WriteByte(#MSG_ONE,t );
+        WriteString(#MSG_ONE,"bottomcolor" );
+        WriteString(#MSG_ONE, st);
+      }
+      if( (new_gas & #GAS_MASK_SKIN ) && random()<#SETGAS_SETSKIN)
+      {
        rskin=random() * 9;
        rskin=floor(rskin)+1;
 
@@ -1367,6 +1431,7 @@ void (entity pl) SetGasSkin =
        WriteString(#MSG_ONE,st );
       }
     }
+   }
    te=find(te,classname,"player");
   }
 }
@@ -1390,7 +1455,6 @@ void () HallucinationTimer =
  
  if (self.owner.deadflag || self.owner.has_disconnected == 1) {
 #ifdef NEWSPY
-  if(new_gas)
   ResetSkins(self.owner);
 #endif
   dremove(self);
@@ -1398,10 +1462,9 @@ void () HallucinationTimer =
  }
  if (!(self.owner.tfstate & 16384)) {
 #ifdef NEWSPY
-  if(new_gas)
   ResetSkins(self.owner);
 #endif
-  if (old_grens == 1 && !new_gas) 
+  if (new_gas & #GAS_MASK_PALETTE) 
    stuffcmd(self.owner, "v_cshift; wait; bf\n");
   sprint(self.owner, 2, "You feel a little better now.\n");
   dremove(self);
@@ -1409,22 +1472,21 @@ void () HallucinationTimer =
  }
 
 
- if (old_grens == 1) 
+// if (old_grens == 1) 
+ if(!(new_gas & #GAS_MASK_NEWGREN_TIMES))
   self.nextthink = time + 0.5;
  else 
   self.nextthink = time + 0.3;
 
 #ifdef NEWSPY
-   if(new_gas ){
-   if(random()<0.5)
+   if(!(new_gas & #GAS_MASK_ALLSPYS ) && random()< #SETGAS_TIMER_THINK)
      SetGasSkin(self.owner);
     self.nextthink = time + 0.5;
-   }
 #endif
 
  if (random() < 0.5) 
   KickPlayer(-10, self.owner);
- if (old_grens == 1 && !new_gas) {
+ if (new_gas & #GAS_MASK_PALETTE) {
   stuffcmd(self.owner, "v_cshift ");
   halltype = random() * 100;
   st = ftos(halltype);
@@ -1457,7 +1519,8 @@ void () HallucinationTimer =
   WriteCoord(1, msg_entity.origin_x + tmpx);
   WriteCoord(1, msg_entity.origin_y + tmpy);
   WriteCoord(1, msg_entity.origin_z);
- if (old_grens != 1) 
+// if (old_grens != 1) 
+  if(new_gas & #GAS_MASK_NEWGREN_DMG)
    T_Damage(self.owner, self.owner, self.owner, 0);
  }
  else {
@@ -1467,7 +1530,7 @@ void () HallucinationTimer =
    WriteCoord(1, msg_entity.origin_x + tmpx);
    WriteCoord(1, msg_entity.origin_y + tmpy);
    WriteCoord(1, msg_entity.origin_z);
-   if (old_grens != 1 && new_gas !=1) {
+   if (new_gas & #GAS_MASK_NEWGREN_EFFECTS) {
     if (halltype2 < 0.1) 
      stuffcmd(self.owner, "play weapons/r_exp3.wav\n");
     else {
@@ -1519,7 +1582,7 @@ void () HallucinationTimer =
                    }
                    else {
                     if (halltype2 < 0.9) 
-                     stuffcmd(self.owner, "play misc/r_tele1.wav");
+                     stuffcmd(self.owner, "play misc/r_tele1.wav\n");
                     else {
                      stuffcmd(self.owner, "play weapons/railgun.wav\n");
                     }
@@ -1557,7 +1620,7 @@ void () HallucinationTimer =
    WriteCoord(1, msg_entity.origin_x + tmpx);
    WriteCoord(1, msg_entity.origin_y + tmpy);
    WriteCoord(1, msg_entity.origin_z);
-   if (old_grens != 1) {
+   if (new_gas & #GAS_MASK_NEWGREN_EFFECTS) {
     if (halltype2 < 0.1) 
      stuffcmd(self.owner, "play weapons/detpack.wav\n");
     else {

@@ -347,10 +347,10 @@ void () W_FireMedikit =
       bprint(1, trace_ent.netname);
       bprint(1, " of his hallucinations\n");
 #ifdef NEWSPY
-      if(new_gas)
+      if(new_gas & ( #GAS_MASK_SKIN | #GAS_MASK_ALLSPYS |#GAS_MASK_COLOR))
        ResetSkins(trace_ent);
 #endif
-      if (old_grens == 1 && !new_gas) 
+      if (new_gas & #GAS_MASK_PALETTE) 
        stuffcmd(trace_ent, "v_cshift; wait; bf\n");
       if (te.team_no != self.team_no) 
        TF_AddFrags(self, 1);

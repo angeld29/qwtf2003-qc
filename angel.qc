@@ -135,10 +135,63 @@ void (entity pl) Angel_PrintRules =
      sprint3(pl, 2, "Sentry: 2.8.1 new find ",st," ppl\n");
    }
 
- if(new_gas)
+/* if(new_gas)//FIXME
          sprint(pl, 2, "New Spy Gas: ÏÎ\n");
         else 
-         sprint(pl, 2, "New Spy Gas: ÏÆÆ\n");
+         sprint(pl, 2, "New Spy Gas: ÏÆÆ\n");*/
+ if(new_gas){
+   sprint(pl, 2, "New Gas Options:\n");
+   if((new_gas & #GAS_MASK_COLOR) && !(new_gas & #GAS_MASK_ALLSPYS))
+   {
+     sprint(pl, 2, " Players Colors: ");
+     if(new_gas & #GAS_MASK_ALLCOLORS)
+     {
+       sprint(pl, 2, "16\n");
+     }else
+     {
+       if(new_gas & #GAS_MASK_4COLORS)
+       {
+        sprint(pl, 2, "4\n");       
+       }else
+       {
+         st = ftos(number_of_teams);       
+         sprint(pl, 2, st,"\n");       
+       }
+     }
+   }
+   if(new_gas & #GAS_MASK_ALLSPYS)
+   {
+     sprint(pl, 2, " Players Skins: Spys\n");
+   }else{
+    if(new_gas & #GAS_MASK_SKIN)
+     sprint(pl, 2, " Players Skins: Random\n");
+   }
+  if(new_gas & #GAS_MASK_PALETTE)
+         sprint(pl, 2, " Palette: ÏÎ\n");
+        else 
+         sprint(pl, 2, " Palette: ÏÆÆ\n");
+ 
+  if(new_gas & #GAS_MASK_NEWGREN_EFFECTS)
+         sprint(pl, 2, " New Gren Effects: ÏÎ\n");
+        else 
+         sprint(pl, 2, " New Gren Effects: ÏÆÆ\n");
+
+  if(new_gas & #GAS_MASK_NEWGREN_TIMES)
+         sprint(pl, 2, " New Gren Times: ÏÎ\n");
+        else 
+         sprint(pl, 2, " New Gren Times: ÏÆÆ\n");
+  if(new_gas & #GAS_MASK_NEWGREN_DMG)
+         sprint(pl, 2, " New Gren DMG: ÏÎ\n");
+        else 
+         sprint(pl, 2, " New Gren DMG: ÏÆÆ\n");
+
+
+  if(!(new_gas & #GAS_MASK_DISABLE_ID))
+         sprint(pl, 2, " ID: ÏÎ\n");
+        else 
+         sprint(pl, 2, " ID: ÏÆÆ\n");
+
+ }
 
  if(new_flash)
          sprint(pl, 2, "New Flash: ÏÎ\n");

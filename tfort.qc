@@ -2054,7 +2054,7 @@ void () TeamFortress_RemoveTimers =
    self.tfstate = self.tfstate - (self.tfstate & 16384);
   }
 #ifdef NEWSPY
-   if(new_gas)
+   if(new_gas & ( #GAS_MASK_SKIN | #GAS_MASK_ALLSPYS |#GAS_MASK_COLOR))
     ResetSkins(self);
 #endif
  te = find(world, classname, "timer");
@@ -2102,7 +2102,7 @@ void () TeamFortress_RemoveTimers =
     te = find(te, classname, "grenade");
   }
  }
- if (old_grens == 1) {
+ if (old_grens == 1 | (new_gas & #GAS_MASK_PALETTE)) {
   stuffcmd(self, "v_idlescale 0\n");
   stuffcmd(self, "v_cshift; wait; bf\n");
   self.FlashTime = 0;
