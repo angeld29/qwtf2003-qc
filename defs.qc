@@ -299,3 +299,5 @@ void (entity killer, entity killee) logfrag = #79;
 string (entity e, string key) infokey = #80;
 float (string s) stof = #81;
 void (vector where, float set) multicast = #82;
+
+

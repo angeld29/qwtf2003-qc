@@ -1,4 +1,3 @@
-
 void (entity Goal, entity Player, entity Item) DisplayItemStatus;
 void (entity Item, entity AP, float method) tfgoalitem_RemoveFromPlayer;
 void () TeamFortress_CheckClassStats;
@@ -12,6 +11,8 @@ void () TeamFortress_ExplodePerson;
 void () TeamFortress_Regenerate;
 void () TeamFortress_CheckforCheats;
 void () TeamFortress_RegenerateCells;
+void () TeamFortress_AutoID;
+float TF_AUTOIDTIME = 1.0;
 
 void () UseSpecialSkill =
 {
@@ -1461,6 +1462,17 @@ void () TeamFortress_SetEquipment =
 	if (!self.team_no) 
 		self.lives = -1;
 	self.items = self.items | kept_items;
+//angel fix
+        st = infokey(self.owner, "autoid");
+        if (st == "on")
+        {
+        	te = spawn();
+        	te.nextthink = time + TF_AUTOIDTIME;
+        	te.think = TeamFortress_AutoID;
+        	te.owner = self;
+        	te.classname = "timer";
+         }
+////////
 	if (self.playerclass == 1) {
 		self.weapons_carried = self.weapons_carried | 16 | 128 | 512;
 		self.ammo_rockets = 0;
@@ -2752,6 +2764,17 @@ void () TeamFortress_RegenerateCells =
 		}
 		return;
 	}
+};
+
+
+void () TeamFortress_AutoID =
+{
+ local entity oldself;
+ self.nextthink = time + TF_AUTOIDTIME;
+  oldself = self;
+  self=self.owner;
+  TeamFortress_ID();
+  self = oldself;
 };
 
 void () TeamFortress_CheckforCheats =
