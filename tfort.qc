@@ -733,6 +733,7 @@ void () TeamFortress_PrimeGrenade =
  tGrenade.classname = "primer";
  tGrenade.impulse = self.impulse;
  tGrenade.nextthink = time + 0.8;
+ tGrenade.respawn_time  = time + 0.8;
  if (gtype == 10) 
   tGrenade.heat = time + 0.5 + 0.5;
  else 
@@ -908,9 +909,19 @@ void () TeamFortress_GrenadePrimed =
 
 void () TeamFortress_ThrowGrenade =
 {
+ local entity te;
  if (!(self.tfstate & 1)) 
   return;
  self.tfstate = self.tfstate | 1024;
+   te = find (world, classname, "primer");
+   while (te)
+   {
+   	if (te.owner == self)
+   		if (te.respawn_time <= time)
+   			te.nextthink = time;
+   	te = find (te, classname, "primer");
+   }
+
 };
 
 float (float pc) IsLegalClass =

@@ -661,7 +661,8 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
  local float res3;
  local float vf_e_angle;
  local float vr_e_angle;
-
+ local float multiscan;
+ local string st;
  self.impulse = 0;
  self.last_impulse = 0;
  if (self.classname != "player") 
@@ -710,8 +711,27 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
          sprint(self, #PRINT_HIGH, "All scanner functions are disabled.\n");
          return;
         }
-    if(typescan == 0)
-       sprint(self, #PRINT_HIGH, "Scanning...\n");
+       multiscan=1;
+       st = infokey(self,"ms");
+       if(st == string_null)
+       {
+        st = infokey(self,"multiscan");
+        if(st == string_null)
+         {
+           st = infokey(self, "s");
+           if (stof(st)& #TF_MULTISCAN_MASK) 
+           {
+             st="off";
+           }
+         }
+       }
+       if(st=="off")
+       {
+        multiscan=0;
+       }
+     
+       if(typescan == 0)
+        sprint(self, #PRINT_HIGH, "Scanning...\n");
        any_detected2=0;
         scanrange = scanrange * 25;
         minlen=scanrange+100;
@@ -746,14 +766,16 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
          if(any_detected)
          {
            any_detected2=1;
-#ifndef MULTISCAN
+//#ifndef MULTISCAN
+           if(multiscan==0){
            len=vlen(list.origin - self.origin);
            if(!saveent || (len < minlen))
            {
             saveent=list;
             minlen=len;
            }
-#else
+           }else{
+//#else
            lightningvec = normalize(list.origin - self.origin);
            lightningvec = lightningvec * (vlen(list.origin - self.origin) / 5);
            lightningvec = lightningvec + self.origin;
@@ -767,11 +789,14 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
            WriteCoord(#MSG_ONE, lightningvec_x);
            WriteCoord(#MSG_ONE, lightningvec_y);
            WriteCoord(#MSG_ONE, lightningvec_z + 8);
-#endif
+           }
+//#endif
          }
          list=list.chain;
         }
-#ifndef MULTISCAN
+
+//#ifndef MULTISCAN
+        if(multiscan==0){
         if(saveent)
         {
          lightningvec = normalize(saveent.origin - self.origin);
@@ -788,7 +813,8 @@ void (float scanrange,float typescan) TeamFortress_Scan_Angel =
          WriteCoord(#MSG_ONE, lightningvec_y);
          WriteCoord(#MSG_ONE, lightningvec_z + 8);
         }
-#endif
+        }
+//#endif
    if(typescan == 0 && any_detected2==0)
     sprint(self, #PRINT_HIGH, "No blips.\n");
 

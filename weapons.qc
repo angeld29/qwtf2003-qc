@@ -694,6 +694,7 @@ void (float shotcount, vector dir, vector spread) FireBullets =
  Multi_Finish();
 };
 
+
 void () W_FireShotgun =
 {
  local vector dir;

@@ -501,7 +501,9 @@ void () TeamFortress_FinishedBuilding =
    oldself.takedamage = 0;
    oldself.th_die = Sentry_Die;
    oldself.team_no = self.team_no;
+#ifndef CHEATBUILD
    self.ammo_cells = self.ammo_cells - 130;
+#endif
    setsize(oldself, '-16 -16 0', '16 16 4');
    newmis = spawn();
    newmis.classname = "building_sentrygun";

@@ -4658,26 +4658,26 @@ string (entity pl) ClipSizeToString100 =
  local float num;
 
  if (pl.current_weapon == 128) {
-  if (8 - pl.reload_shotgun > pl.ammo_shells) 
-   pl.reload_shotgun = 8 - pl.ammo_shells;
+//  if (8 - pl.reload_shotgun > pl.ammo_shells) 
+//   pl.reload_shotgun = 8 - pl.ammo_shells;
   num = 8 - pl.reload_shotgun;
  }
  else {
   if (pl.current_weapon == 256) {
-   if (16 - pl.reload_super_shotgun > pl.ammo_shells) 
-    pl.reload_super_shotgun = 16 - pl.ammo_shells;
+//   if (16 - pl.reload_super_shotgun > pl.ammo_shells) 
+//    pl.reload_super_shotgun = 16 - pl.ammo_shells;
    num = 16 - pl.reload_super_shotgun;
   }
   else {
    if (pl.current_weapon == 2048) {
-    if (6 - pl.reload_grenade_launcher > pl.ammo_rockets) 
-     pl.reload_grenade_launcher = 6 - pl.ammo_rockets;
+//    if (6 - pl.reload_grenade_launcher > pl.ammo_rockets) 
+//     pl.reload_grenade_launcher = 6 - pl.ammo_rockets;
     num = 6 - pl.reload_grenade_launcher;
    }
    else {
     if (pl.current_weapon == 8192) {
-     if (4 - pl.reload_rocket_launcher > pl.ammo_rockets) 
-      pl.reload_rocket_launcher = 4 - pl.ammo_rockets;
+//     if (4 - pl.reload_rocket_launcher > pl.ammo_rockets) 
+//      pl.reload_rocket_launcher = 4 - pl.ammo_rockets;
      num = 4 - pl.reload_rocket_launcher;
     }
     else 
@@ -4685,6 +4685,7 @@ string (entity pl) ClipSizeToString100 =
    }
   }
  }
+ if(num < 0) return "         ";
  if (num < 10) {
   if (num < 5) {
    if (!num) 

@@ -359,6 +359,31 @@ void () Sentry_Die =
  self.nextthink = time + 0.1;
 };
 
+void (float shotcount, vector target, vector spread) FireSentryBullets =
+{
+ local vector direction;
+ local vector src;
+ local vector dir;
+ makevectors(self.v_angle);
+ src = self.origin + v_forward * 10;
+ src_z = self.absmin_z + self.size_z * 0.7;
+ dir=target-src;
+ ClearMultiDamage();
+ traceline(src, src + dir * 2048, 0, self);
+ puff_org = trace_endpos - dir * 4;
+ while (shotcount > 0) {
+  direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
+  normalize(direction);
+  traceline(src, src + direction*2048 , 0, self);
+  if (trace_fraction != 1) {
+    TraceAttack(4, direction);
+  }
+  shotcount = shotcount - 1;
+ }
+ ApplyMultiDamage();
+ Multi_Finish();
+};
+
 float () Sentry_Fire =
 {
  local vector dir;
@@ -390,7 +415,9 @@ float () Sentry_Fire =
   if (self.ammo_rockets == 10) 
    sprint(self.real_owner, 2, "Sentry Gun is low on rockets.\n");
  }
+#ifndef CHEATBUILD
  self.ammo_shells = self.ammo_shells - 1;
+#endif
  if (self.ammo_shells < 0) {
   self.ammo_shells = 0;
   return 0;
@@ -406,8 +433,9 @@ float () Sentry_Fire =
         else {
                 if (sentry_type == 2 || sentry_type == 3) {
                         self.v_angle = self.angles;
-                        dir = normalize(dir);
-                        FireBullets(4, dir, '0.1 0.1 0');
+//                        dir = normalize(dir);
+//                        FireBullets(4, dir, '0.1 0.1 0');
+                        FireSentryBullets(4,self.enemy.origin, '0.1 0.1 0');
 /*                        FireBullets(5, dir, '0.08 0.08 0');*/
                 }
                 else 
@@ -419,7 +447,7 @@ float () Sentry_Fire =
  else {
   if (self.ammo_shells == 20) 
    sprint(self.real_owner, 2, "Sentry Gun is low on shells.\n");
- }
+ }                                                              	
  if (!self.ammo_rockets && self.weapon == 3 && random() < 0.1) 
   sprint(self.real_owner, 2, "Sentry Gun is out of rockets.\n");
  return 1;

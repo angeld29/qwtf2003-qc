@@ -1,6 +1,22 @@
 QuakeWorld TeamFortress 2003
 by [sd] angel for MTFL
+////////////////////////////////////////////////////
+Внесенные изменения (на 26.07.2003):
+[+] Добавлена новая возможность настройки через битовую маску:
+    "setinfo s <число>"
+    1 - exec map on
+    2 - exec class on
+    4 - class help on
+    8 - autoid on
+    16 - multiscan off
+fix reload  при вкюченном sbar
+fix grenadethrow pause (OmiTF)
+sentry fireshell fix
 
+client settings
+localinfo ms off
+localinfo multiscan off
+scanner скаута паказывает 1 ближайшую цель
 ////////////////////////////////////////////////////
 Внесенные изменения (на 23.07.2003):
 
