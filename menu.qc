@@ -664,34 +664,36 @@ void () Menu_ShowBindings2 =
 void () Menu_Spy =
 {
 	if ((self.effects & (8 | 4)) || self.is_unabletospy == 1) {
-		ResetMenu();
+//		ResetMenu();
+ 	        CenterPrint(self, "Action:                           \n•‘ Start Feigning              \n–‘ Silent Feign                \n—‘ Nothing                     \n\n");                 
 		return;
 	}
+
 	if (self.is_feigning) {
 		if (self.undercover_team && self.undercover_skin) 
-			CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n–‘ Reset Skin and Color        \n—‘ Nothing                     \n\n");
+			CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n—‘ Reset Skin and Color        \n˜‘ Nothing                     \n\n");
 		else {
 			if (self.undercover_team) 
-				CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n–‘ Reset Color                 \n—‘ Nothing                     \n\n");
+				CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n—‘ Reset Color                 \n˜‘ Nothing                     \n\n");
 			else {
 				if (self.undercover_skin) 
-					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n–‘ Reset Skin                  \n—‘ Nothing                     \n\n");
+					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n—‘ Reset Skin                  \n˜‘ Nothing                     \n\n");
 				else 
-					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n–‘ Nothing                     \n\n");
+					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Stop Feigning               \n—‘ Nothing                     \n\n");
 			}
 		}
 	}
 	else {
 		if (self.undercover_team && self.undercover_skin) 
-			CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Reset Skin and Color        \n—‘ Nothing                     \n\n");
+			CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Silent Feign                \n—‘ Reset Skin and Color        \n˜‘ Nothing                     \n\n");
 		else {
 			if (self.undercover_team) 
-				CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Reset Color                 \n—‘ Nothing                     \n\n");
+				CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Silent Feign                \n—‘ Reset Color                 \n˜‘ Nothing                     \n\n");
 			else {
 				if (self.undercover_skin) 
-					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Reset Skin                  \n—‘ Nothing                     \n\n");
+					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Silent Feign                \n—‘ Reset Skin                  \n˜‘ Nothing                     \n\n");
 				else 
-					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Nothing                     \n\n");
+					CenterPrint(self, "Action:                           \n“‘ Change Skin                 \n”‘ Change Color                \n•‘ Start Feigning              \n–‘ Silent Feign                \n—‘ Nothing                     \n\n");
 			}
 		}
 	}
@@ -738,16 +740,23 @@ void (float inp) Menu_Spy_Input =
 				self.impulse = 0;
 			}
 			else {
-				if (inp == 4) {
+				if (inp == 5) {
 					Spy_RemoveDisguise(self);
 					ResetMenu();
 					self.impulse = 0;
 				}
 				else {
-					if (inp == 5 && (self.undercover_team || self.undercover_skin)) {
+					if (inp == 6 && (self.undercover_team || self.undercover_skin)) {
 						ResetMenu();
 						self.impulse = 0;
-					}
+					}else
+                      			if (inp == 4) {
+                      			        if(!self.is_feigning)
+                      				TeamFortress_SpyFeignDeath(1);
+                      				ResetMenu();
+                      				self.impulse = 0;
+                      			}
+
 				}
 			}
 		}

@@ -376,6 +376,22 @@ void () DecodeLevelParms =
 		if(st == "on")
 		 flag_timer=1;
 
+                st = infokey(world, "sf");
+		if (st == string_null) 
+		    st = infokey(world, "snip_fps");
+		snip_fps=stof(st);
+		if(snip_fps<0)snip_fps=0;
+
+                st = infokey(world, "srf");
+		if (st == string_null) 
+		    st = infokey(world, "snip_range_fix");
+		if(st == "on")
+		snip_range_fix=1;
+
+                st = infokey(world, "g2b");
+		gren2box=stof(st);
+		if(gren2box<0)gren2box=0;
+
 //////////////
 
 		st = infokey(world, "rd");

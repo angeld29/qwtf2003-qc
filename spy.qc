@@ -634,15 +634,17 @@ void () TeamFortress_SpyGoUndercover =
 {
 	local entity te;
 
-	if (self.effects & (8 | 4)) {
+	
+	if (invis_only == 1) {
+
+	 if (self.effects & (8 | 4)) {
 		sprint(self, 1, "You cannot disguise while glowing.\n");
 		return;
-	}
-	if (self.is_unabletospy == 1) {
+	        }
+	 if (self.is_unabletospy == 1) {
 		sprint(self, 2, "You can't go undercover right now.\n");
 		return;
-	}
-	if (invis_only == 1) {
+		}
 		if (self.is_undercover == 1) {
 			self.is_undercover = 0;
 			self.modelindex = modelindex_player;

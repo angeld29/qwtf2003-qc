@@ -1338,6 +1338,7 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define TF_CLASS_HELP_MASK  4
 #define TF_AUTOID_MASK  8
 
+
 #define DG_TYPE_NORMAL		2 
 #define DG_TYPE_CONCUSSION	4 
 #define DG_TYPE_NAIL		8 
@@ -1350,3 +1351,13 @@ void(entity whom, float time) disable_updates = #83; /* server-side flash */
 #define DG_TYPE_CALTROPS		1024
 #define DG_TYPE_DETPACK		2048
 
+#define BP_GREN		1		
+#define BP_GREN_BYTYPE		2		
+#define BP_TYPE_ARMOR		4
+#define BP_TYPE_HEALTH		8
+#define BP_TYPE_DETPACK		16
+
+// sniper rifle control
+#define SR_INITDAMAGE 50
+#define SR_INCDAMAGE 216 // by second
+#define SR_MAXDAMAGE 398

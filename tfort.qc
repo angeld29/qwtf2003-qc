@@ -13,6 +13,7 @@ void () TeamFortress_CheckforCheats;
 void () TeamFortress_RegenerateCells;
 void () TeamFortress_AutoID;
 void () ScannerSwitch;
+void () W_SetCurrentAmmo;
 
 void () UseSpecialSkill =
 {
@@ -33,13 +34,28 @@ void () UseSpecialSkill =
 					self.impulse = 170;
 				else {
 					if (self.playerclass == 5) 
-						self.impulse = 176;
+					     {
+       						if (self.current_weapon != #WEAP_MEDIKIT) 
+       							self.impulse = #TF_MEDIKIT;
+       						else 
+       						    if(self.ammo_nails >0)
+       							self.impulse = 5;
+       						else 	
+       							self.impulse = 3;
+
+//						self.impulse = 176;
+					     }	
 					else {
-						if (self.playerclass == 6) 
-							self.impulse = 7;
+						if (self.playerclass == #PC_HVYWEAP) 
+						{
+       						if (self.current_weapon == #WEAP_SUPER_SHOTGUN) 
+       							self.impulse = 7;
+       						else 
+       							self.impulse = 3;
+						}
 						else {
 							if (self.playerclass == 7) {
-								if (self.current_weapon == 4096) 
+								if (self.current_weapon == #WEAP_FLAMETHROWER || self.ammo_cells == 0) 
 									self.impulse = 7;
 								else 
 									self.impulse = 6;
@@ -2750,6 +2766,7 @@ void (string halias, float himpulse1, float himpulse2) TeamFortress_Alias =
 
 void () TeamFortress_Regenerate =
 {
+        local entity oldself;
 	if (self.owner.playerclass == 5) {
 		self.nextthink = time + 3;
 		if (self.owner.has_disconnected == 1) {
@@ -2770,6 +2787,12 @@ void () TeamFortress_Regenerate =
 		}
 		if (self.owner.health > self.owner.max_health) 
 			self.owner.health = self.owner.max_health;
+
+	        oldself=self;
+	        self=self.owner;
+	        W_SetCurrentAmmo();
+	        self=oldself;
+
 	}
 };
 

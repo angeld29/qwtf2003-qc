@@ -425,6 +425,7 @@ void () W_FireMedikit =
 								newmis.think = item_megahealth_rot;
 								newmis.owner = trace_ent;
 							}
+							W_SetCurrentAmmo();
 						}
 					}
 				}
@@ -743,11 +744,21 @@ void () W_FireSniperRifle =
 	local vector g;
 	local vector h;
 
+	if(snip_fps)
+	{
+ 	 self.heat = (time - self.heat) * snip_fps * 3 + #SR_INITDAMAGE;
+
+	 if (self.heat > #SR_MAXDAMAGE)
+		self.heat = #SR_MAXDAMAGE;
+	}
+
 	sound(self, 1, "weapons/sniper.wav", 1, 1);
 	KickPlayer(-2, self);
 	self.ammo_shells = self.ammo_shells - 1;
 	self.currentammo = self.ammo_shells - 1;
 	makevectors(self.v_angle);
+	if(snip_range_fix)
+	 dir = v_forward;
 	src = self.origin + v_forward * 10;
 	src_z = self.absmin_z + self.size_z * 0.7;
 	use_this = 0;
@@ -1589,7 +1600,8 @@ void () W_SetCurrentAmmo =
 															}
 															else {
 																if (self.current_weapon == 4) {
-																	self.currentammo = 0;
+//																	self.currentammo = 0;
+																	self.currentammo = self.ammo_medikit;
 																	self.weaponmodel = "progs/v_medi.mdl";
 																	self.weaponframe = 0;
 																}
@@ -1923,7 +1935,7 @@ void () W_Attack =
 				Attack_Finished(0.1);
 			}
 			else {
-				if (self.current_weapon == 128) {
+				if (self.current_weapon == #WEAP_SHOTGUN) {
 					if (CheckForReload() == 1) 
 						return;
 					player_shot1();
@@ -1934,7 +1946,7 @@ void () W_Attack =
 					Attack_Finished(0.5);
 				}
 				else {
-					if (self.current_weapon == 256) {
+					if (self.current_weapon == #WEAP_SUPER_SHOTGUN) {
 						if (CheckForReload() == 1) 
 							return;
 						player_shot1();
@@ -1945,13 +1957,13 @@ void () W_Attack =
 						Attack_Finished(0.7);
 					}
 					else {
-						if (self.current_weapon == 512) 
+						if (self.current_weapon == #WEAP_NAILGUN) 
 							player_nail1();
 						else {
-							if (self.current_weapon == 1024) 
+							if (self.current_weapon == #WEAP_SUPER_NAILGUN) 
 								player_nail1();
 							else {
-								if (self.current_weapon == 2048) {
+								if (self.current_weapon == #WEAP_GRENADE_LAUNCHER) {
 									if (CheckForReload() == 1) 
 										return;
 									player_rocket1();
@@ -1962,7 +1974,7 @@ void () W_Attack =
 									Attack_Finished(0.6);
 								}
 								else {
-									if (self.current_weapon == 8192) {
+									if (self.current_weapon == #WEAP_ROCKET_LAUNCHER) {
 										if (CheckForReload() == 1) 
 											return;
 										player_rocket1();
@@ -1987,21 +1999,21 @@ void () W_Attack =
 			}
 		}
 	}
-	if (self.current_weapon == 32) {
-		if ((self.flags & 512) || self.hook_out) {
+	if (self.current_weapon == #WEAP_SNIPER_RIFLE) {
+		if ((self.flags & #FL_ONGROUND) || self.hook_out) {
 			player_shot1();
 			W_FireSniperRifle();
 			Attack_Finished(1.5);
 		}
 	}
 	else {
-		if (self.current_weapon == 64) {
+		if (self.current_weapon == #WEAP_AUTO_RIFLE) {
 			player_autorifle1();
 			W_FireAutoRifle();
 			Attack_Finished(0.1);
 		}
 		else {
-			if (self.current_weapon == 32768) {
+			if (self.current_weapon == #WEAP_ASSAULT_CANNON) {
 				if (self.ammo_cells < 4) 
 					sprint(self, 1, "Insufficient cells to power up the Assault Cannon.\n");
 				else {
@@ -2014,7 +2026,7 @@ void () W_Attack =
 				}
 			}
 			else {
-				if (self.current_weapon == 4096) {
+				if (self.current_weapon == #WEAP_FLAMETHROWER) {
 					player_shot1();
 					W_FireFlame();
 					if (self.waterlevel > 2) 
@@ -2024,7 +2036,7 @@ void () W_Attack =
 					}
 				}
 				else {
-					if (self.current_weapon == 16384) {
+					if (self.current_weapon == #WEAP_INCENDIARY) {
 						player_rocket1();
 						W_FireIncendiaryCannon();
 						Attack_Finished(1.2);
@@ -2066,14 +2078,14 @@ void () W_Attack =
 								Attack_Finished(0.5);
 							}
 							else {
-								if (self.current_weapon == 262144) {
+								if (self.current_weapon == #WEAP_TRANQ) {
 									sound(self, 1, "weapons/dartgun.wav", 1, 1);
 									player_shot1();
 									W_FireTranq();
 									Attack_Finished(1.5);
 								}
 								else {
-									if (self.current_weapon == 524288) {
+									if (self.current_weapon == #WEAP_LASER) {
 										sound(self, 1, "weapons/railgun.wav", 1, 1);
 										player_shot1();
 										W_FireLaser();
@@ -2956,9 +2968,9 @@ void () W_WeaponFrame =
 			Attack_Finished(0.2);
 		}
 		else {
-			if (self.current_weapon == 32) {
-				if (self.tfstate & 2048) {
-					if (self.heat < 400) 
+			if (self.current_weapon == #WEAP_SNIPER_RIFLE) {
+				if (self.tfstate & #TFSTATE_AIMING) {
+					if (!snip_fps && self.heat < 400) 
 						self.heat = self.heat + 3;
 					if (self.height > 30) {
 						self.height = self.height - 5;
@@ -2970,9 +2982,13 @@ void () W_WeaponFrame =
 					tv_z = 0;
 					if (vlen(tv) <= 50) {
 						SniperSight_Create();
-						self.heat = 50;
+						if(snip_fps)
+						 self.heat = time;
+						else
+						 self.heat = 50;
+
 						self.height = 90;
-						self.tfstate = self.tfstate | 2048;
+						self.tfstate = self.tfstate | #TFSTATE_AIMING;
 						TeamFortress_SetSpeed(self);
 					}
 				}

@@ -301,6 +301,9 @@ float sentry_type;
 float disable_grens;
 float disable_powerups;
 float flag_timer;
+float snip_fps;
+float snip_range_fix;
+float gren2box;
 
 void (float psize, entity p) KickPlayer =
 {
@@ -317,4 +320,5 @@ void () muzzleflash =
 	WriteEntity(4, self);
 	multicast(self.origin, 2);
 };
+
 

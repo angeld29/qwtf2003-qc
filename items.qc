@@ -1357,8 +1357,12 @@ void () item_artifact_super_damage =
 void () BackpackTouch =
 {
 	local string s;
+	local string s1s;
+	local string s2s;
 	local float best;
 	local entity stemp;
+	local float gotgren1;
+	local float gotgren2;
 
 	if (other.classname != "player") 
 		return;
@@ -1370,6 +1374,41 @@ void () BackpackTouch =
 	other.ammo_nails = other.ammo_nails + self.ammo_nails;
 	other.ammo_rockets = other.ammo_rockets + self.ammo_rockets;
 	other.ammo_cells = other.ammo_cells + self.ammo_cells;
+	if(gren2box & #BP_TYPE_HEALTH)
+	 if (self.ammo_medikit > 0) {
+		best = other.max_health - other.health;
+		T_Heal(other, self.ammo_medikit, 1);
+		if (other.health == other.max_health && other.playerclass == #PC_MEDIC) 
+			other.ammo_medikit = other.ammo_medikit + self.ammo_medikit - best;
+	 }
+	if(gren2box & #BP_TYPE_ARMOR)
+      	if (other.armorvalue * other.armortype < self.armorvalue * self.armortype) {
+      		other.armorvalue = self.armorvalue;
+      		other.armortype = self.armortype;
+      	}
+      	if(gren2box & #BP_GREN_BYTYPE)
+      	{
+      	 if (self.tp_grenades_1 == other.tp_grenades_1) 
+      	        {
+       		 other.no_grenades_1 = other.no_grenades_1 + self.no_grenades_1;
+       		 gotgren1=1;
+       		}
+      	 if (self.tp_grenades_2 == other.tp_grenades_2) 
+      	       {
+      		other.no_grenades_2 = other.no_grenades_2 + self.no_grenades_2;
+      		gotgren2=1;
+      	       }	
+      	}else  if(gren2box & #BP_GREN)
+      	{
+		other.no_grenades_1 = other.no_grenades_1 + self.no_grenades_1;
+		other.no_grenades_2 = other.no_grenades_2 + self.no_grenades_2;
+		gotgren1=1;
+		gotgren2=1;
+      	}
+	if(gren2box & #BP_TYPE_DETPACK)
+	 other.ammo_detpack = self.ammo_detpack;
+
+
 	bound_other_ammo(other);
 	sprint(other, 0, "You get ");
 	if (self.ammo_shells) {
@@ -1400,6 +1439,94 @@ void () BackpackTouch =
 		if (other.ammo_cells > other.maxammo_cells) 
 			other.ammo_cells = other.maxammo_cells;
 	}
+
+
+	if (self.no_grenades_1 && gotgren1) {
+		s1s = ftos(self.no_grenades_1);
+		if (self.tp_grenades_1 == #GR_TYPE_CONCUSSION) 
+			s2s = "Concussion grenade";
+		else {
+			if (self.tp_grenades_1 == #GR_TYPE_NAIL	) 
+				s2s = "Nail grenade";
+			else {
+				if (self.tp_grenades_1 == #GR_TYPE_MIRV) 
+					s2s = "Mirv grenade";
+				else {
+					if (self.tp_grenades_1 == #GR_TYPE_NAPALM) 
+						s2s = "Napalm grenade";
+					else {
+						if (self.tp_grenades_1 == #GR_TYPE_FLARE) 
+							s2s = "Flare";
+						else {
+							if (self.tp_grenades_1 == #GR_TYPE_GAS) 
+								s2s = "Gas grenade";
+							else {
+								if (self.tp_grenades_1 == #GR_TYPE_EMP) 
+									s2s = "EMP grenade";
+								else {
+									if (self.tp_grenades_1 == #GR_TYPE_CALTROPS) 
+										s2s = "Caltrop canister";
+									else {
+										if (self.tp_grenades_1 == #GR_TYPE_FLASH) 
+											s2s = "Flash grenade";
+										else 
+											s2s = "Grenade";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		sprint(other, 0, s1s, " ", s2s);
+		if (self.no_grenades_1 != 1) 
+			sprint(other, 0, "s");
+		sprint(other, 0, "  ");	
+	}
+	if (self.no_grenades_2 && gotgren2) {
+		s1s = ftos(self.no_grenades_2);
+		if (self.tp_grenades_2 == #GR_TYPE_CONCUSSION) 
+			s2s = "Concussion grenade";
+		else {
+			if (self.tp_grenades_2 == #GR_TYPE_NAIL) 
+				s2s = "Nail grenade";
+			else {
+				if (self.tp_grenades_2 == #GR_TYPE_MIRV) 
+					s2s = "Mirv grenade";
+				else {
+					if (self.tp_grenades_2 == #GR_TYPE_NAPALM) 
+						s2s = "Napalm grenade";
+					else {
+						if (self.tp_grenades_2 == #GR_TYPE_FLARE) 
+							s2s = "Flare";
+						else {
+							if (self.tp_grenades_2 == #GR_TYPE_GAS) 
+								s2s = "Gas grenade";
+							else {
+								if (self.tp_grenades_2 == #GR_TYPE_EMP) 
+									s2s = "EMP grenade";
+								else {
+									if (self.tp_grenades_2 == #GR_TYPE_CALTROPS) 
+										s2s = "Caltrop canister";
+									else {
+										if (self.tp_grenades_2 == #GR_TYPE_FLASH) 
+											s2s = "Flash grenade";
+										else 
+											s2s = "Grenade";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		sprint(other, 0, s1s, " ", s2s);
+		if (self.no_grenades_2 != 1) 
+			sprint(other, 0, "s");
+		sprint(other, 0, "  ");	
+	}
 	sprint(other, 0, "\n");
 	sound(other, 3, "weapons/lock4.wav", 1, 1);
 	stuffcmd(other, "bf\n");
@@ -1421,6 +1548,15 @@ void () DropBackpack =
 	newmis.ammo_rockets = self.ammo_rockets;
 	newmis.ammo_cells = self.ammo_cells;
 	newmis.armorvalue = self.armorvalue;
+
+	newmis.armortype = self.armortype;
+	newmis.ammo_detpack = self.ammo_detpack;
+	newmis.ammo_medikit = self.ammo_medikit;
+	newmis.no_grenades_1 = self.no_grenades_1;
+	newmis.no_grenades_2 = self.no_grenades_2;
+	newmis.tp_grenades_1 = self.tp_grenades_1;
+	newmis.tp_grenades_2 = self.tp_grenades_2;
+
 	newmis.velocity_z = 300;
 	newmis.velocity_x = -100 + random() * 200;
 	newmis.velocity_y = -100 + random() * 200;
