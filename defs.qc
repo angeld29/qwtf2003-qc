@@ -172,11 +172,7 @@
 // Since BROADCAST is never used in QW 1.5, and MULTICAST is used instead,
 // just define BROADCAST as MULTICAST for QW 1.5
 #define MSG_MULTICAST   4       
-#ifdef QUAKE_WORLD
-	#define MSG_BROADCAST 	#MSG_MULTICAST
-#else
-	#define MSG_BROADCAST	0 	// unreliable to all
-#endif
+#define MSG_BROADCAST 	#MSG_MULTICAST
 #define MSG_ONE			1 		// reliable to one (msg_entity)
 #define MSG_ALL			2 		// reliable to all
 #define MSG_INIT		3 		// write to the init string
@@ -441,19 +437,19 @@
 // Building types
 #define BUILD_DISPENSER			1
 #define BUILD_SENTRYGUN			2
-#define BUILD_MORTAR			3
+//#define BUILD_MORTAR			3
 
 // Building metal costs
 #define BUILD_COST_DISPENSER	100		// Built thru the menu
 #define BUILD_COST_SENTRYGUN	130		// Built thru the menu
-#define BUILD_COST_MORTAR		150		// Built thru the menu
+//#define BUILD_COST_MORTAR		150		// Built thru the menu
 
-#define BUILD_COST_SANDBAG		20		// Built with a separate alias
+//#define BUILD_COST_SANDBAG		20		// Built with a separate alias
 
 // Building times
 #define BUILD_TIME_DISPENSER	2		// 2 seconds to build
 #define BUILD_TIME_SENTRYGUN	5		// 5 seconds to build
-#define BUILD_TIME_MORTAR		5		// 5 seconds to build
+//#define BUILD_TIME_MORTAR		5		// 5 seconds to build
 
 // Building health levels
 #define BUILD_HEALTH_DISPENSER	150		// Built thru the menu
@@ -565,12 +561,12 @@
 #define GL_PIPEBOMB	1 
 
 // Defines for Concussion Grenade
-#define GR_CONCUSS_TIME	5 
-#define GR_CONCUSS_DEC	20 
+//#define GR_CONCUSS_TIME	5 
+//#define GR_CONCUSS_DEC	20 
 
 // Defines for the Gas Grenade
-#define GR_HALLU_TIME	0.5
-#define GR_HALLU_DEC	2.5
+//#define GR_HALLU_TIME	0.5
+//#define GR_HALLU_DEC	2.5
 
 /*==================================================*/
 /* New Items			                        	*/
@@ -609,15 +605,11 @@
 /*==========================================================================*/
 /* TEAMFORTRESS CLASS DETAILS												*/
 /*==========================================================================*/
-// Class Details for SCOUT
+//++ Class Details for SCOUT
 #define PC_SCOUT_SKIN				4 		// Skin for this class when Classkin is on.
-#ifdef QUAKE_WORLD
-	#define PC_SCOUT_MAXHEALTH			100		// Maximum Health Level
-#else
-	#define PC_SCOUT_MAXHEALTH			75 		// Maximum Health Level
-#endif
-#define PC_SCOUT_MAXSPEED			500		// Maximum movement speed
-#define PC_SCOUT_MAXSTRAFESPEED		500		// Maximum strafing movement speed
+#define PC_SCOUT_MAXHEALTH			75		// Maximum Health Level
+#define PC_SCOUT_MAXSPEED			450		// Maximum movement speed
+#define PC_SCOUT_MAXSTRAFESPEED		450		// Maximum strafing movement speed
 #define PC_SCOUT_MAXARMOR			50 		// Maximum Armor Level, of any armor class
 #define PC_SCOUT_INITARMOR			25 		// Armor level when respawned
 #define PC_SCOUT_MAXARMORTYPE		0.3		// Maximum level of Armor absorption
@@ -672,8 +664,8 @@
 // Class Details for SOLDIER
 #define PC_SOLDIER_SKIN				6 			
 #define PC_SOLDIER_MAXHEALTH		100	 
-#define PC_SOLDIER_MAXSPEED			200 		
-#define PC_SOLDIER_MAXSTRAFESPEED	200 
+#define PC_SOLDIER_MAXSPEED			240 		
+#define PC_SOLDIER_MAXSTRAFESPEED	240 
 #define PC_SOLDIER_MAXARMOR			200 
 #define PC_SOLDIER_INITARMOR		100 
 #define PC_SOLDIER_MAXARMORTYPE		0.8 
@@ -698,14 +690,14 @@
 // Class Details for DEMOLITION MAN
 #define PC_DEMOMAN_SKIN				1 
 #define PC_DEMOMAN_MAXHEALTH		90 
-#define PC_DEMOMAN_MAXSPEED			300 		
-#define PC_DEMOMAN_MAXSTRAFESPEED	300 
-#define PC_DEMOMAN_MAXARMOR			100 
+#define PC_DEMOMAN_MAXSPEED			280 		
+#define PC_DEMOMAN_MAXSTRAFESPEED	280 
+#define PC_DEMOMAN_MAXARMOR			120 
 #define PC_DEMOMAN_INITARMOR		50 
 #define PC_DEMOMAN_MAXARMORTYPE		0.6 
 #define PC_DEMOMAN_INITARMORTYPE	0.6 
 #define PC_DEMOMAN_ARMORCLASSES		31 		// ALL
-#define PC_DEMOMAN_INITARMORCLASS	4 		// AT_SAVEEXPLOSION 
+#define PC_DEMOMAN_INITARMORCLASS	0 		// AT_SAVEEXPLOSION 
 #define PC_DEMOMAN_WEAPONS			#WEAP_AXE | #WEAP_SHOTGUN | #WEAP_GRENADE_LAUNCHER | #WEAP_DETPACK
 #define PC_DEMOMAN_MAXAMMO_SHOT		75 
 #define PC_DEMOMAN_MAXAMMO_NAIL		50 
@@ -726,8 +718,8 @@
 // Class Details for COMBAT MEDIC
 #define PC_MEDIC_SKIN				3 
 #define PC_MEDIC_MAXHEALTH			90 
-#define PC_MEDIC_MAXSPEED			300 
-#define PC_MEDIC_MAXSTRAFESPEED		300 
+#define PC_MEDIC_MAXSPEED			320 
+#define PC_MEDIC_MAXSTRAFESPEED		320 
 #define PC_MEDIC_MAXARMOR			100
 #define PC_MEDIC_INITARMOR			50 
 #define PC_MEDIC_MAXARMORTYPE		0.6 
@@ -756,9 +748,9 @@
 // Class Details for HVYWEAP
 #define PC_HVYWEAP_SKIN				2 
 #define PC_HVYWEAP_MAXHEALTH		100 
-#define PC_HVYWEAP_MAXSPEED			200 		
-#define PC_HVYWEAP_MAXSTRAFESPEED	150 
-#define PC_HVYWEAP_MAXARMOR			250 
+#define PC_HVYWEAP_MAXSPEED			230 		
+#define PC_HVYWEAP_MAXSTRAFESPEED	230 
+#define PC_HVYWEAP_MAXARMOR			300 
 #define PC_HVYWEAP_INITARMOR		150 
 #define PC_HVYWEAP_MAXARMORTYPE		0.8 
 #define PC_HVYWEAP_INITARMORTYPE	0.8 
@@ -784,7 +776,7 @@
 #define PC_PYRO_SKIN			21 
 #define PC_PYRO_MAXHEALTH		100 
 #define PC_PYRO_MAXSPEED		300 
-#define PC_PYRO_MAXSTRAFESPEED	250 
+#define PC_PYRO_MAXSTRAFESPEED	300 
 #define PC_PYRO_MAXARMOR		150 
 #define PC_PYRO_INITARMOR		50 
 #define PC_PYRO_MAXARMORTYPE	0.6 
@@ -810,7 +802,7 @@
 #define PC_SPY_SKIN				22 
 #define PC_SPY_MAXHEALTH		90 
 #define PC_SPY_MAXSPEED			300 
-#define PC_SPY_MAXSTRAFESPEED	250 
+#define PC_SPY_MAXSTRAFESPEED	300 
 #define PC_SPY_MAXARMOR			100 
 #define PC_SPY_INITARMOR		25 
 #define PC_SPY_MAXARMORTYPE		0.3 
@@ -819,11 +811,11 @@
 #define PC_SPY_INITARMORCLASS	0  
 #define PC_SPY_WEAPONS			#WEAP_AXE | #WEAP_TRANQ | #WEAP_SUPER_SHOTGUN | #WEAP_NAILGUN
 #define PC_SPY_MAXAMMO_SHOT		40 
-#define PC_SPY_MAXAMMO_NAIL		50 
+#define PC_SPY_MAXAMMO_NAIL		100 
 #define PC_SPY_MAXAMMO_CELL		30 
 #define PC_SPY_MAXAMMO_ROCKET	15 
 #define PC_SPY_INITAMMO_SHOT	40 
-#define PC_SPY_INITAMMO_NAIL	0 
+#define PC_SPY_INITAMMO_NAIL	50 
 #define PC_SPY_INITAMMO_CELL	10 
 #define PC_SPY_INITAMMO_ROCKET	0 
 #define PC_SPY_GRENADE_TYPE_1	#GR_TYPE_NORMAL
@@ -840,7 +832,7 @@
 #define PC_ENGINEER_SKIN			22 		// Not used anymore
 #define PC_ENGINEER_MAXHEALTH		80 
 #define PC_ENGINEER_MAXSPEED		300 
-#define PC_ENGINEER_MAXSTRAFESPEED	250 
+#define PC_ENGINEER_MAXSTRAFESPEED	300 
 #define PC_ENGINEER_MAXARMOR		50
 #define PC_ENGINEER_INITARMOR		25 
 #define PC_ENGINEER_MAXARMORTYPE	0.6 
@@ -865,8 +857,8 @@
 // Class Details for CIVILIAN
 #define PC_CIVILIAN_SKIN			22 
 #define PC_CIVILIAN_MAXHEALTH		50
-#define PC_CIVILIAN_MAXSPEED		200
-#define PC_CIVILIAN_MAXSTRAFESPEED	200
+#define PC_CIVILIAN_MAXSPEED		240
+#define PC_CIVILIAN_MAXSTRAFESPEED	240
 #define PC_CIVILIAN_MAXARMOR		0
 #define PC_CIVILIAN_INITARMOR		0 
 #define PC_CIVILIAN_MAXARMORTYPE	0

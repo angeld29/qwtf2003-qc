@@ -241,7 +241,7 @@ void () W_FireSpanner =
 				else {
 					if (trace_ent.classname == "player") {
 						if ((trace_ent.team_no == self.team_no && self.team_no && teamplay) || coop) {
-							healam = 10;
+							healam = #WEAP_SPANNER_REPAIR;
 							if (self.ammo_cells < healam) 
 								healam = self.ammo_cells;
 							if (!trace_ent.armortype) 
@@ -302,7 +302,7 @@ void () W_FireMedikit =
 	if (trace_ent.takedamage) {
 		if (trace_ent.classname == "player") {
 			if ((trace_ent.team_no == self.team_no && self.team_no) || coop) {
-				healam = 200;
+				healam = #WEAP_MEDIKIT_HEAL;
 				te = find(world, classname, "timer");
 				while ((te.owner != trace_ent || (te.think != ConcussionGrenadeTimer && te.think != OldConcussionGrenadeTimer)) && te != world) 
 					te = find(te, classname, "timer");
@@ -415,7 +415,7 @@ void () W_FireMedikit =
 					T_Heal(trace_ent, healam, 0);
 				}
 				else {
-					if (trace_ent.health >= trace_ent.max_health && trace_ent.health < trace_ent.max_health + 50) {
+					if (trace_ent.health >= trace_ent.max_health && trace_ent.health < trace_ent.max_health + #WEAP_MEDIKIT_OVERHEAL) {
 						healam = 5;
 						if (healam > self.ammo_medikit * 5) 
 							healam = self.ammo_medikit * 5;
@@ -2990,7 +2990,7 @@ void () W_WeaponFrame =
 				else {
 					tv = self.velocity;
 					tv_z = 0;
-					if (vlen(tv) <= 50) {
+					if (vlen(tv) <= #WEAP_SNIPER_RIFLE_MAX_MOVE) {
 						SniperSight_Create();
 						if(snip_fps)
 						 self.heat = time;

@@ -333,7 +333,7 @@ void (float objtobuild) TeamFortress_Build =
 	v_forward_z = 0;
 	v_forward = normalize(v_forward) * 64;
 	newmis.origin = self.origin + v_forward;
-	if (objtobuild == 1) {
+	if (objtobuild == #BUILD_DISPENSER) {
 		if (self.has_dispenser) {
 			sprint(self, 2, "You can only have one dispenser.\nTry dismantling your old one.\n");
 			return;
@@ -342,10 +342,10 @@ void (float objtobuild) TeamFortress_Build =
 		tmp2 = '16 16 48';
 		newmis.mdl = "progs/disp.mdl";
 		newmis.netname = "dispenser";
-		btime = time + 2;
+		btime = time + #BUILD_TIME_DISPENSER;
 	}
 	else {
-		if (objtobuild == 2) {
+		if (objtobuild == #BUILD_SENTRYGUN) {
 			if (self.has_sentry) {
 				sprint(self, 2, "You can only have one sentry gun.\nTry dismantling your old one.\n");
 				return;
@@ -354,7 +354,7 @@ void (float objtobuild) TeamFortress_Build =
 			tmp2 = '16 16 48';
 			newmis.mdl = "progs/turrbase.mdl";
 			newmis.netname = "sentrygun";
-			btime = time + 5;
+			btime = time + #BUILD_TIME_SENTRYGUN;
 		}
 	}
 	if (!CheckArea(newmis, self)) {
@@ -416,16 +416,16 @@ void () DispenserThink =
 		self.ammo_nails = self.ammo_nails + rint(600 / 20);
 		self.ammo_rockets = self.ammo_rockets + rint(300 / 20);
 		self.armorvalue = self.armorvalue + rint(500 / 20);
-		if (self.ammo_shells > 400) 
-			self.ammo_shells = 400;
-		if (self.ammo_nails > 600) 
-			self.ammo_nails = 600;
-		if (self.ammo_rockets > 300) 
-			self.ammo_rockets = 300;
-		if (self.ammo_cells > 400) 
-			self.ammo_cells = 400;
-		if (self.armorvalue > 500) 
-			self.armorvalue = 500;
+		if (self.ammo_shells > #BUILD_DISPENSER_MAX_SHELLS) 
+			self.ammo_shells = #BUILD_DISPENSER_MAX_SHELLS;
+		if (self.ammo_nails > #BUILD_DISPENSER_MAX_NAILS) 
+			self.ammo_nails = #BUILD_DISPENSER_MAX_NAILS;
+		if (self.ammo_rockets > #BUILD_DISPENSER_MAX_ROCKETS) 
+			self.ammo_rockets = #BUILD_DISPENSER_MAX_ROCKETS;
+		if (self.ammo_cells > #BUILD_DISPENSER_MAX_CELLS) 
+			self.ammo_cells = #BUILD_DISPENSER_MAX_CELLS;
+		if (self.armorvalue > #BUILD_DISPENSER_MAX_ARMOR) 
+			self.armorvalue = #BUILD_DISPENSER_MAX_ARMOR;
 		self.hook_out = 0;
 	}
 	self.hook_out = self.hook_out + 1;
@@ -450,7 +450,7 @@ void () TeamFortress_FinishedBuilding =
 	self.current_weapon = self.weapon;
 	self.StatusRefreshTime = time + 0.1;
 	TeamFortress_SetSpeed(self);
-	if (oldself.weapon == 1) {
+	if (oldself.weapon == #BUILD_DISPENSER) {
 		self.has_dispenser = 1;
 		sprint(self, 2, "You finish building the dispenser.\n");
 		teamsprint(self.team_no, self, self.netname);
@@ -460,8 +460,8 @@ void () TeamFortress_FinishedBuilding =
 		oldself.netname = "dispenser";
 		oldself.blocked = T_Dispenser;
 		oldself.touch = T_Dispenser;
-		oldself.max_health = 150;
-		oldself.health = 150;
+		oldself.max_health = #BUILD_HEALTH_DISPENSER;
+		oldself.health = #BUILD_HEALTH_DISPENSER;
 		oldself.hook_out = 1;
 		oldself.think = DispenserThink;
 		oldself.nextthink = time + 3;
@@ -491,7 +491,7 @@ void () TeamFortress_FinishedBuilding =
 		setorigin(oldself, oldself.origin + '0 0 8');
 	}
 	else {
-		if (oldself.weapon == 2) {
+		if (oldself.weapon == #BUILD_SENTRYGUN) {
 			self.has_sentry = 1;
 			sprint(self, 2, "You finish building the sentry gun.\n");
 			teamsprint(self.team_no, self, self.netname);
@@ -505,7 +505,7 @@ void () TeamFortress_FinishedBuilding =
 			setsize(oldself, '-16 -16 0', '16 16 4');
 			newmis = spawn();
 			newmis.classname = "building_sentrygun";
-			newmis.health = 150;
+			newmis.health = #BUILD_HEALTH_SENTRYGUN;
 			newmis.max_health = newmis.health;
 			newmis.weapon = 1;
 			newmis.th_die = Sentry_Die;

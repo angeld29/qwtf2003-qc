@@ -188,7 +188,7 @@ void (entity pl) Angel_PrintRules =
 	}else
 	 sprint(pl, 2, "All Grenades Enabled\n"); 
 
-	sprint(pl, 2, "Compiled: 13.06.2003\n"); 
+	sprint(pl, 2, "Compiled: 14.06.2003\n"); 
 
 };
 

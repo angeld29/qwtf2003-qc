@@ -981,53 +981,53 @@ void (entity p) TeamFortress_SetSpeed =
 		}
 	}
 	if (p.playerclass == 1) {
-		p.maxfbspeed = 450;
-		p.maxstrafespeed = 450;
+		p.maxfbspeed = #PC_SCOUT_MAXSPEED;
+		p.maxstrafespeed = #PC_SCOUT_MAXSTRAFESPEED;
 	}
 	else {
 		if (p.playerclass == 2) {
-			p.maxfbspeed = 300;
-			p.maxstrafespeed = 300;
+			p.maxfbspeed = #PC_SNIPER_MAXSPEED;
+			p.maxstrafespeed = #PC_SNIPER_MAXSTRAFESPEED;
 		}
 		else {
 			if (p.playerclass == 3) {
-				p.maxfbspeed = 240;
-				p.maxstrafespeed = 240;
+				p.maxfbspeed = #PC_SOLDIER_MAXSPEED;
+				p.maxstrafespeed = #PC_SOLDIER_MAXSTRAFESPEED;
 			}
 			else {
 				if (p.playerclass == 4) {
-					p.maxfbspeed = 280;
-					p.maxstrafespeed = 280;
+					p.maxfbspeed = #PC_DEMOMAN_MAXSPEED;
+					p.maxstrafespeed = #PC_DEMOMAN_MAXSTRAFESPEED;
 				}
 				else {
 					if (p.playerclass == 5) {
-						p.maxfbspeed = 320;
-						p.maxstrafespeed = 320;
+						p.maxfbspeed = #PC_MEDIC_MAXSPEED;
+						p.maxstrafespeed = #PC_MEDIC_MAXSTRAFESPEED;
 					}
 					else {
 						if (p.playerclass == 6) {
-							p.maxfbspeed = 230;
-							p.maxstrafespeed = 230;
+							p.maxfbspeed = #PC_HVYWEAP_MAXSPEED;
+							p.maxstrafespeed = #PC_HVYWEAP_MAXSTRAFESPEED;
 						}
 						else {
 							if (p.playerclass == 7) {
-								p.maxfbspeed = 300;
-								p.maxstrafespeed = 300;
+								p.maxfbspeed = #PC_PYRO_MAXSPEED;
+								p.maxstrafespeed = #PC_PYRO_MAXSTRAFESPEED;
 							}
 							else {
-								if (p.playerclass == 11) {
-									p.maxfbspeed = 240;
-									p.maxstrafespeed = 240;
+								if (p.playerclass == #PC_CIVILIAN) {
+									p.maxfbspeed = #PC_CIVILIAN_MAXSPEED;
+									p.maxstrafespeed = #PC_CIVILIAN_MAXSTRAFESPEED;
 								}
 								else {
 									if (p.playerclass == 8) {
-										p.maxfbspeed = 300;
-										p.maxstrafespeed = 300;
+										p.maxfbspeed = #PC_SPY_MAXSPEED;
+										p.maxstrafespeed = #PC_SPY_MAXSTRAFESPEED;
 									}
 									else {
 										if (p.playerclass == 9) {
-											p.maxfbspeed = 300;
-											p.maxstrafespeed = 300;
+											p.maxfbspeed = #PC_ENGINEER_MAXSPEED;
+											p.maxstrafespeed = #PC_ENGINEER_MAXSTRAFESPEED;
 										}
 										else {
 											if (!p.playerclass) {
@@ -1093,34 +1093,34 @@ void (entity p) TeamFortress_SetSpeed =
 void () TeamFortress_SetHealth =
 {
 	if (self.playerclass == 1) 
-		self.max_health = 75;
+		self.max_health = #PC_SCOUT_MAXHEALTH;
 	else {
 		if (self.playerclass == 2) 
-			self.max_health = 90;
+			self.max_health = #PC_SNIPER_MAXHEALTH;
 		else {
 			if (self.playerclass == 3) 
-				self.max_health = 100;
+				self.max_health = #PC_SOLDIER_MAXHEALTH;
 			else {
 				if (self.playerclass == 4) 
-					self.max_health = 90;
+					self.max_health = #PC_DEMOMAN_MAXHEALTH;
 				else {
 					if (self.playerclass == 5) 
-						self.max_health = 90;
+						self.max_health = #PC_MEDIC_MAXHEALTH;
 					else {
 						if (self.playerclass == 6) 
-							self.max_health = 100;
+							self.max_health = #PC_HVYWEAP_MAXHEALTH;
 						else {
 							if (self.playerclass == 7) 
-								self.max_health = 100;
+								self.max_health = #PC_PYRO_MAXHEALTH;
 							else {
 								if (self.playerclass == 11) 
-									self.max_health = 50;
+									self.max_health = #PC_CIVILIAN_MAXHEALTH;
 								else {
 									if (self.playerclass == 8) 
-										self.max_health = 90;
+										self.max_health = #PC_SPY_MAXHEALTH;
 									else {
 										if (self.playerclass == 9) 
-											self.max_health = 80;
+											self.max_health = #PC_ENGINEER_MAXHEALTH;
 										else {
 											if (!self.playerclass) {
 												self.max_health = 1;
@@ -1538,136 +1538,136 @@ void () TeamFortress_SetEquipment =
 	if (self.playerclass == 1) {
 		self.weapons_carried = self.weapons_carried | #PC_SCOUT_WEAPONS;
 		self.ammo_rockets = #PC_SCOUT_INITAMMO_ROCKET;
-		self.ammo_nails = 100;
-		self.ammo_shells = 25;
-		self.ammo_cells = 50;
-		self.maxammo_rockets = 25;
-		self.maxammo_nails = 200;
-		self.maxammo_shells = 50;
-		self.maxammo_cells = 100;
-		self.no_grenades_1 = 2;
-		self.no_grenades_2 = 3;
+		self.ammo_nails = #PC_SCOUT_INITAMMO_NAIL;
+		self.ammo_shells = #PC_SCOUT_INITAMMO_SHOT;
+		self.ammo_cells = #PC_SCOUT_INITAMMO_CELL;
+		self.maxammo_rockets = #PC_SCOUT_MAXAMMO_ROCKET;
+		self.maxammo_nails = #PC_SCOUT_MAXAMMO_NAIL;
+		self.maxammo_shells = #PC_SCOUT_MAXAMMO_SHOT;
+		self.maxammo_cells = #PC_SCOUT_MAXAMMO_CELL;
+		self.no_grenades_1 = #PC_SCOUT_GRENADE_INIT_1;
+		self.no_grenades_2 = #PC_SCOUT_GRENADE_INIT_2;
 		if (old_grens == 1) 
-			self.tp_grenades_1 = 9;
+			self.tp_grenades_1 = #PC_SCOUT_GRENADE_TYPE_1;
 		else 
 			self.tp_grenades_1 = 10;
-		self.tp_grenades_2 = 2;
+		self.tp_grenades_2 = #PC_SCOUT_GRENADE_TYPE_2;
 		self.tf_items = #PC_SCOUT_TF_ITEMS;
                 self.ScannerOn = 0;
                 self.ScanRange = 50;
 		self.tf_items_flags = self.tf_items_flags | #NIT_SCANNER_ENEMY;
 		self.armorclass = self.armorclass | #PC_SCOUT_INITARMORCLASS;
-		self.armortype = 0.3;
-		self.armorvalue = 25;
-		self.armor_allowed = 0.3;
-		self.maxarmor = 50;
+		self.armortype = #PC_SCOUT_INITARMORTYPE;
+		self.armorvalue = #PC_SCOUT_INITARMOR;
+		self.armor_allowed = #PC_SCOUT_MAXARMORTYPE;
+		self.maxarmor = #PC_SCOUT_MAXARMOR;
 		self.current_weapon = #WEAP_NAILGUN;
 		self.items_allowed = #PC_SCOUT_WEAPONS;
 		self.items = self.items | 1 | 4;
 	}
 	else {
 		if (self.playerclass == 2) {
-			self.weapons_carried = self.weapons_carried | 32 | 64 | 16 | 512;
-			self.ammo_rockets = 0;
-			self.ammo_nails = 50;
-			self.ammo_shells = 60;
-			self.ammo_cells = 0;
-			self.maxammo_rockets = 25;
-			self.maxammo_nails = 100;
-			self.maxammo_shells = 75;
-			self.maxammo_cells = 50;
-			self.no_grenades_1 = 2;
-			self.no_grenades_2 = 3;
-			self.tp_grenades_1 = 1;
-			self.tp_grenades_2 = 6;
-			self.tf_items = 0;
-			self.armorclass = self.armorclass | 0;
-			self.armortype = 0.3;
-			self.armorvalue = 0;
-			self.armor_allowed = 0.3;
-			self.maxarmor = 50;
+			self.weapons_carried = self.weapons_carried | #PC_SNIPER_WEAPONS; //32 | 64 | 16 | 512;
+			self.ammo_rockets = #PC_SNIPER_INITAMMO_ROCKET;
+			self.ammo_nails = #PC_SNIPER_INITAMMO_NAIL;
+			self.ammo_shells = #PC_SNIPER_INITAMMO_SHOT;
+			self.ammo_cells = #PC_SNIPER_INITAMMO_CELL;
+			self.maxammo_rockets = #PC_SNIPER_MAXAMMO_ROCKET;
+			self.maxammo_nails = #PC_SNIPER_MAXAMMO_NAIL;
+			self.maxammo_shells = #PC_SNIPER_MAXAMMO_SHOT;
+			self.maxammo_cells = #PC_SNIPER_MAXAMMO_CELL;
+			self.no_grenades_1 = #PC_SNIPER_GRENADE_INIT_1;
+			self.no_grenades_2 = #PC_SNIPER_GRENADE_INIT_2;
+			self.tp_grenades_1 = #PC_SNIPER_GRENADE_TYPE_1;
+			self.tp_grenades_2 = #PC_SNIPER_GRENADE_TYPE_2;
+			self.tf_items = #PC_SNIPER_TF_ITEMS;
+			self.armorclass = self.armorclass | #PC_SNIPER_INITARMORCLASS;
+			self.armortype = #PC_SNIPER_INITARMORTYPE;
+			self.armorvalue = #PC_SNIPER_INITARMOR;
+			self.armor_allowed = #PC_SNIPER_MAXARMORTYPE;
+			self.maxarmor = #PC_SNIPER_MAXARMOR;
 			self.current_weapon = 32;
 			self.items_allowed = 32 | 64 | 16 | 512;
 			self.items = self.items | 1 | 2 | 4;
 		}
 		else {
 			if (self.playerclass == 3) {
-				self.weapons_carried = self.weapons_carried | 16 | 128 | 256 | 8192;
-				self.ammo_rockets = 10;
-				self.ammo_nails = 0;
-				self.ammo_shells = 50;
-				self.ammo_cells = 0;
-				self.maxammo_rockets = 50;
-				self.maxammo_nails = 100;
-				self.maxammo_shells = 100;
-				self.maxammo_cells = 50;
-				self.no_grenades_1 = 4;
-				self.no_grenades_2 = 1;
-				self.tp_grenades_1 = 1;
-				self.tp_grenades_2 = 3;
-				self.tf_items = 0;
-				self.armorclass = self.armorclass | 0;
-				self.armortype = 0.8;
-				self.armorvalue = 100;
-				self.armor_allowed = 0.8;
-				self.maxarmor = 200;
+				self.weapons_carried = self.weapons_carried | #PC_SOLDIER_WEAPONS;//16 | 128 | 256 | 8192;
+				self.ammo_rockets = #PC_SOLDIER_INITAMMO_ROCKET;
+				self.ammo_nails = #PC_SOLDIER_INITAMMO_NAIL;
+				self.ammo_shells = #PC_SOLDIER_INITAMMO_SHOT;
+				self.ammo_cells = #PC_SOLDIER_INITAMMO_CELL;
+				self.maxammo_rockets = #PC_SOLDIER_MAXAMMO_ROCKET;
+				self.maxammo_nails = #PC_SOLDIER_MAXAMMO_NAIL;
+				self.maxammo_shells = #PC_SOLDIER_MAXAMMO_SHOT;
+				self.maxammo_cells = #PC_SOLDIER_MAXAMMO_CELL;
+				self.no_grenades_1 = #PC_SOLDIER_GRENADE_INIT_1;
+				self.no_grenades_2 = #PC_SOLDIER_GRENADE_INIT_2;
+				self.tp_grenades_1 = #PC_SOLDIER_GRENADE_TYPE_1;
+				self.tp_grenades_2 = #PC_SOLDIER_GRENADE_TYPE_2;
+				self.tf_items = #PC_SOLDIER_TF_ITEMS;
+				self.armorclass = self.armorclass | #PC_SOLDIER_INITARMORCLASS;
+				self.armortype = #PC_SOLDIER_INITARMORTYPE;
+				self.armorvalue = #PC_SOLDIER_INITARMOR;
+				self.armor_allowed = #PC_SOLDIER_MAXARMORTYPE;
+				self.maxarmor = #PC_SOLDIER_MAXARMOR;
 				self.current_weapon = 8192;
 				self.items_allowed = 16 | 128 | 256 | 8192;
 				self.items = self.items | 1 | 2 | 32;
 			}
 			else {
 				if (self.playerclass == 4) {
-					self.weapons_carried = self.weapons_carried | 16 | 128 | 2048 | 131072;
-					self.ammo_rockets = 20;
-					self.ammo_nails = 0;
-					self.ammo_shells = 30;
-					self.ammo_cells = 0;
-					self.maxammo_rockets = 50;
-					self.maxammo_nails = 50;
-					self.maxammo_shells = 75;
-					self.maxammo_cells = 50;
-					self.no_grenades_1 = 4;
-					self.no_grenades_2 = 4;
-					self.tp_grenades_1 = 1;
-					self.tp_grenades_2 = 4;
-					self.tf_items = 0;
+					self.weapons_carried = self.weapons_carried | #PC_DEMOMAN_WEAPONS;//16 | 128 | 2048 | 131072;
+					self.ammo_rockets = #PC_DEMOMAN_INITAMMO_ROCKET;
+					self.ammo_nails = #PC_DEMOMAN_INITAMMO_NAIL;
+					self.ammo_shells = #PC_DEMOMAN_INITAMMO_SHOT;
+					self.ammo_cells = #PC_DEMOMAN_INITAMMO_CELL;
+					self.maxammo_rockets = #PC_DEMOMAN_MAXAMMO_ROCKET;
+					self.maxammo_nails = #PC_DEMOMAN_MAXAMMO_NAIL;
+					self.maxammo_shells = #PC_DEMOMAN_MAXAMMO_SHOT;
+					self.maxammo_cells = #PC_DEMOMAN_MAXAMMO_CELL;
+					self.no_grenades_1 = #PC_DEMOMAN_GRENADE_INIT_1;
+					self.no_grenades_2 = #PC_DEMOMAN_GRENADE_INIT_2;
+					self.tp_grenades_1 = #PC_DEMOMAN_GRENADE_TYPE_1;
+					self.tp_grenades_2 = #PC_DEMOMAN_GRENADE_TYPE_2;
+					self.tf_items = #PC_DEMOMAN_TF_ITEMS;
 					self.ammo_detpack = 1;
 					self.maxammo_detpack = 1;
-					self.armorclass = self.armorclass | 0;
-					self.armortype = 0.6;
-					self.armorvalue = 50;
-					self.armor_allowed = 0.6;
-					self.maxarmor = 120;
+					self.armorclass = self.armorclass | #PC_DEMOMAN_INITARMORCLASS;
+					self.armortype = #PC_DEMOMAN_INITARMORTYPE;
+					self.armorvalue = #PC_DEMOMAN_INITARMOR;
+					self.armor_allowed = #PC_DEMOMAN_MAXARMORTYPE;
+					self.maxarmor = #PC_DEMOMAN_MAXARMOR;
 					self.current_weapon = 2048;
 					self.items_allowed = 16 | 128 | 2048 | 131072;
 					self.items = self.items | 1 | 16;
 				}
 				else {
 					if (self.playerclass == 5) {
-						self.weapons_carried = self.weapons_carried | 2 | 4 | 128 | 256 | 1024;
-						self.ammo_rockets = 0;
-						self.ammo_nails = 50;
-						self.ammo_shells = 50;
-						self.ammo_cells = 0;
-						self.maxammo_rockets = 25;
-						self.maxammo_nails = 150;
-						self.maxammo_shells = 75;
-						self.maxammo_cells = 50;
-						self.no_grenades_1 = 3;
-						self.no_grenades_2 = 2;
-						self.tp_grenades_1 = 1;
-						self.tp_grenades_2 = 2;
-						self.tf_items = 0;
-						self.armorclass = self.armorclass | 0;
+						self.weapons_carried = self.weapons_carried | #PC_MEDIC_WEAPONS;//2 | 4 | 128 | 256 | 1024;
+						self.ammo_rockets = #PC_MEDIC_INITAMMO_ROCKET;
+						self.ammo_nails = #PC_MEDIC_INITAMMO_NAIL;
+						self.ammo_shells = #PC_MEDIC_INITAMMO_SHOT;
+						self.ammo_cells = #PC_MEDIC_INITAMMO_CELL;
+						self.maxammo_rockets = #PC_MEDIC_MAXAMMO_ROCKET;
+						self.maxammo_nails = #PC_MEDIC_MAXAMMO_NAIL;
+						self.maxammo_shells = #PC_MEDIC_MAXAMMO_SHOT;
+						self.maxammo_cells = #PC_MEDIC_MAXAMMO_CELL;
+						self.no_grenades_1 = #PC_MEDIC_GRENADE_INIT_1;
+						self.no_grenades_2 = #PC_MEDIC_GRENADE_INIT_2;
+						self.tp_grenades_1 = #PC_MEDIC_GRENADE_TYPE_1;
+						self.tp_grenades_2 = #PC_MEDIC_GRENADE_TYPE_2;
+						self.tf_items = #PC_MEDIC_TF_ITEMS;
+						self.armorclass = self.armorclass | #PC_MEDIC_INITARMORCLASS;
                                                 self.armortype = #PC_MEDIC_INITARMORTYPE;
-						self.armorvalue = 50;
+						self.armorvalue = #PC_MEDIC_INITARMOR;
 						self.armor_allowed = #PC_MEDIC_MAXARMORTYPE;
-						self.maxarmor = 100;
+						self.maxarmor = #PC_MEDIC_MAXARMOR;
 						self.current_weapon = 1024;
-						self.ammo_medikit = 50;
-						self.maxammo_medikit = 100;
+						self.ammo_medikit = #PC_MEDIC_INITAMMO_MEDIKIT;
+						self.maxammo_medikit = #PC_MEDIC_MAXAMMO_MEDIKIT;
 						te = spawn();
-						te.nextthink = time + 3;
+						te.nextthink = time + #PC_MEDIC_REGEN_TIME;
 						te.think = TeamFortress_Regenerate;
 						te.owner = self;
 						te.classname = "timer";
@@ -1676,106 +1676,106 @@ void () TeamFortress_SetEquipment =
 					}
 					else {
 						if (self.playerclass == 6) {
-							self.weapons_carried = self.weapons_carried | 32768 | 16 | 128 | 256;
-							self.ammo_rockets = 0;
-							self.ammo_nails = 0;
-							self.ammo_shells = 200;
-							self.ammo_cells = 24;
-							self.maxammo_rockets = 25;
-							self.maxammo_nails = 200;
-							self.maxammo_shells = 200;
-							self.maxammo_cells = 50;
-							self.no_grenades_1 = 4;
-							self.no_grenades_2 = 1;
-							self.tp_grenades_1 = 1;
-							self.tp_grenades_2 = 4;
-							self.tf_items = 0;
-							self.armorclass = self.armorclass | 0;
-							self.armortype = 0.8;
-							self.armorvalue = 150;
-							self.armor_allowed = 0.8;
-							self.maxarmor = 300;
+							self.weapons_carried = self.weapons_carried | #PC_HVYWEAP_WEAPONS;//32768 | 16 | 128 | 256;
+							self.ammo_rockets = #PC_HVYWEAP_INITAMMO_ROCKET;
+							self.ammo_nails = #PC_HVYWEAP_INITAMMO_NAIL;
+							self.ammo_shells = #PC_HVYWEAP_INITAMMO_SHOT;
+							self.ammo_cells = #PC_HVYWEAP_INITAMMO_CELL;
+							self.maxammo_rockets = #PC_HVYWEAP_MAXAMMO_ROCKET;
+							self.maxammo_nails = #PC_HVYWEAP_MAXAMMO_NAIL;
+							self.maxammo_shells = #PC_HVYWEAP_MAXAMMO_SHOT;
+							self.maxammo_cells = #PC_HVYWEAP_MAXAMMO_CELL;
+							self.no_grenades_1 = #PC_HVYWEAP_GRENADE_INIT_1;
+							self.no_grenades_2 = #PC_HVYWEAP_GRENADE_INIT_2;
+							self.tp_grenades_1 = #PC_HVYWEAP_GRENADE_TYPE_1;
+							self.tp_grenades_2 = #PC_HVYWEAP_GRENADE_TYPE_2;
+							self.tf_items = #PC_HVYWEAP_TF_ITEMS;
+							self.armorclass = self.armorclass | #PC_HVYWEAP_INITARMORCLASS;
+							self.armortype = #PC_HVYWEAP_INITARMORTYPE;
+							self.armorvalue = #PC_HVYWEAP_INITARMOR;
+							self.armor_allowed = #PC_HVYWEAP_MAXARMORTYPE;
+							self.maxarmor = #PC_HVYWEAP_MAXARMOR;
 							self.current_weapon = 32768;
 							self.items_allowed = 32768 | 16 | 128 | 256;
 							self.items = self.items | 1 | 2 | 32;
 						}
 						else {
 							if (self.playerclass == 7) {
-								self.weapons_carried = self.weapons_carried | 16384 | 4096 | 16 | 128;
-								self.ammo_rockets = 15;
-								self.ammo_nails = 0;
-								self.ammo_shells = 20;
-								self.ammo_cells = 120;
-								self.maxammo_rockets = 60;
-								self.maxammo_nails = 50;
-								self.maxammo_shells = 40;
-								self.maxammo_cells = 200;
-								self.no_grenades_1 = 1;
-								self.no_grenades_2 = 4;
-								self.tp_grenades_1 = 1;
-								self.tp_grenades_2 = 5;
-								self.tf_items = 0;
-								self.armorclass = self.armorclass | 16;
-								self.armortype = 0.6;
-								self.armorvalue = 50;
-								self.armor_allowed = 0.6;
-								self.maxarmor = 150;
+								self.weapons_carried = self.weapons_carried | #PC_PYRO_WEAPONS;//16384 | 4096 | 16 | 128;
+								self.ammo_rockets = #PC_PYRO_INITAMMO_ROCKET;
+								self.ammo_nails = #PC_PYRO_INITAMMO_NAIL;
+								self.ammo_shells = #PC_PYRO_INITAMMO_SHOT;
+								self.ammo_cells = #PC_PYRO_INITAMMO_CELL;
+								self.maxammo_rockets = #PC_PYRO_MAXAMMO_ROCKET;
+								self.maxammo_nails = #PC_PYRO_MAXAMMO_NAIL;
+								self.maxammo_shells = #PC_PYRO_MAXAMMO_SHOT;
+								self.maxammo_cells = #PC_PYRO_MAXAMMO_CELL;
+								self.no_grenades_1 = #PC_PYRO_GRENADE_INIT_1;
+								self.no_grenades_2 = #PC_PYRO_GRENADE_INIT_2;
+								self.tp_grenades_1 = #PC_PYRO_GRENADE_TYPE_1;
+								self.tp_grenades_2 = #PC_PYRO_GRENADE_TYPE_2;
+								self.tf_items = #PC_PYRO_TF_ITEMS;
+								self.armorclass = self.armorclass | #PC_PYRO_INITARMORCLASS;
+								self.armortype = #PC_PYRO_INITARMORTYPE;
+								self.armorvalue = #PC_PYRO_INITARMOR;
+								self.armor_allowed = #PC_PYRO_MAXARMORTYPE;
+								self.maxarmor = #PC_PYRO_MAXARMOR;
 								self.current_weapon = 4096;
 								self.items_allowed = 16384 | 4096 | 16 | 128;
 								self.items = self.items | 1 | 16 | 32;
 							}
 							else {
 								if (self.playerclass == 11) {
-									self.weapons_carried = self.weapons_carried | 16;
-									self.ammo_rockets = 0;
-									self.ammo_nails = 0;
-									self.ammo_shells = 0;
-									self.ammo_cells = 0;
-									self.maxammo_rockets = 0;
-									self.maxammo_nails = 0;
-									self.maxammo_shells = 0;
-									self.maxammo_cells = 0;
-									self.no_grenades_1 = 0;
-									self.no_grenades_2 = 0;
-									self.tp_grenades_1 = 0;
-									self.tp_grenades_2 = 0;
-									self.tf_items = 0;
-									self.armorclass = self.armorclass | 0;
-									self.armortype = 0;
-									self.armorvalue = 0;
-									self.armor_allowed = 0;
-									self.maxarmor = 0;
+									self.weapons_carried = self.weapons_carried | #PC_CIVILIAN_WEAPONS;//16;
+									self.ammo_rockets = #PC_CIVILIAN_INITAMMO_ROCKET;
+									self.ammo_nails = #PC_CIVILIAN_INITAMMO_NAIL;
+									self.ammo_shells = #PC_CIVILIAN_INITAMMO_SHOT;
+									self.ammo_cells = #PC_CIVILIAN_INITAMMO_CELL;
+									self.maxammo_rockets = #PC_CIVILIAN_MAXAMMO_ROCKET;
+									self.maxammo_nails = #PC_CIVILIAN_MAXAMMO_NAIL;
+									self.maxammo_shells = #PC_CIVILIAN_MAXAMMO_SHOT;
+									self.maxammo_cells = #PC_CIVILIAN_INITAMMO_CELL;
+									self.no_grenades_1 = #PC_CIVILIAN_GRENADE_INIT_1;
+									self.no_grenades_2 = #PC_CIVILIAN_GRENADE_INIT_2;
+									self.tp_grenades_1 = #PC_CIVILIAN_GRENADE_TYPE_1;
+									self.tp_grenades_2 = #PC_CIVILIAN_GRENADE_TYPE_2;
+									self.tf_items = #PC_CIVILIAN_TF_ITEMS;
+									self.armorclass = self.armorclass | #PC_CIVILIAN_INITARMORCLASS;
+									self.armortype = #PC_CIVILIAN_INITARMORTYPE;
+									self.armorvalue = #PC_CIVILIAN_INITARMOR;
+									self.armor_allowed = #PC_CIVILIAN_MAXARMORTYPE;
+									self.maxarmor = #PC_CIVILIAN_MAXARMOR;
 									self.current_weapon = 16;
 									self.items_allowed = 16;
 									self.items = 0;
 								}
 								else {
 									if (self.playerclass == 8) {
-										self.weapons_carried = self.weapons_carried | 16 | 262144 | 256 | 512;
-										self.ammo_rockets = 0;
-										self.ammo_nails = 50;
-										self.ammo_shells = 40;
-										self.ammo_cells = 10;
-										self.maxammo_rockets = 15;
-										self.maxammo_nails = 100;
-										self.maxammo_shells = 40;
-										self.maxammo_cells = 30;
-										self.no_grenades_1 = 2;
-										self.no_grenades_2 = 2;
-										self.tp_grenades_1 = 1;
-										self.tp_grenades_2 = 7;
-										self.tf_items = 0;
-										self.armorclass = self.armorclass | 0;
-										self.armortype = 0.3;
-										self.armorvalue = 25;
-										self.armor_allowed = 0.3;
-										self.maxarmor = 100;
+										self.weapons_carried = self.weapons_carried | #PC_SPY_WEAPONS;//16 | 262144 | 256 | 512;
+										self.ammo_rockets = #PC_SPY_INITAMMO_ROCKET;
+										self.ammo_nails = #PC_SPY_INITAMMO_NAIL;
+										self.ammo_shells = #PC_SPY_INITAMMO_SHOT;
+										self.ammo_cells = #PC_SPY_INITAMMO_CELL;
+										self.maxammo_rockets = #PC_SPY_MAXAMMO_ROCKET;
+										self.maxammo_nails = #PC_SPY_MAXAMMO_NAIL;
+										self.maxammo_shells = #PC_SPY_MAXAMMO_SHOT;
+										self.maxammo_cells = #PC_SPY_MAXAMMO_CELL;
+										self.no_grenades_1 = #PC_SPY_GRENADE_INIT_1;
+										self.no_grenades_2 = #PC_SPY_GRENADE_INIT_2;
+										self.tp_grenades_1 = #PC_SPY_GRENADE_TYPE_1;
+										self.tp_grenades_2 = #PC_SPY_GRENADE_TYPE_2;
+										self.tf_items = #PC_SPY_TF_ITEMS;
+										self.armorclass = self.armorclass | #PC_SPY_INITARMORCLASS;
+										self.armortype = #PC_SPY_INITARMORTYPE;
+										self.armorvalue = #PC_SPY_INITARMOR;
+										self.armor_allowed = #PC_SPY_MAXARMORTYPE;
+										self.maxarmor = #PC_SPY_MAXARMOR;
 										self.current_weapon = 262144;
 										self.items_allowed = 16 | 262144 | 256 | 512;
 										self.items = self.items | 1 | 2 | 4;
 										if (invis_only == 1) {
 											te = spawn();
-											te.nextthink = time + 5;
+											te.nextthink = time + #PC_SPY_CELL_REGEN_TIME;
 											te.think = TeamFortress_RegenerateCells;
 											te.owner = self;
 											te.classname = "timer";
@@ -1783,26 +1783,26 @@ void () TeamFortress_SetEquipment =
 									}
 									else {
 										if (self.playerclass == 9) {
-											self.weapons_carried = self.weapons_carried | 8 | 524288 | 256;
+											self.weapons_carried = self.weapons_carried | #PC_ENGINEER_WEAPONS;//8 | 524288 | 256;
 											
-											self.ammo_rockets = 0;
-											self.ammo_nails = 25;
-											self.ammo_shells = 20;
-											self.ammo_cells = 100;
-											self.maxammo_rockets = 30;
-											self.maxammo_nails = 50;
-											self.maxammo_shells = 50;
-											self.maxammo_cells = 200;
-											self.no_grenades_1 = 2;
-											self.no_grenades_2 = 2;
-											self.tp_grenades_1 = 1;
-											self.tp_grenades_2 = 8;
-											self.tf_items = 0;
-											self.armorclass = self.armorclass | 0;
+											self.ammo_rockets = #PC_ENGINEER_INITAMMO_ROCKET;
+											self.ammo_nails = #PC_ENGINEER_INITAMMO_NAIL;
+											self.ammo_shells = #PC_ENGINEER_INITAMMO_SHOT;
+											self.ammo_cells = #PC_ENGINEER_INITAMMO_CELL;
+											self.maxammo_rockets = #PC_ENGINEER_MAXAMMO_ROCKET;
+											self.maxammo_nails = #PC_ENGINEER_MAXAMMO_NAIL;
+											self.maxammo_shells = #PC_ENGINEER_MAXAMMO_SHOT;
+											self.maxammo_cells = #PC_ENGINEER_MAXAMMO_CELL;
+											self.no_grenades_1 = #PC_ENGINEER_GRENADE_INIT_1;
+											self.no_grenades_2 = #PC_ENGINEER_GRENADE_INIT_2;
+											self.tp_grenades_1 = #PC_ENGINEER_GRENADE_TYPE_1;
+											self.tp_grenades_2 = #PC_ENGINEER_GRENADE_TYPE_2;
+											self.tf_items = #PC_ENGINEER_TF_ITEMS;
+											self.armorclass = self.armorclass | #PC_ENGINEER_INITARMORCLASS;
 											self.armortype = #PC_ENGINEER_INITARMORTYPE;
-											self.armorvalue = 25;
+											self.armorvalue = #PC_ENGINEER_INITARMOR;
 											self.armor_allowed = #PC_ENGINEER_MAXARMORTYPE;
-											self.maxarmor = 50;
+											self.maxarmor = #PC_ENGINEER_MAXARMOR;
 											self.current_weapon = 524288;
 											self.items_allowed = 8 | 524288 | 256;
 											self.items = self.items | 1 | 2;
@@ -2174,12 +2174,12 @@ void (float type) TeamFortress_DropAmmo =
 	local float ammo;
 
 	if (type == 1) {
-		ammo = 20;
+		ammo = #DROP_SHELLS;
 		if (self.ammo_shells < ammo) {
 			if (self.playerclass == 9) {
-				if (self.ammo_cells / 3 > ammo - self.ammo_shells) {
+				if (self.ammo_cells / #AMMO_COST_SHELLS > ammo - self.ammo_shells) {
 					sprint(self, 2, "you make some shells.\n");
-					self.ammo_cells = self.ammo_cells - (ammo - self.ammo_shells) * 3;
+					self.ammo_cells = self.ammo_cells - (ammo - self.ammo_shells) * #AMMO_COST_SHELLS;
 					self.ammo_shells = ammo;
 				}
 			}
@@ -2190,12 +2190,12 @@ void (float type) TeamFortress_DropAmmo =
 	}
 	else {
 		if (type == 2) {
-			ammo = 20;
+			ammo = #DROP_NAILS;
 			if (self.ammo_nails < ammo) {
 				if (self.playerclass == 9) {
-					if (self.ammo_cells / 2 > ammo - self.ammo_nails) {
+					if (self.ammo_cells / #AMMO_COST_NAILS > ammo - self.ammo_nails) {
 						sprint(self, 2, "you make some nails.\n");
-						self.ammo_cells = self.ammo_cells - (ammo - self.ammo_nails) * 2;
+						self.ammo_cells = self.ammo_cells - (ammo - self.ammo_nails) * #AMMO_COST_NAILS;
 						self.ammo_nails = ammo;
 					}
 				}
@@ -2206,12 +2206,12 @@ void (float type) TeamFortress_DropAmmo =
 		}
 		else {
 			if (type == 3) {
-				ammo = 10;
+				ammo = #DROP_ROCKETS;
 				if (self.ammo_rockets < ammo) {
 					if (self.playerclass == 9) {
-						if (self.ammo_cells / 5 > ammo - self.ammo_rockets) {
+						if (self.ammo_cells / #AMMO_COST_ROCKETS > ammo - self.ammo_rockets) {
 							sprint(self, 2, "you make some rockets.\n");
-							self.ammo_cells = self.ammo_cells - (ammo - self.ammo_rockets) * 5;
+							self.ammo_cells = self.ammo_cells - (ammo - self.ammo_rockets) * #AMMO_COST_ROCKETS;
 							self.ammo_rockets = ammo;
 						}
 					}
@@ -2222,12 +2222,12 @@ void (float type) TeamFortress_DropAmmo =
 			}
 			else {
 				if (type == 4) {
-					ammo = 10;
+					ammo = #DROP_CELLS;
 					if (self.ammo_cells < ammo) {
 						if (self.playerclass == 9) {
-							if (self.ammo_cells / 5 > ammo - self.ammo_cells) {
+							if (self.ammo_cells / #AMMO_COST_CELLS > ammo - self.ammo_cells) {
 								sprint(self, 2, "you make some cells.\n");
-								self.ammo_cells = self.ammo_cells - (ammo - self.ammo_cells) * 5;
+								self.ammo_cells = self.ammo_cells - (ammo - self.ammo_cells) * #AMMO_COST_CELLS;
 								self.ammo_cells = ammo;
 							}
 						}

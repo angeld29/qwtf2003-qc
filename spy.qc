@@ -1193,7 +1193,7 @@ void () T_TranqDartTouch =
 				sprint(other, 2, "You feel tired...\n");
 				other.tfstate = other.tfstate | 32768;
 				timer = spawn();
-				timer.nextthink = time + 15;
+				timer.nextthink = time + #TRANQ_TIME;
 				timer.think = TranquiliserTimer;
 				timer.classname = "timer";
 				timer.owner = other;
