@@ -1371,6 +1371,7 @@ float api_version;
 #ifdef TG
 #define TG_CONC_IMPULSE 205
 #define TG_FLASH_IMPULSE 206
+#define TG_EFF_REMOVE_IMPULSE 207
 
 #define TG_MAINMENU_IMPULSE 220
 #define TG_SG_REBUILD_IMPULSE 221
@@ -1506,6 +1507,11 @@ float api_version;
 #define ASSAULT_MIN_SHELLS 20
 #define ASSAULT_SPREAD_MULTIPLY 3
 #define ASSAULT_SPREAD_TIME 3
-#define ANGEL_VERSION "Compiled: 27.03.2004 r1\n" 
+//размеры для проверки места для постройки
+#define VEC_CB_MIN	'-16 -16 0' 
+//#define VEC_CB_MAX	'16 16 48' 
+#define VEC_CB_MAX	'16 16 48' 
+
+#define ANGEL_VERSION "Compiled: 20.08.2004 r1\n" 
 //Official НФЖМ version\n"
 

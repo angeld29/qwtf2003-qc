@@ -6,6 +6,7 @@ void () Eng_DispLoad;
 void () Eng_DispUnload;
 void () TG_Eff_Flash;
 void () TG_Eff_Conc;
+void () TG_Eff_Remove;
 #endif 
 void () player_run;
 void () TeamFortress_DisplayDetectionItems;
@@ -2884,7 +2885,11 @@ void () ImpulseCommands =
      if(self.impulse == #TG_FLASH_IMPULSE){
       TG_Eff_Flash();
       self.impulse=0;
-  }}}}}}}}
+  }else {
+     if(self.impulse == #TG_EFF_REMOVE_IMPULSE){
+      TG_Eff_Remove();
+      self.impulse=0;
+  }}}}}}}}}
 #endif
  if (!self.is_building && !self.is_detpacking && !self.is_feigning) {
   if ((self.impulse >= 1 && self.impulse < 8) || self.impulse == 176) 

@@ -274,12 +274,22 @@ void () TeamFortress_EngineerBuild =
  }
 };
 
+
 float (entity obj, entity builder) CheckAreaNew = 
 {
  local entity te;
- traceline(builder.origin, obj.origin, 1, builder, '-16 -16 0','16 16 48');
- if (trace_fraction != 1) 
-  return 0;
+ local string st;
+
+ traceline(obj.origin, obj.origin , 0, obj , #VEC_CB_MIN , #VEC_CB_MAX );
+ if(trace_startsolid == 1)
+ {
+  traceline(obj.origin, obj.origin - '0 0 48', 0, obj, '-16 -16 0','16 16 4' );
+  traceline(trace_endpos + '0 0 1', trace_endpos + '0 0 1', 0, obj  , #VEC_CB_MIN , #VEC_CB_MAX);
+  if(trace_startsolid == 1)
+  {
+   return 0;
+  }
+ }
 
  te = findradius(obj.origin, 64);
  if (te != world) 
@@ -293,12 +303,16 @@ float (entity obj, entity builder) CheckArea =
  local vector end;
  local float pos;
  local entity te;
-
+ local string st;
 
   if(new_build_check)
   {
-   return CheckAreaNew(obj,builder);
+   pos = CheckAreaNew(obj,builder);
+   if(pos == 0) 
+     return pos;
   }
+//  st = ftos(pos);
+//  sprint(builder,2,"new check=",st,"\n");
 /*  traceline(builder.origin, obj.origin, 1, builder, '-16 -16 0','16 16 48');
 
   if (trace_fraction != 1) 
@@ -344,6 +358,8 @@ float (entity obj, entity builder) CheckArea =
  te = findradius(obj.origin, 64);
  if (te != world) 
   return 0;
+ st = ftos(pos);
+
  return 1;
 };
 
@@ -395,12 +411,13 @@ void (float objtobuild) TeamFortress_Build =
    newmis.netname = "sentrygun";
 #ifdef TG
   btime = time +0.1;
+//  btime = time +1;
 #else
    btime = time + #BUILD_TIME_SENTRYGUN;
 #endif
   }
  }
- 	
+
  if (!CheckArea(newmis, self)) {
   sprint(self, 2, "Not enough room to build here\n");
   dremove(newmis);
@@ -432,6 +449,8 @@ void (float objtobuild) TeamFortress_Build =
  setmodel(newmis, newmis.mdl);
  setsize(newmis, tmp1, tmp2);
  setorigin(newmis, newmis.origin);
+
+
 #ifdef TG
 /* if (objtobuild == #BUILD_SENTRYGUN)
  {
@@ -491,7 +510,7 @@ void () DispenserThink =
 
 void () TeamFortress_FinishedBuilding =
 {
- local entity oldself;
+ local entity oldself,saveself;
  local entity te;
  local float current_yaw;
  local vector source;
@@ -565,6 +584,13 @@ void () TeamFortress_FinishedBuilding =
 #else
    self.has_sentry =  self.has_sentry + 1;
 #endif
+#ifdef TG
+  saveself=self;
+  self=oldself;
+  droptofloor();
+  self=saveself;
+#endif
+
    sprint(self, 2, "You finish building the sentry gun.\n");
    teamsprint(self.team_no, self, self.netname);
    teamsprint(self.team_no, self, " has built a Sentry Gun.\n");

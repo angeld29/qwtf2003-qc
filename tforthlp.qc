@@ -146,6 +146,7 @@ void () TeamFortress_MOTD =
   TeamFortress_Alias("disp_unload", #TG_DISP_UNLOAD_IMPULSE, 0);
   TeamFortress_Alias("eff_conc", #TG_CONC_IMPULSE, 0);
   TeamFortress_Alias("eff_flash", #TG_FLASH_IMPULSE, 0);
+  TeamFortress_Alias("eff_remove", #TG_EFF_REMOVE_IMPULSE, 0);
 #endif
   return;
  }

@@ -1021,4 +1021,85 @@ void () TG_Eff_Conc=
       }
 };
 
+void () TG_Eff_Remove=
+{     
+ local entity te;
+ local float healam;
+////conc
+    te = find(world, classname, "timer");
+    while ((te.owner != self || (te.think != ConcussionGrenadeTimer && te.think != OldConcussionGrenadeTimer)) && te != world) 
+     te = find(te, classname, "timer");
+
+    if (te != world) {
+     if (old_grens == 1) 
+      stuffcmd(self, "v_idlescale 0\nfov 90\n");
+     dremove(te);
+    }
+//gas grenade
+    if (self.tfstate & 16384) {
+     te = find(world, classname, "timer");
+     while ((te.owner != self || te.think != HallucinationTimer) && te != world) 
+      te = find(te, classname, "timer");
+     if (te != world) {
+      self.tfstate = self.tfstate - (self.tfstate & 16384);
+#ifdef NEWSPY
+      if(new_gas & ( #GAS_MASK_SKIN | #GAS_MASK_ALLSPYS |#GAS_MASK_COLOR))
+       ResetSkins(self);
+#endif
+      if (new_gas & #GAS_MASK_PALETTE) 
+       stuffcmd(self, "v_cshift; wait; bf\n");
+      dremove(te);
+     }
+     else 
+      dprint("Warning: Error in Hallucination Timer logic.\n");
+    }
+//tranq
+    if (self.tfstate & 32768) {
+     te = find(world, classname, "timer");
+     while ((te.owner != self || te.think != TranquiliserTimer) && te != world) 
+      te = find(te, classname, "timer");
+     if (te != world) {
+      self.tfstate = self.tfstate - (self.tfstate & 32768);
+      TeamFortress_SetSpeed(self);
+      dremove(te);
+     }
+     else 
+      dprint("Warning: Error in Tranquilisation Timer logic.\n");
+    }
+//flash
+    if (self.FlashTime > 0) {
+     te = find(world, netname, "flashtimer");
+     while ((te.owner != self || te.classname != "timer") && te != world) 
+      te = find(te, netname, "flashtimer");
+     if (te != world) {
+      self.FlashTime = 0;
+#ifdef ANTIANTIFLASH
+       if(new_flash && sv262) 
+                disable_updates(self, -1); /* server-side flash */
+#endif // antiantiflash
+//      dremove(te);
+     }
+     else {
+      dprint("Warning: Error in Flash Timer logic.\n");
+      self.FlashTime = 0;
+     }
+    }
+//infection
+
+    if (self.tfstate & 16) {
+     healam = rint(self.health / 2);
+     self.tfstate = self.tfstate - (self.tfstate & 16);
+     deathmsg = 23;
+     T_Damage(self, self, self, healam);
+     return;
+    }
+
+    if (self.numflames > 0) {
+     sound(self, 1, "items/r_item1.wav", 1, 1);
+     self.numflames = 0;
+     return;
+    }
+
+}
 #endif 
+
