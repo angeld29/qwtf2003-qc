@@ -870,7 +870,7 @@ void () W_FireAssaultCannon =
 
 	KickPlayer(-4, self);
 
-	if(self.ScanRange >= 1)
+	if(self.ScanRange <10)
 	{
  	 self.ammo_shells = self.ammo_shells - 1;
 	 self.currentammo = self.ammo_shells - 1;
@@ -2016,7 +2016,7 @@ void () W_Attack =
 										Attack_Finished(0.8);
 									}
 									else {
-										if (self.current_weapon == 65536) {
+										if (self.current_weapon == #WEAP_LIGHTNING) {
 											player_light1();
 											Attack_Finished(0.1);
 											sound(self, 0, "weapons/lstart.wav", 1, 1);

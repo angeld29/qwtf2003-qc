@@ -507,6 +507,7 @@ void () player_nail2 = [104, player_nail1]
 
 void () player_assaultcannonup1 = [103, player_assaultcannonup2]
 {
+
 	if (!self.button0 || self.ammo_shells <= #ASSAULT_MIN_SHELLS || intermission_running) {
 		self.tfstate = self.tfstate - (self.tfstate & 2048);
 		TeamFortress_SetSpeed(self);
@@ -568,7 +569,6 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
 {
 	/* ERROR: Fields and functions must be global: player_assaultcannon2 */
 	local string st;
-
 	if (vlen(self.velocity) < 20) {
 		muzzleflash();
 		sound(self, 1, "weapons/asscan2.wav", 1, 1);
@@ -609,7 +609,6 @@ void () player_assaultcannon1 = [103, player_assaultcannon2]
 void () player_assaultcannon2 = [104, player_assaultcannon1]
 {
 	local string st;
-
 	stuffcmd(self, "v_idlescale 0\n");
 	if (vlen(self.velocity) < 20) {
 		if (self.weaponframe == 2) 

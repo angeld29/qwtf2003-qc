@@ -1793,6 +1793,12 @@ void () ReturnItem =
 {
 	local entity te;
 
+	if (self.enemy.goal_state == 1) //#TFGS_ACTIVE
+	{
+           dremove(self);
+	   return;
+	}         
+
 	self.enemy.goal_state = 2;
 	if ((self.enemy.goal_activation & 8192) && self.enemy.classname == "item_tfgoal") 
 		self.enemy.solid = 2;
@@ -2010,6 +2016,7 @@ void () tfgoalitem_droptouch =
 
 void (entity Item, float PAlive, entity P) tfgoalitem_drop =
 {
+//        sprint(P,2,"tfgoalitem_drop\n"); //debug
 	Item.origin = Item.owner.origin;
 	setorigin(Item, Item.origin);
 	Item.camangle = Item.owner.origin - '0 0 8';
