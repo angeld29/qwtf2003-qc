@@ -230,7 +230,17 @@ void (entity pl) Angel_PrintRules =
  }else
   sprint(pl, 2, "All Grenades Enabled\n"); 
 #ifdef TG
- sprint(pl, 2, "TF2003 Training Ground\n"); 
+#ifdef LAN_SERVER
+ sprint(pl, 2, "TF2003(QWLAN TF) Training Ground by êsdë angel for Õ‘∆Ã\n"); 
+#else
+ sprint(pl, 2, "TF2003 Training Ground by êsdë angel for Õ‘∆Ã\n"); 
+#endif
+#else
+#ifdef LAN_SERVER
+ sprint(pl, 2, "TF2003(QWLAN TF) by êsdë angel for Õ‘∆Ã\n"); 
+#else
+ sprint(pl, 2, "TF2003 by êsdë angel for Õ‘∆Ã\n"); 
+#endif
 #endif 
  sprint(pl, 2, #ANGEL_VERSION); 
 

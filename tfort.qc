@@ -912,6 +912,7 @@ void () TeamFortress_GrenadePrimed =
   }
  }
  setsize(newmis, '0 0 0', '0 0 0');
+// setsize(newmis, '0 0 0', '1 1 1');
  setorigin(newmis, user.origin);
  oldself = self;
  self = self.owner;

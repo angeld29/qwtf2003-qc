@@ -455,6 +455,11 @@ void () TeamFortress_FinishedBuilding =
 
  if (self.owner.is_building != 1) 
   return;
+#ifdef TG
+  if (self.weapon == #BUILD_SENTRYGUN) {
+   droptofloor();
+  }
+#endif
  oldself = self;
  self = self.owner;
  oldself.owner = world;
@@ -776,6 +781,9 @@ void (entity eng, string bld) DestroyBuilding =
     te.real_owner.current_menu = 1;
     te.real_owner.building = world;
    }
+#ifdef TG
+   te.has_sentry=0;
+#endif
    TF_T_Damage(te, world, world, 500, 0, 0);
   }
   te = find(te, classname, bld);

@@ -15,6 +15,7 @@ void () NailGrenadeTouch =
 void () NailGrenadeExplode =
 {
  local entity te;
+ local vector neworigin;
 
  self.owner.no_active_nail_grens = self.owner.no_active_nail_grens + 1;
  if (self.owner.no_active_nail_grens > 2) {
@@ -30,7 +31,16 @@ void () NailGrenadeExplode =
  }
  self.no_active_nail_grens = self.owner.no_active_nail_grens;
  self.movetype = 5;
- setorigin(self, self.origin + '0 0 32');
+//fix nail teleport 
+  neworigin_x=0;
+  neworigin_y=0;
+  neworigin_z=32;
+ traceline(self.origin, self.origin + neworigin, 1, self);
+ if (trace_fraction != 1){
+  neworigin_z =   neworigin_z *trace_fraction - 1;
+ }
+ setorigin(self, self.origin + neworigin);
+// setorigin(self, self.origin + '0 0 32');
  self.avelocity = '0 500 0';
  self.nextthink = time + 0.7;
  self.think = NailGrenadeNailEm;

@@ -51,7 +51,8 @@ void () MirvGrenadeExplode =
  self.solid = 0;
  i = 0;
  while (i < #GR_TYPE_MIRV_NO) {
-  MirvGrenadeLaunch(self.origin + '0 0 -1', self.owner);
+//  MirvGrenadeLaunch(self.origin + '0 0 -1', self.owner);
+  MirvGrenadeLaunch(self.origin + '0 0 0', self.owner);
   i = i + 1;
  }
  BecomeExplosion();
@@ -82,12 +83,13 @@ void (vector org, entity shooter) MirvGrenadeLaunch =
  newmis.nextthink = time + 2 + random();
  newmis.velocity_x = xdir * 2;
  newmis.velocity_y = ydir * 2;
- newmis.velocity_z = zdir * 15;
+ newmis.velocity_z = zdir * 15+1;
  newmis.avelocity = '250 300 400';
  if (birthday == 1 && random() < 0.3) 
   setmodel(newmis, "progs/grenade3.mdl");
  else 
   setmodel(newmis, "progs/grenade2.mdl");
+ 
  setsize(newmis, '0 0 0', '0 0 0');
  setorigin(newmis, org);
 };

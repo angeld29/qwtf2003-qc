@@ -21,10 +21,19 @@ void () TeamFortress_MOTD =
   sprint(self, 2, "\n\n\n");
   sprint(self, 2, "Type help for more info.\n");
 #ifdef TG
+#ifdef LAN_SERVER
+  sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•(QWLAN TF) Training Ground\n");
+#else
   sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’• Training Ground\n");
+#endif
+#else
+#ifdef LAN_SERVER
+  sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•(QWLAN TF)\n");
 #else
   sprint(self, 2, "ΡυαλεΧοςμδ ΤεανΖοςτςεσσ ”’’•\n");
 #endif
+#endif
+  sprint(self, 2, "by sd‘ angel for ΝΤΖΜ\n");
   sprint(self, 2, "http://ντζμ®σδ®ςυ\n");
 
   self.menu_displaytime = 0;

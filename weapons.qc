@@ -1350,6 +1350,9 @@ void () GrenadeTouch =
 
 void () W_FireGrenade =
 {
+#ifdef TG
+  if (!unlimit_ammo) 
+#endif
  self.ammo_rockets = self.ammo_rockets - 1;
  self.currentammo = self.ammo_rockets ;
  sound(self, 1, "weapons/grenade.wav", 1, 1);
@@ -3170,8 +3173,10 @@ void () W_WeaponFrame =
       SuperDamageSound();
       W_Attack();
      }
-     else 
+     else {
       sprint(self, 1, "You cannot fire the assault cannon without\nyour feet on the ground...\n");
+      self.fire_held_down=1;
+      }
     }
     else {
      SuperDamageSound();
