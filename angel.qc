@@ -102,7 +102,7 @@ void (entity pl) Angel_PrintRules =
        	else 
        		sprint(pl, 2, "New Flash: ÏÆÆ\n");
 
-	if(disable_powerups)
+	if(!disable_powerups)
        		sprint(pl, 2, "Powerups: ÏÎ\n");
        	else 
        		sprint(pl, 2, "Powerups: ÏÆÆ\n");

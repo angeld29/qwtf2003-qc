@@ -2639,6 +2639,8 @@ void () ImpulseCommands =
 	else {
 		if (self.last_impulse == 159 && self.impulse) 
 			TeamFortress_Scan_Angel(self.impulse);
+		if(self.impulse == 160 || self.impulse == 161 )
+		 TeamFortress_Scan_Angel(self.impulse);
 	}
 	if (self.impulse == 8 && self.current_menu != 6) {
 		self.current_menu = 6;

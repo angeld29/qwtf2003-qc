@@ -149,7 +149,7 @@ void () misc_fireball =
 	self.think = fire_fly;
 	if (!self.speed) {
 		/* ERROR: meaningless operation */
-		 self.speed == 1000;
+		 self.speed = 1000;
 	}
 };
 

@@ -57,7 +57,7 @@ void (entity pl) RefreshStatusBar =
 	pl.StatusRefreshTime = time + 1.5;
 	if (!pl.playerclass) 
 		return;
-	s1 = GetStatusSize();
+	s1 = GetStatusSize(pl);
 	win = TeamFortress_TeamGetWinner();
 	sec = TeamFortress_TeamGetSecond();
 	if (TeamFortress_TeamGetScore(win) > 100 || TeamFortress_TeamGetScore(sec) > 100) {
