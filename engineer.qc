@@ -336,10 +336,12 @@ void (float objtobuild) TeamFortress_Build =
  v_forward = normalize(v_forward) * 64;
  newmis.origin = self.origin + v_forward;
  if (objtobuild == #BUILD_DISPENSER) {
+#ifndef TG
   if (self.has_dispenser) {
    sprint(self, 2, "You can only have one dispenser.\nTry dismantling your old one.\n");
    return;
   }
+#endif
   tmp1 = '-16 -16 0';
   tmp2 = '16 16 48';
   newmis.mdl = "progs/disp.mdl";
@@ -352,10 +354,12 @@ void (float objtobuild) TeamFortress_Build =
  }
  else {
   if (objtobuild == #BUILD_SENTRYGUN) {
+#ifndef TG
    if (self.has_sentry) {
     sprint(self, 2, "You can only have one sentry gun.\nTry dismantling your old one.\n");
     return;
    }
+#endif
    tmp1 = '-16 -16 0';
    tmp2 = '16 16 48';
    newmis.mdl = "progs/turrbase.mdl";
@@ -461,7 +465,11 @@ void () TeamFortress_FinishedBuilding =
  self.StatusRefreshTime = time + 0.1;
  TeamFortress_SetSpeed(self);
  if (oldself.weapon == #BUILD_DISPENSER) {
+#ifndef TG
   self.has_dispenser = 1;
+#else
+  self.has_dispenser = self.has_dispenser + 1;
+#endif
   sprint(self, 2, "You finish building the dispenser.\n");
   teamsprint(self.team_no, self, self.netname);
   teamsprint(self.team_no, self, " has built a Dispenser.\n");
@@ -504,7 +512,11 @@ void () TeamFortress_FinishedBuilding =
  }
  else {
   if (oldself.weapon == #BUILD_SENTRYGUN) {
+#ifndef TG
    self.has_sentry = 1;
+#else
+   self.has_sentry =  self.has_sentry + 1;
+#endif
    sprint(self, 2, "You finish building the sentry gun.\n");
    teamsprint(self.team_no, self, self.netname);
    teamsprint(self.team_no, self, " has built a Sentry Gun.\n");
@@ -618,7 +630,11 @@ void () Dispenser_Explode =
 void () Dispenser_Die =
 {
         sprint(self.real_owner, 2, "Your dispenser was destroyed.\n");
+#ifndef TG
  self.real_owner.has_dispenser = 0;
+#else
+ self.real_owner.has_dispenser =  self.real_owner.has_dispenser - 1;
+#endif
  self.think = Dispenser_Explode;
  self.nextthink = time + 0.1;
 };

@@ -1,10 +1,12 @@
 void () ResetMenu;
 void () Detpack_SetClip;
 string (float num) NumberToString100;
+void ()TG_LoadSettings;
+
 void ()Menu_TG_Main=
 {
 // centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n4) Misc MOD options           \n5) Load defaults              \n7) Nothing                    ");
- centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n7) Nothing                    ");
+ centerprint(self, "Options:\n1) SG options                 \n2) Detpack option             \n3) Cheats                     \n4) Load defaults              \n7) Nothing                    ");
 };
 
 void (float inp)Menu_TG_Main_Input=
@@ -18,13 +20,16 @@ void (float inp)Menu_TG_Main_Input=
     if(inp == 3)
      self.current_menu=#TG_MENU_CHEATS;
     else{
-   if(inp == 7)
-    ResetMenu();
-   }
-  }
+      if(inp == 4)
+       TG_LoadSettings();
+      else{
+       if(inp == 7)
+        ResetMenu();
+  }}}}
+ if (inp > 0 && inp <= 7) {
+  self.impulse = 0;
+  self.menu_count = 23;
  }
- self.impulse = 0;
- self.menu_count = 25;
 };
 
 void ()Menu_TG_SGOptions=
@@ -282,7 +287,10 @@ void ()Menu_TG_Detpack=
 void (float inp)Menu_TG_Detpack_Input
 {
  if (inp == 1) {
-  Detpack_SetClip();
+   detpack_clip = detpack_clip + 1;
+   if (detpack_clip > 2) 
+    detpack_clip = 0;
+   Detpack_SetClip();
   }
  else {
   if (inp == 2) {

@@ -2843,6 +2843,7 @@ void () ImpulseCommands =
         if (self.impulse == 169) 
          TeamFortress_DetpackStop();
        else {
+#ifndef TG
        if (self.impulse == 188 && self.playerclass == 9) 
         DestroyBuilding(self, "building_sentrygun");
        else {
@@ -2854,6 +2855,19 @@ void () ImpulseCommands =
        else {
        if (self.impulse == 197 && self.playerclass == 9) 
         DestroyBuilding(self, "building_teleporter_entrance");
+#else
+       if (self.impulse == 188 ) 
+        DestroyBuilding(self, "building_sentrygun");
+       else {
+        if (self.impulse == 187 ) 
+         DestroyBuilding(self, "building_dispenser");
+       else {
+        if (self.impulse == 196 ) 
+         DestroyBuilding(self, "building_teleporter_exit");
+       else {
+       if (self.impulse == 197 ) 
+        DestroyBuilding(self, "building_teleporter_entrance");
+#endif
        else {
         if (self.impulse == 177 && self.playerclass == 8) 
          TeamFortress_SpyGoUndercover();
@@ -2864,11 +2878,12 @@ void () ImpulseCommands =
        if (self.impulse == #TF_SPY_SFEIGN_IMPULSE  && self.playerclass == 8) 
         TeamFortress_SpyFeignDeath(1);
        else {
-       if (self.impulse == 179 
+
 #ifndef TG
-       && self.playerclass == 9
+       if (self.impulse == 179        && self.playerclass == 9)
+#else
+       if (self.impulse == 179       )
 #endif
-       ) 
         TeamFortress_EngineerBuild();
        else {
        if (self.impulse == #AUTOSCAN_IMPULSE && self.playerclass == #PC_SCOUT) 

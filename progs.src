@@ -15,6 +15,7 @@ weapons.pqc
 world.pqc
 status.pqc
 client.pqc
+client_tg.pqc
 player.pqc
 doors.pqc
 buttons.pqc

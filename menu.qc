@@ -868,30 +868,39 @@ void () Menu_Engineer =
 
  s_action = "Action:                           \n";
  s_nothing = "—‘ Nothing                      \n\n";
+
+#ifndef TG
  if (self.has_dispenser) 
   s_disp = "™‘ Remotely Detonate Dispenser  \n";
  else {
-#ifndef TG
   if (self.ammo_cells >= 100) 
-#endif
    s_disp = "“‘ Build Ammo&Armor Dispenser   \n";
-#ifndef TG
   else 
    s_disp = "\n";
-#endif
  }
+#else
+ if (self.has_dispenser > 0) 
+  s_disp = "“‘ Build Ammo&Armor Dispenser   \n™‘ Remotely Detonate Dispenser  \n";
+ else {
+   s_disp = "“‘ Build Ammo&Armor Dispenser   \n";
+ }
+#endif
+#ifndef TG
  if (self.has_sentry) 
   s_sentry = "š‘ Remotely Detonate Sentry Gun \n";
  else {
-#ifndef TG
   if (self.ammo_cells >= 130) 
-#endif
    s_sentry = "”‘ Build Sentry Gun             \n";
-#ifndef TG
   else 
    s_sentry = "\n";
-#endif
+}
+#else
+ if (self.has_sentry) 
+  s_sentry = "”‘ Build Sentry Gun             \nš‘ Remotely Detonate Sentry Gun \n";
+ else {
+   s_sentry = "”‘ Build Sentry Gun             \n";
  }
+#endif
  centerprint(self, s_action, s_disp, s_sentry, s_nothing);
 };
 
@@ -899,33 +908,41 @@ void (float inp) Menu_Engineer_Input =
 {
  local entity te;
 
- if (inp == 1 && 
+ if (inp == 1 
 #ifndef TG
- self.ammo_cells >= 100 && 
+  && self.ammo_cells >= 100 && self.has_dispenser != 1
 #endif 
- self.has_dispenser != 1) {
+ ) {
   TeamFortress_Build(1);
   ResetMenu();
   self.impulse = 0;
  }
  else {
-  if (inp == 2 && 
+  if (inp == 2 
 #ifndef TG
-  self.ammo_cells >= 130 && 
+  && self.ammo_cells >= 130 && self.has_sentry != 1
 #endif
-  self.has_sentry != 1) {
+  ) {
    TeamFortress_Build(2);
    ResetMenu();
    self.impulse = 0;
   }
   else {
+#ifndef  TG
    if (inp == 7 && self.has_dispenser == 1) {
+#else
+   if (inp == 7 && self.has_dispenser >0 ) {
+#endif
     DestroyBuilding(self, "building_dispenser");
     ResetMenu();
     self.impulse = 0;
    }
    else {
+#ifndef  TG
     if (inp == 8 && self.has_sentry == 1) {
+#else
+    if (inp == 8 && self.has_sentry >0) {
+#endif
      DestroyBuilding(self, "building_sentrygun");
      ResetMenu();
      self.impulse = 0;
@@ -1020,7 +1037,11 @@ void (float inp) Menu_EngineerFix_Dispenser_Input =
       teamsprint(self.building.real_owner.team_no, self.building.real_owner, "'s Dispenser.\n");
      }
      dremove(self.building);
+#ifndef TG
      self.building.real_owner.has_dispenser = 0;
+#else
+     self.building.real_owner.has_dispenser = self.building.real_owner.has_dispenser - 1;
+#endif
     }
    }
   }
@@ -1142,7 +1163,11 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
      }
      dremove(self.building.trigger_field);
      dremove(self.building);
+#ifndef TG
      self.building.real_owner.has_sentry = 0;
+#else
+     self.building.real_owner.has_sentry = self.building.real_owner.has_sentry - 1 ;
+#endif
     }
     else {
      if (inp == 6) {

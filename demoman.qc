@@ -92,9 +92,6 @@ void () Detpack_SetClip =
  local entity te;
  local entity pl;
 
- detpack_clip = detpack_clip + 1;
- if (detpack_clip > 2) 
-  detpack_clip = 0;
  te = find(world, classname, "detpack");
  while (te) {
   if (detpack_clip == 2) {

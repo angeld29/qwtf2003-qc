@@ -1,4 +1,6 @@
-
+#ifdef TG
+void ()TG_LoadSettings;
+#endif
 void () player_pain;
 void () player_stand1;
 void (vector org) spawn_tfog;
@@ -414,44 +416,20 @@ void () DecodeLevelParms =
    new_flash = 1;
    else new_flash = 0;
 
-    st = infokey(world, "sg");
-    if (st == "old") {
-            sentry_type = #SENTRY_OLD;
-    }
-    else {
-            if (st == "fix") 
-                    sentry_type = #SENTRY_FIX;
-            else 
-            {
-            if (st == "new") 
-                   sentry_type = #SENTRY_NEW;
-              else{
-               if (st == "mtflf") 
-                      sentry_type = #SENTRY_MTFL_NEWFIND;
-                 else{
-               if (st == "oldf") 
-                      sentry_type = #SENTRY_OLD_NEWFIND;
-                 else{
-                    sentry_type = #SENTRY_MTFL;
-    }}}}}
-    st = infokey(world, "sgppl");
-    if(st == string_null)
-     sgppl=12;
-    else
-    {
-     sgppl=rint(stof(st));
-     if(sgppl<0)sgppl=0;
-    }
-#ifdef TG
-  sg_allow_fire=1;
-  sg_allow_find=#TG_SG_FIND_IGNORE_TEAM;
-  sg_fire_type=#TG_SG_FIRE_NORMAL;
-  gren_time=0;
-  gren_effect=1;
-  detpack_disarm=1;
-  detpack_drop=0;
-  fullflash_for_self=0;
-#endif
+  st = infokey(world, "sg");
+  if (st == "old") {sentry_type = #SENTRY_OLD; }
+  else {if (st == "fix")  sentry_type = #SENTRY_FIX;
+    else { if (st == "new")  sentry_type = #SENTRY_NEW;
+     else { if (st == "mtflf") sentry_type = #SENTRY_MTFL_NEWFIND;
+      else { if (st == "oldf")  sentry_type = #SENTRY_OLD_NEWFIND;
+       else { sentry_type = #SENTRY_MTFL; }}}}}
+
+  st = infokey(world, "sgppl");
+  if(st == string_null)  sgppl=12;
+  else{
+   sgppl=rint(stof(st));
+   if(sgppl<0)sgppl=0;
+  }
   st = infokey(world, "dg");
   if (st == string_null) 
       st = infokey(world, "disable_grens");
@@ -524,6 +502,10 @@ void () DecodeLevelParms =
  if (parm15) {
   self.is_admin = parm15;
  }
+#ifdef TG
+  if(!defaults_loaded)
+  TG_LoadSettings();
+#endif
 };
 
 entity () FindIntermission =
@@ -1961,6 +1943,9 @@ void () ClientConnect =
  }
  if (cb_prematch_time > time) 
   sprint(self, 2, "CURRENTLY IN PREMATCH TIME\n");
+#ifdef TG
+ stuffcmd(self, "exec tg.cfg\n");
+#endif
 };
 
 void () ClientDisconnect =

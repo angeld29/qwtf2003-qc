@@ -377,7 +377,11 @@ void () Sentry_Explode =
 void () Sentry_Die =
 {
  sprint(self.real_owner, 2, "Your sentry gun was destroyed.\n");
+#ifndef TG
  self.real_owner.has_sentry = 0;
+#else
+ self.real_owner.has_sentry = self.real_owner.has_sentry - 1;
+#endif
  self.think = Sentry_Explode;
  self.nextthink = time + 0.1;
 };

@@ -289,7 +289,7 @@ void () TeamFortress_ID =
     self.StatusRefreshTime = time + 1.5;
     if (self == trace_ent.real_owner) 
     {
-                                        st = NumberToString1000(trace_ent.health);
+     st = NumberToString1000(trace_ent.health);
      centerprint(self, "\n\n\n\nYour Dispenser\nHealth: ",st);
     } 
     else 
