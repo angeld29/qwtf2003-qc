@@ -49,6 +49,10 @@ void () TeamFortress_Discard =
 		}
 	}
 	st = infokey(self,"disc_s");
+	if(st == string_null)
+	{
+	  st = infokey(self,"1");
+	}
 	if(st != string_null)
 	{
 	  ammo_tmp = rint(stof(st));
@@ -60,6 +64,11 @@ void () TeamFortress_Discard =
  	  }
 	}
 	st = infokey(self,"disc_n");
+	if(st == string_null)
+	{
+	  st = infokey(self,"2");
+	}
+
 	if(st != string_null)
 	{
 	  ammo_tmp = rint(stof(st));
@@ -70,6 +79,11 @@ void () TeamFortress_Discard =
 	  }
 	}
 	st = infokey(self,"disc_r");
+	if(st == string_null)
+	{
+	  st = infokey(self,"3");
+	}
+
 	if(st != string_null)
 	{
 	  ammo_tmp = rint(stof(st));
@@ -80,6 +94,11 @@ void () TeamFortress_Discard =
 	  }
 	}
 	st = infokey(self,"disc_c");
+	if(st == string_null)
+	{
+	  st = infokey(self,"4");
+	}
+
 	if(st != string_null)
 	{
 	  ammo_tmp = rint(stof(st));

@@ -324,6 +324,14 @@ void (float inp) Menu_Class_Input =
 			st = infokey(self, "ch");
 			if (st == string_null) 
 				st = infokey(self, "classhelp");
+                        if (st == string_null) 
+                        {
+                         st = infokey(self, "s");
+                         if ((st != string_null) && ((stof(st)&4)==0)) 
+                         {
+                           st="off";
+                         }
+                        }
 			if (st != "off") 
 				self.current_menu = 6;
 		}

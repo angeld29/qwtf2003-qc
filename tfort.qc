@@ -1464,6 +1464,14 @@ void () TeamFortress_SetEquipment =
 	self.items = self.items | kept_items;
 //angel fix
         st = infokey(self, "autoid");
+        if(st == string_null)
+         {
+           st = infokey(self, "s");
+           if (stof(st)&8) 
+           {
+             st="on";
+           }
+         }
         if (st == "on")
         {
         	te = spawn();
@@ -2908,6 +2916,14 @@ void (entity p) TeamFortress_ExecClassScript =
 	st = infokey(p, "ec");
 	if (st == string_null) 
 		st = infokey(p, "exec_class");
+        if (st == string_null) 
+        {
+         st = infokey(p, "s");
+         if (stof(st)&2 ) 
+         {
+           st="on";
+         }
+        }
 	if (st == "on") {
 		if (p.playerclass == 1) 
 			stuffcmd(p, "exec scout.cfg\n");
@@ -2953,6 +2969,15 @@ void (entity p) TeamFortress_ExecMapScript =
 	st = infokey(p, "em");
 	if (st == string_null) 
 		st = infokey(p, "exec_map");
+        if (st == string_null) 
+        {
+         st = infokey(p, "s");
+         if (stof(st)&1 ) 
+         {
+           st="on";
+         }
+        }
+
 	if (st == "on") {
 		stuffcmd(p, "exec mapdefault.cfg\n");
 		stuffcmd(p, "exec ");
