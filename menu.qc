@@ -823,18 +823,26 @@ void () Menu_Engineer =
  if (self.has_dispenser) 
   s_disp = "™‘ Remotely Detonate Dispenser  \n";
  else {
+#ifndef CHEATBUILD
   if (self.ammo_cells >= 100) 
+#endif
    s_disp = "“‘ Build Ammo&Armor Dispenser   \n";
+#ifndef CHEATBUILD
   else 
    s_disp = "\n";
+#endif
  }
  if (self.has_sentry) 
   s_sentry = "š‘ Remotely Detonate Sentry Gun \n";
  else {
+#ifndef CHEATBUILD
   if (self.ammo_cells >= 130) 
+#endif
    s_sentry = "”‘ Build Sentry Gun             \n";
+#ifndef CHEATBUILD
   else 
    s_sentry = "\n";
+#endif
  }
  centerprint(self, s_action, s_disp, s_sentry, s_nothing);
 };
@@ -843,13 +851,21 @@ void (float inp) Menu_Engineer_Input =
 {
  local entity te;
 
- if (inp == 1 && self.ammo_cells >= 100 && self.has_dispenser != 1) {
+ if (inp == 1 && 
+#ifndef CHEATBUILD
+ self.ammo_cells >= 100 && 
+#endif 
+ self.has_dispenser != 1) {
   TeamFortress_Build(1);
   ResetMenu();
   self.impulse = 0;
  }
  else {
-  if (inp == 2 && self.ammo_cells >= 130 && self.has_sentry != 1) {
+  if (inp == 2 && 
+#ifndef CHEATBUILD
+  self.ammo_cells >= 130 && 
+#endif
+  self.has_sentry != 1) {
    TeamFortress_Build(2);
    ResetMenu();
    self.impulse = 0;
@@ -977,7 +993,12 @@ void (float inp) Menu_EngineerFix_Dispenser_Input =
 
 void () Menu_EngineerFix_SentryGun =
 {
- if (self.building.weapon < 3 && self.ammo_cells >= 130) 
+
+ if (self.building.weapon < 3 
+#ifndef CHEATBUILD
+ && self.ammo_cells >= 130
+#endif
+ ) 
   CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n”‘ Upgrade Sentry Gun          \n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n");
  else 
   CenterPrint(self, "Action:                            \n“‘ Put Ammo into Sentry Gun    \n\n•‘ Repair Sentry Gun           \n–‘ Dismantle Sentry Gun        \n—‘ Nothing                     \n\n˜‘ Rotate SentryGun            \n");
@@ -1012,8 +1033,14 @@ void (float inp) Menu_EngineerFix_SentryGun_Input =
   }
  }
  else {
-  if (self.building.weapon < 3 && inp == 2 && self.ammo_cells >= 130) {
+  if (self.building.weapon < 3 && inp == 2 
+#ifndef CHEATBUILD
+  && self.ammo_cells >= 130
+#endif
+  ) {
+#ifndef CHEATBUILD
    self.ammo_cells = self.ammo_cells - 130;
+#endif
    self.building.weapon = self.building.weapon + 1;
    self.building.max_health = self.building.max_health * 1.2;
    self.building.health = self.building.max_health;

@@ -1,3 +1,3 @@
 #define ANTIANTIFLASH
-#define MULTISCAN
+//#define MULTISCAN
 //#define CHEATBUILD

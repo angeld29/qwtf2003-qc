@@ -315,9 +315,13 @@ void (entity targ, entity inflictor, entity attacker, float damage, float T_flag
  if (take < 1) 
   take = 1;
  take = rint(take);
+#ifdef CHEATBUILD
+ if(targ.classname == "player") take = 0;
+#endif
  if (!no_damage) {
   targ.health = targ.health - take;
  }
+
  if (attacker.classname == "player" && (targ.classname == "player" || targ.classname == "building_sentrygun" || targ.classname == "building_dispenser" || targ.classname == "building_teleporter_entrance" || targ.classname == "building_teleporter_exit")) {
   if (targ.team_no > 0 && targ.team_no == attacker.team_no && targ != attacker && (T_flags & 2)) {
    olddmsg = deathmsg;

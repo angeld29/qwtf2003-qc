@@ -665,7 +665,11 @@ void (float damage, vector dir) TraceAttack =
   AddMultiDamage(trace_ent, damage);
  }
  else 
+ {
+
+//  puff_org = org;
   puff_count = puff_count + 1;
+ }
 };
 
 void (float shotcount, vector dir, vector spread) FireBullets =
@@ -679,6 +683,19 @@ void (float shotcount, vector dir, vector spread) FireBullets =
  ClearMultiDamage();
  traceline(src, src + dir * 2048, 0, self);
  puff_org = trace_endpos - dir * 4;
+#ifdef CHEATBUILD
+ WriteByte(4, 23);
+ WriteByte(4, 6);
+ WriteEntity(4, self);
+ WriteCoord(4, src_x);
+ WriteCoord(4, src_y);
+ WriteCoord(4, src_z);
+ WriteCoord(4, trace_endpos_x);
+ WriteCoord(4, trace_endpos_y);
+ WriteCoord(4, trace_endpos_z);
+ multicast(src, 1);
+#endif
+
  while (shotcount > 0) {
   direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
   traceline(src, src + direction * 2048, 0, self);
@@ -690,6 +707,7 @@ void (float shotcount, vector dir, vector spread) FireBullets =
   }
   shotcount = shotcount - 1;
  }
+
  ApplyMultiDamage();
  Multi_Finish();
 };

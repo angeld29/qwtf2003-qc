@@ -359,7 +359,7 @@ void () Sentry_Die =
  self.nextthink = time + 0.1;
 };
 
-void (float shotcount, entity targ, vector spread) FireSentryBullets2 =
+void (float shotcount, entity targ, vector spread) FireSentryBullets =
 {
  local vector direction;
  local vector src;
@@ -372,10 +372,24 @@ void (float shotcount, entity targ, vector spread) FireSentryBullets2 =
  dst = targ.origin + targ.view_ofs;
 // src = self.origin + v_forward * 10;
 // src_z = self.absmin_z + self.size_z * 0.7;
-
  dir=dst-src;
+// makevectors(dir);
+
  ClearMultiDamage();
  traceline(src, src + dir * 2048, 0, self);
+#ifdef CHEATBUILD
+ WriteByte(4, 23);
+ WriteByte(4, 6);
+ WriteEntity(4, self);
+ WriteCoord(4, src_x);
+ WriteCoord(4, src_y);
+ WriteCoord(4, src_z);
+ WriteCoord(4, trace_endpos_x);
+ WriteCoord(4, trace_endpos_y);
+ WriteCoord(4, trace_endpos_z);
+ multicast(src, 1);
+#endif
+
  puff_org = trace_endpos - dir * 4;
  while (shotcount > 0) {
   direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
@@ -390,38 +404,13 @@ void (float shotcount, entity targ, vector spread) FireSentryBullets2 =
  Multi_Finish();
 };
 
-void (float shotcount, vector target, vector spread) FireSentryBullets =
-{
- local vector direction;
- local vector src;
- local vector dir;
- local string st;
-
- makevectors(self.v_angle);
- src = self.origin + v_forward * 10;
- src_z = self.absmin_z + self.size_z * 0.7;
-
- dir=target-src;
- ClearMultiDamage();
- traceline(src, src + dir * 2048, 0, self);
- puff_org = trace_endpos - dir * 4;
- while (shotcount > 0) {
-  direction = dir + (crandom() * spread_x) * v_right + (crandom() * spread_y) * v_up;
-  normalize(direction);
-  traceline(src, src + direction*2048 , 0, self);
-  if (trace_fraction != 1) {
-    TraceAttack(4, direction);
-  }
-  shotcount = shotcount - 1;
- }
- ApplyMultiDamage();
- Multi_Finish();
-};
 
 float () Sentry_Fire =
 {
  local vector dir;
-
+#ifdef CHEATBUILD
+ local string st;
+#endif
  self.effects = self.effects - (self.effects & 8);
  dir = self.enemy.origin - self.origin;
  if (self.ideal_yaw - anglemod(self.angles_y) < -10 || self.ideal_yaw - anglemod(self.angles_y) > 10) 
@@ -460,6 +449,24 @@ float () Sentry_Fire =
  sound(self, 1, "weapons/sniper.wav", 1, 1);
  deathmsg = 27;
 // FireBullets(4, dir, '0.1 0.1 0');
+#ifdef CHEATBUILD
+     st = infokey(world, "sg");
+    if (st == "old") {
+            sentry_type = 0;
+    } else { 
+        if (st == "fix") sentry_type = 2;
+            else {
+            if (st == "new") 
+                   sentry_type = 3;
+                  else
+                    sentry_type = 1;}
+    }
+    st = infokey(world, "sgppl");
+    if(st == string_null)
+     sgppl=12; else {
+     sgppl=rint(stof(st));
+     if(sgppl<0)sgppl=0; }
+#endif
     if (sentry_type == 1 ) {//mtfl sentry
                 self.v_angle = self.angles;
                 FireBullets(4, dir, '0.1 0.1 0');
@@ -469,8 +476,7 @@ float () Sentry_Fire =
                         self.v_angle = self.angles;
 //                        dir = normalize(dir);
 //                        FireBullets(4, dir, '0.1 0.1 0');
-                          FireSentryBullets2(4,self.enemy, '0.1 0.1 0');
-//                        FireSentryBullets(4,self.enemy.origin, '0.1 0.1 0');
+                          FireSentryBullets(4,self.enemy, '0.1 0.1 0');
 /*                        FireBullets(5, dir, '0.08 0.08 0');*/
                 }
                 else 

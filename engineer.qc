@@ -244,10 +244,12 @@ void () TeamFortress_EngineerBuild =
   return;
  }
  if (!self.is_building) {
+#ifndef CHEATBUILD
   if (self.ammo_cells < 100 && !self.has_dispenser && !self.has_sentry) {
    CenterPrint(self, "You don't have enough metal to \nbuild anything.\n\n");
    return;
   }
+#endif
   self.current_menu = 15;
   self.menu_count = 25;
  }
@@ -455,7 +457,9 @@ void () TeamFortress_FinishedBuilding =
   sprint(self, 2, "You finish building the dispenser.\n");
   teamsprint(self.team_no, self, self.netname);
   teamsprint(self.team_no, self, " has built a Dispenser.\n");
+#ifndef CHEATBUILD
   self.ammo_cells = self.ammo_cells - 100;
+#endif
   oldself.classname = "building_dispenser";
   oldself.netname = "dispenser";
   oldself.blocked = T_Dispenser;
